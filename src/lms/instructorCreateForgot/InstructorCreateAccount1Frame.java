@@ -1,6 +1,14 @@
 package lms.instructorCreateForgot;
-
 import lms.LoginInstructorFrame;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
 
@@ -140,8 +148,77 @@ public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_next_ButtonMouseReleased
 
     private void next_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_next_ButtonActionPerformed
-        new InstructorCreateAccount2Frame().setVisible(true);
-        dispose();
+            String InstName;
+            String InstMail;
+            String InstID;
+            String InstDept;
+            String query;
+
+             try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(InstructorCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                
+            }
+               
+               String url = "jdbc:mysql://localhost:3306/lms_project";
+               String user = "root";
+               String pass = "";
+               
+               boolean isValid = true;
+               
+               Connection con = null;
+        try {
+            con = DriverManager.getConnection(url, user, pass);
+        } catch (SQLException ex) {
+            Logger.getLogger(InstructorCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+               if("".equals(createInstructorName_Field.getText().trim())){
+                   JOptionPane.showMessageDialog(new JFrame(), "Name is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+                   isValid = false;
+               }
+               else if("".equals(createInstructorMail_Field.getText().trim())){
+                   JOptionPane.showMessageDialog(new JFrame(), "CvSU Mail is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+                   isValid = false;
+               }
+               else if("".equals(createInstructorID_Field.getText().trim())){
+                   JOptionPane.showMessageDialog(new JFrame(), "ID is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+                   isValid = false;
+               }
+               else if("".equals((String) instructorDept_Combobox.getSelectedItem())){
+                   JOptionPane.showMessageDialog(new JFrame(), "Department is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+                   isValid = false;
+               }
+        
+               else {
+                   InstName = createInstructorName_Field.getText().trim();
+                   InstMail = createInstructorMail_Field.getText().trim();
+                   InstID = createInstructorID_Field.getText().trim();
+                   InstDept = (String) instructorDept_Combobox.getSelectedItem();
+        
+                   query = "INSERT INTO tb_createinstructor(Name, CvSU_Mail, EmployeeID, Department) VALUES (?, ?, ?, ?)";
+               try {
+                        PreparedStatement pst = con.prepareStatement(query);
+                        pst.setString(1, InstName);
+                        pst.setString(2, InstMail);
+                        pst.setString(3, InstID);
+                        pst.setString(4, InstDept);
+                        
+                        pst.executeUpdate();
+                                              
+                     JOptionPane.showMessageDialog(new JFrame(), "Proceed to Password Section", "Success", JOptionPane.INFORMATION_MESSAGE);
+                     
+                     new InstructorCreateAccount2Frame(InstName, InstMail, InstID, InstDept).setVisible(true);
+                      dispose();
+                      
+                     } catch (Exception e){
+                        System.out.println("Error "+ e.getMessage());
+                        JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        
+                     }}
     }//GEN-LAST:event_next_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed

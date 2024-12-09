@@ -11,7 +11,6 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jCalendar1 = new com.toedter.calendar.JCalendar();
         jPanel1 = new javax.swing.JPanel();
         profile_Button = new javax.swing.JButton();
         view_Profile_Label = new javax.swing.JLabel();
@@ -21,10 +20,6 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jCalendar1.setBackground(new java.awt.Color(255, 255, 255));
-        jCalendar1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 11)); // NOI18N
-        getContentPane().add(jCalendar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(518, 20, 450, 260));
 
         jPanel1.setOpaque(false);
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -96,7 +91,6 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel instructor_Home_Background;
-    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JButton profile_Button;

@@ -1,16 +1,38 @@
 package lms.instructorCreateForgot;
 
-public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
+import lms.LoginInstructorFrame;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lms.InstructorHomeFrame;
 
-    public InstructorCreateAccount2Frame() {
+
+public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
+    private String InstName, InstMail, InstID, InstDept ;
+
+    public InstructorCreateAccount2Frame(String InstName, String InstMail, String InstID, String InstDept) {
         initComponents();
+        this.InstName = InstName;
+        this.InstMail = InstMail;
+        this.InstID = InstID;
+        this.InstDept = InstDept;
+       
+    }
+
+    private InstructorCreateAccount2Frame() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        instructorDept_Combobox = new javax.swing.JComboBox<>();
+        instructorQuestion_Combobox = new javax.swing.JComboBox<>();
         instructor_AnswerCreate_Field = new javax.swing.JTextField();
         instructor_Submit_Button = new javax.swing.JButton();
         createInstructorPassword_Field = new javax.swing.JPasswordField();
@@ -26,12 +48,12 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        instructorDept_Combobox.setBackground(new java.awt.Color(33, 125, 23));
-        instructorDept_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
-        instructorDept_Combobox.setForeground(new java.awt.Color(255, 255, 255));
-        instructorDept_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What year did you start working at CvSU?", "Who is the school adminstrator?", "What are the university tenets?", "When was CvSU established?", "How many campuses does CvSU have?" }));
-        instructorDept_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(instructorDept_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 400, -1));
+        instructorQuestion_Combobox.setBackground(new java.awt.Color(33, 125, 23));
+        instructorQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
+        instructorQuestion_Combobox.setForeground(new java.awt.Color(255, 255, 255));
+        instructorQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What year did you start working at CvSU?", "Who is the school adminstrator?", "What are the university tenets?", "When was CvSU established?", "How many campuses does CvSU have?" }));
+        instructorQuestion_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(instructorQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 400, -1));
 
         instructor_AnswerCreate_Field.setBackground(new java.awt.Color(33, 125, 23));
         instructor_AnswerCreate_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
@@ -128,7 +150,72 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructor_Submit_ButtonMouseReleased
 
     private void instructor_Submit_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_Submit_ButtonActionPerformed
-        // TODO add your handling code here:
+        String Password;
+        String ValAnswer;
+        String ValQuestion;
+        String query;
+        
+        
+        try {
+                Class.forName("com.mysql.cj.jdbc.Driver");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(InstructorCreateAccount2Frame.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                
+            }
+               
+               String url = "jdbc:mysql://localhost:3306/lms_project";
+               String user = "root";
+               String pass = "";
+               
+               boolean isValid = true;
+               
+               Connection con = null;
+        try {
+            con = DriverManager.getConnection(url, user, pass);
+        } catch (SQLException ex) {
+            Logger.getLogger(InstructorCreateAccount2Frame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
+               if("".equals(createInstructorPassword_Field.getText().trim())){
+                   JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+                   isValid = false;
+               }
+               else if("".equals((String)instructorQuestion_Combobox.getSelectedItem())){
+                   JOptionPane.showMessageDialog(new JFrame(), "Validation Question is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+                   isValid = false;
+               }
+               else if("".equals(instructor_AnswerCreate_Field.getText().trim())){
+                   JOptionPane.showMessageDialog(new JFrame(), "Validation Answer is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+                   isValid = false;
+               }
+               else {
+                   
+                   Password = createInstructorPassword_Field.getText().trim().trim();
+                   ValQuestion = (String) instructorQuestion_Combobox.getSelectedItem();
+                   ValAnswer = instructor_AnswerCreate_Field.getText().trim().trim();
+                   
+                   query = "INSERT INTO tb_createinstructor(Password, ValidationAnswer) VALUES (?,?)";
+               try {
+                        PreparedStatement pst = con.prepareStatement(query);    
+                        pst.setString(1, Password);      
+                        pst.setString(2, ValAnswer); 
+                       
+                        pst.executeUpdate();
+                                              
+                     JOptionPane.showMessageDialog(new JFrame(), "Welcome, Instructor!" , "Success", JOptionPane.INFORMATION_MESSAGE);
+                     
+                     dispose();
+                     new InstructorHomeFrame().setVisible(true);
+                     
+         
+                      
+                     } catch (Exception e){
+                        System.out.println("Error "+ e.getMessage());
+                        JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        
+                     }}
     }//GEN-LAST:event_instructor_Submit_ButtonActionPerformed
 
     private void checkPassword_CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPassword_CheckboxActionPerformed
@@ -204,7 +291,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     private javax.swing.JLabel createAccount_Background;
     private javax.swing.JPasswordField createInstructorPassword_Field;
     private javax.swing.JButton goBack_Button;
-    private javax.swing.JComboBox<String> instructorDept_Combobox;
+    private javax.swing.JComboBox<String> instructorQuestion_Combobox;
     private javax.swing.JTextField instructor_AnswerCreate_Field;
     private javax.swing.JButton instructor_Submit_Button;
     private javax.swing.JLabel jLabel1;
