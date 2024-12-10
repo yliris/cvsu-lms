@@ -1,4 +1,5 @@
 package lms.instructorCreateForgot;
+
 import lms.LoginInstructorFrame;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -6,14 +7,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import static lms.UtilityMethods.*;
 
 public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
 
     public InstructorCreateAccount1Frame() {
         initComponents();
+
+        TransparentField(createInstructorName_Field, createInstructorMail_Field, createInstructorID_Field);
     }
 
     @SuppressWarnings("unchecked")
@@ -65,19 +69,56 @@ public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
         createInstructorName_Field.setBackground(new java.awt.Color(33, 125, 23));
         createInstructorName_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         createInstructorName_Field.setForeground(new java.awt.Color(255, 255, 255));
+        createInstructorName_Field.setText("Enter Name");
         createInstructorName_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        createInstructorName_Field.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                createInstructorName_FieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                createInstructorName_FieldFocusLost(evt);
+            }
+        });
+        createInstructorName_Field.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                createInstructorName_FieldActionPerformed(evt);
+            }
+        });
         getContentPane().add(createInstructorName_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 175, 280, -1));
 
         createInstructorMail_Field.setBackground(new java.awt.Color(33, 125, 23));
         createInstructorMail_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         createInstructorMail_Field.setForeground(new java.awt.Color(255, 255, 255));
+        createInstructorMail_Field.setText("Enter CvSU Mail");
         createInstructorMail_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        createInstructorMail_Field.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                createInstructorMail_FieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                createInstructorMail_FieldFocusLost(evt);
+            }
+        });
         getContentPane().add(createInstructorMail_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 215, 280, -1));
 
         createInstructorID_Field.setBackground(new java.awt.Color(33, 125, 23));
         createInstructorID_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         createInstructorID_Field.setForeground(new java.awt.Color(255, 255, 255));
+        createInstructorID_Field.setText("Enter Employee ID");
         createInstructorID_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        createInstructorID_Field.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                createInstructorID_FieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                createInstructorID_FieldFocusLost(evt);
+            }
+        });
+        createInstructorID_Field.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                createInstructorID_FieldKeyTyped(evt);
+            }
+        });
         getContentPane().add(createInstructorID_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 255, 280, -1));
 
         next_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Next_Button.png"))); // NOI18N
@@ -148,77 +189,82 @@ public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_next_ButtonMouseReleased
 
     private void next_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_next_ButtonActionPerformed
-            String InstName;
-            String InstMail;
-            String InstID;
-            String InstDept;
-            String query;
+        String InstName;
+        String InstMail;
+        String InstID;
+        String InstDept;
+        String query;
 
-             try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(InstructorCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                
-            }
-               
-               String url = "jdbc:mysql://localhost:3306/lms_project";
-               String user = "root";
-               String pass = "";
-               
-               boolean isValid = true;
-               
-               Connection con = null;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(InstructorCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+        String url = "jdbc:mysql://localhost:3306/lms_project";
+        String user = "root";
+        String pass = "";
+
+        boolean isValid = true;
+
+        Connection con = null;
         try {
             con = DriverManager.getConnection(url, user, pass);
         } catch (SQLException ex) {
             Logger.getLogger(InstructorCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-               if("".equals(createInstructorName_Field.getText().trim())){
-                   JOptionPane.showMessageDialog(new JFrame(), "Name is required", "Dialog", JOptionPane.ERROR_MESSAGE);
-                   isValid = false;
-               }
-               else if("".equals(createInstructorMail_Field.getText().trim())){
-                   JOptionPane.showMessageDialog(new JFrame(), "CvSU Mail is required", "Dialog", JOptionPane.ERROR_MESSAGE);
-                   isValid = false;
-               }
-               else if("".equals(createInstructorID_Field.getText().trim())){
-                   JOptionPane.showMessageDialog(new JFrame(), "ID is required", "Dialog", JOptionPane.ERROR_MESSAGE);
-                   isValid = false;
-               }
-               else if("".equals((String) instructorDept_Combobox.getSelectedItem())){
-                   JOptionPane.showMessageDialog(new JFrame(), "Department is required", "Dialog", JOptionPane.ERROR_MESSAGE);
-                   isValid = false;
-               }
-        
-               else {
-                   InstName = createInstructorName_Field.getText().trim();
-                   InstMail = createInstructorMail_Field.getText().trim();
-                   InstID = createInstructorID_Field.getText().trim();
-                   InstDept = (String) instructorDept_Combobox.getSelectedItem();
-        
-                   query = "INSERT INTO tb_createinstructor(Name, CvSU_Mail, EmployeeID, Department) VALUES (?, ?, ?, ?)";
-               try {
-                        PreparedStatement pst = con.prepareStatement(query);
-                        pst.setString(1, InstName);
-                        pst.setString(2, InstMail);
-                        pst.setString(3, InstID);
-                        pst.setString(4, InstDept);
-                        
-                        pst.executeUpdate();
-                                              
-                     JOptionPane.showMessageDialog(new JFrame(), "Proceed to Password Section", "Success", JOptionPane.INFORMATION_MESSAGE);
-                     
-                     new InstructorCreateAccount2Frame(InstName, InstMail, InstID, InstDept).setVisible(true);
-                      dispose();
-                      
-                     } catch (Exception e){
-                        System.out.println("Error "+ e.getMessage());
-                        JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        
-                     }}
+
+        if (createInstructorName_Field.getText().trim().isEmpty() || createInstructorName_Field.getText().equals("Enter Name")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Name is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (createInstructorMail_Field.getText().trim().isEmpty() || createInstructorMail_Field.getText().equals("Enter CvSU Mail")) {
+            JOptionPane.showMessageDialog(new JFrame(), "CvSU Mail is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (createInstructorID_Field.getText().trim().isEmpty() || createInstructorMail_Field.getText().equals("Enter Employee ID")) {
+            JOptionPane.showMessageDialog(new JFrame(), "ID is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (instructorDept_Combobox.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Department is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        }
+
+        if (isValid) {
+            InstName = createInstructorName_Field.getText().trim();
+            InstMail = createInstructorMail_Field.getText().trim();
+            InstID = createInstructorID_Field.getText().trim();
+            InstDept = (String) instructorDept_Combobox.getSelectedItem();
+
+            query = "INSERT INTO tb_createinstructor(Name, CvSU_Mail, EmployeeID, Department) VALUES (?, ?, ?, ?)";
+            try {
+                PreparedStatement pst = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+                pst.setString(1, InstName);
+                pst.setString(2, InstMail);
+                pst.setString(3, InstID);
+                pst.setString(4, InstDept);
+
+                pst.executeUpdate();
+
+                int primaryID = -1;
+
+                ResultSet generatedKeys = pst.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    primaryID = generatedKeys.getInt(1);
+                }
+
+                JOptionPane.showMessageDialog(new JFrame(), "Proceed to Password Section", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                new InstructorCreateAccount2Frame(InstName, InstMail, InstID, InstDept, primaryID).setVisible(true);
+                dispose();
+
+            } catch (SQLException e) {
+                System.out.println("Error " + e.getMessage());
+                JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
     }//GEN-LAST:event_next_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed
@@ -233,6 +279,38 @@ public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
         new LoginInstructorFrame().setVisible(true);
         dispose();
     }//GEN-LAST:event_goBack_ButtonActionPerformed
+
+    private void createInstructorID_FieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_createInstructorID_FieldKeyTyped
+        NumbersOnly(evt);
+    }//GEN-LAST:event_createInstructorID_FieldKeyTyped
+
+    private void createInstructorName_FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createInstructorName_FieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createInstructorName_FieldActionPerformed
+
+    private void createInstructorName_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorName_FieldFocusGained
+        DefaultText(createInstructorName_Field, "Enter Name", DefaultFocus.GAINED);
+    }//GEN-LAST:event_createInstructorName_FieldFocusGained
+
+    private void createInstructorName_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorName_FieldFocusLost
+        DefaultText(createInstructorName_Field, "Enter Name", DefaultFocus.LOST);
+    }//GEN-LAST:event_createInstructorName_FieldFocusLost
+
+    private void createInstructorMail_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorMail_FieldFocusGained
+        DefaultText(createInstructorMail_Field, "Enter CvSU Mail", DefaultFocus.GAINED);
+    }//GEN-LAST:event_createInstructorMail_FieldFocusGained
+
+    private void createInstructorMail_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorMail_FieldFocusLost
+        DefaultText(createInstructorMail_Field, "Enter CvSU Mail", DefaultFocus.LOST);
+    }//GEN-LAST:event_createInstructorMail_FieldFocusLost
+
+    private void createInstructorID_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorID_FieldFocusGained
+        DefaultText(createInstructorID_Field, "Enter Employee ID", DefaultFocus.GAINED);
+    }//GEN-LAST:event_createInstructorID_FieldFocusGained
+
+    private void createInstructorID_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorID_FieldFocusLost
+        DefaultText(createInstructorID_Field, "Enter Employee ID", DefaultFocus.LOST);
+    }//GEN-LAST:event_createInstructorID_FieldFocusLost
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

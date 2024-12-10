@@ -3,11 +3,14 @@ package lms;
 import lms.instructorCreateForgot.InstructorForgotPassword1Frame;
 import lms.instructorCreateForgot.InstructorCreateAccount1Frame;
 import java.awt.Color;
+import static lms.UtilityMethods.DefaultText;
+import static lms.UtilityMethods.TransparentField;
 
 public class LoginInstructorFrame extends javax.swing.JFrame {
 
     public LoginInstructorFrame() {
         initComponents();
+        TransparentField(instructorEmail_Login_Field, instructorPassword_Login_Field);
     }
 
     @SuppressWarnings("unchecked")
@@ -42,7 +45,7 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
         instructorEmail_Login_Field.setBackground(new java.awt.Color(33, 125, 23));
         instructorEmail_Login_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
         instructorEmail_Login_Field.setForeground(new java.awt.Color(255, 255, 255));
-        instructorEmail_Login_Field.setText("Email");
+        instructorEmail_Login_Field.setText("Enter CvSU Email");
         instructorEmail_Login_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         instructorEmail_Login_Field.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -206,15 +209,12 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructorPassword_Login_FieldActionPerformed
 
     private void instructorPassword_Login_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorPassword_Login_FieldFocusLost
-        if(instructorPassword_Login_Field.getText().equals("")){
-            instructorPassword_Login_Field.setText("Password");
-        }
+       DefaultText(instructorPassword_Login_Field, "Password", UtilityMethods.DefaultFocus.LOST);
+
     }//GEN-LAST:event_instructorPassword_Login_FieldFocusLost
 
     private void instructorPassword_Login_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorPassword_Login_FieldFocusGained
-        if(instructorPassword_Login_Field.getText().equals("Password")){
-            instructorPassword_Login_Field.setText("");
-        }
+        DefaultText(instructorPassword_Login_Field, "Password", UtilityMethods.DefaultFocus.GAINED);
     }//GEN-LAST:event_instructorPassword_Login_FieldFocusGained
 
     private void instructorEmail_Login_FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorEmail_Login_FieldActionPerformed
@@ -222,21 +222,19 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructorEmail_Login_FieldActionPerformed
 
     private void instructorEmail_Login_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorEmail_Login_FieldFocusLost
-        if(instructorEmail_Login_Field.getText().equals("")){
-            instructorEmail_Login_Field.setText("Email");
-        }
+        DefaultText(instructorEmail_Login_Field, "Enter CvSU Email", UtilityMethods.DefaultFocus.LOST);
+
     }//GEN-LAST:event_instructorEmail_Login_FieldFocusLost
 
     private void instructorEmail_Login_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorEmail_Login_FieldFocusGained
-        if(instructorEmail_Login_Field.getText().equals("Email")){
-            instructorEmail_Login_Field.setText("");
-        }
+        DefaultText(instructorEmail_Login_Field, "Enter CvSU Email", UtilityMethods.DefaultFocus.GAINED);
+
     }//GEN-LAST:event_instructorEmail_Login_FieldFocusGained
 
     private void checkPassword_CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPassword_CheckboxActionPerformed
-        if(checkPassword_Checkbox.isSelected()){
+        if (checkPassword_Checkbox.isSelected()) {
             checkPassword_Checkbox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/showPass_Button.png")));
-            instructorPassword_Login_Field.setEchoChar((char)0);
+            instructorPassword_Login_Field.setEchoChar((char) 0);
         } else {
             checkPassword_Checkbox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/hidePass_Button.png")));
             instructorPassword_Login_Field.setEchoChar('*');
