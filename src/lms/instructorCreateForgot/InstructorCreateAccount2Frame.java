@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lms.InstructorHomeFrame;
+import lms.UtilityMethods;
+import static lms.UtilityMethods.DefaultText;
 
 public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
 
@@ -226,15 +228,11 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_checkPassword_CheckboxActionPerformed
 
     private void createInstructorPassword_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_FieldFocusGained
-        if (createInstructorPassword_Field.getText().equals("Password")) {
-            createInstructorPassword_Field.setText("");
-        }
+        DefaultText(createInstructorPassword_Field, "Password", UtilityMethods.DefaultFocus.GAINED);
     }//GEN-LAST:event_createInstructorPassword_FieldFocusGained
 
     private void createInstructorPassword_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_FieldFocusLost
-        if (createInstructorPassword_Field.getText().equals("")) {
-            createInstructorPassword_Field.setText("Password");
-        }
+        DefaultText(createInstructorPassword_Field, "Password", UtilityMethods.DefaultFocus.LOST);
     }//GEN-LAST:event_createInstructorPassword_FieldFocusLost
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed

@@ -1,11 +1,24 @@
 package lms.studentCreateForgot;
 
 import lms.LoginStudentFrame;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import static lms.UtilityMethods.*;
 
 public class StudentCreateAccount1Frame extends javax.swing.JFrame {
 
     public StudentCreateAccount1Frame() {
         initComponents();
+        
+        TransparentField(createStudentName_Field, createStudentNum_Field, createStudentMail_Field);
+    
     }
 
     @SuppressWarnings("unchecked")
@@ -15,10 +28,10 @@ public class StudentCreateAccount1Frame extends javax.swing.JFrame {
         studentName_Label = new javax.swing.JLabel();
         studentMail_Label = new javax.swing.JLabel();
         studentID_Label = new javax.swing.JLabel();
-        studentDept_Combobox = new javax.swing.JComboBox<>();
+        studentCourse_Combobox = new javax.swing.JComboBox<>();
         createStudentName_Field = new javax.swing.JTextField();
+        createStudentNum_Field = new javax.swing.JTextField();
         createStudentMail_Field = new javax.swing.JTextField();
-        createStudentID_Field = new javax.swing.JTextField();
         next_Button = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -47,30 +60,62 @@ public class StudentCreateAccount1Frame extends javax.swing.JFrame {
         studentID_Label.setText("Student Number:");
         getContentPane().add(studentID_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(245, 215, -1, -1));
 
-        studentDept_Combobox.setBackground(new java.awt.Color(33, 125, 23));
-        studentDept_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
-        studentDept_Combobox.setForeground(new java.awt.Color(255, 255, 255));
-        studentDept_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BS in Computer Science" }));
-        studentDept_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(studentDept_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 300, -1));
+        studentCourse_Combobox.setBackground(new java.awt.Color(33, 125, 23));
+        studentCourse_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
+        studentCourse_Combobox.setForeground(new java.awt.Color(255, 255, 255));
+        studentCourse_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BS in Computer Science" }));
+        studentCourse_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        getContentPane().add(studentCourse_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 300, 300, -1));
 
         createStudentName_Field.setBackground(new java.awt.Color(33, 125, 23));
         createStudentName_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         createStudentName_Field.setForeground(new java.awt.Color(255, 255, 255));
+        createStudentName_Field.setText("Enter Name");
         createStudentName_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        createStudentName_Field.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                createStudentName_FieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                createStudentName_FieldFocusLost(evt);
+            }
+        });
         getContentPane().add(createStudentName_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 175, 280, -1));
+
+        createStudentNum_Field.setBackground(new java.awt.Color(33, 125, 23));
+        createStudentNum_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
+        createStudentNum_Field.setForeground(new java.awt.Color(255, 255, 255));
+        createStudentNum_Field.setText("Enter Student Number");
+        createStudentNum_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        createStudentNum_Field.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                createStudentNum_FieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                createStudentNum_FieldFocusLost(evt);
+            }
+        });
+        createStudentNum_Field.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                createStudentNum_FieldKeyTyped(evt);
+            }
+        });
+        getContentPane().add(createStudentNum_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 215, 280, -1));
 
         createStudentMail_Field.setBackground(new java.awt.Color(33, 125, 23));
         createStudentMail_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         createStudentMail_Field.setForeground(new java.awt.Color(255, 255, 255));
+        createStudentMail_Field.setText("Enter CvSU Mail");
         createStudentMail_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(createStudentMail_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 215, 280, -1));
-
-        createStudentID_Field.setBackground(new java.awt.Color(33, 125, 23));
-        createStudentID_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
-        createStudentID_Field.setForeground(new java.awt.Color(255, 255, 255));
-        createStudentID_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(createStudentID_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 255, 280, -1));
+        createStudentMail_Field.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                createStudentMail_FieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                createStudentMail_FieldFocusLost(evt);
+            }
+        });
+        getContentPane().add(createStudentMail_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 255, 280, -1));
 
         next_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Next_Button.png"))); // NOI18N
         next_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -140,8 +185,81 @@ public class StudentCreateAccount1Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_next_ButtonMouseReleased
 
     private void next_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_next_ButtonActionPerformed
-        new StudentCreateAccount2Frame().setVisible(true);
-        dispose();
+        String StudName;
+        String StudNum;
+        String StudMail;
+        String StudCourse;
+        String query;
+        
+          try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(StudentCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+          
+           String url = "jdbc:mysql://localhost:3306/lms_project";
+           String user = "root";
+           String pass = "";
+        
+          boolean isValid = true;
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(url, user, pass);
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        if (createStudentName_Field.getText().trim().isEmpty() || createStudentName_Field.getText().equals("Enter Name")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Name is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (createStudentNum_Field.getText().trim().isEmpty() || createStudentNum_Field.getText().equals("Enter Student Number")) {
+            JOptionPane.showMessageDialog(new JFrame(), "Student Number is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (createStudentMail_Field.getText().trim().isEmpty() || createStudentMail_Field.getText().equals("Enter CvSU Mail")) {
+            JOptionPane.showMessageDialog(new JFrame(), " CvSU Email is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (studentCourse_Combobox.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Course is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        }
+        
+            if (isValid) {
+                StudName = createStudentName_Field.getText().trim();
+                StudNum = createStudentNum_Field.getText().trim();
+                StudMail = createStudentMail_Field.getText().trim();
+                StudCourse = (String) studentCourse_Combobox.getSelectedItem();
+                
+            query = "INSERT INTO tb_createstudent(Name, StudentNumber, CvSU_Email, Course) VALUES (?, ?, ?, ?)";
+                try {
+                    PreparedStatement pst = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+                    pst.setString(1, StudName);
+                    pst.setString(2, StudNum);
+                    pst.setString(3, StudMail);
+                    pst.setString(4, StudCourse);
+
+                pst.executeUpdate();
+                
+                 int primaryID = -1;
+
+                ResultSet generatedKeys = pst.getGeneratedKeys();
+                if (generatedKeys.next()) {
+                    primaryID = generatedKeys.getInt(1);
+                }
+
+                JOptionPane.showMessageDialog(new JFrame(), "Proceed to Password Section", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                new StudentCreateAccount2Frame(StudName, StudNum, StudMail, StudCourse, primaryID).setVisible(true);
+                dispose();
+                
+                } catch (SQLException e) {
+                System.out.println("Error " + e.getMessage());
+                JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+            }}
     }//GEN-LAST:event_next_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed
@@ -156,6 +274,34 @@ public class StudentCreateAccount1Frame extends javax.swing.JFrame {
         new LoginStudentFrame().setVisible(true);
         dispose();
     }//GEN-LAST:event_goBack_ButtonActionPerformed
+
+    private void createStudentName_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentName_FieldFocusGained
+        DefaultText(createStudentName_Field, "Enter Name", DefaultFocus.GAINED);
+    }//GEN-LAST:event_createStudentName_FieldFocusGained
+
+    private void createStudentName_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentName_FieldFocusLost
+        DefaultText(createStudentName_Field, "Enter Name", DefaultFocus.LOST);
+    }//GEN-LAST:event_createStudentName_FieldFocusLost
+
+    private void createStudentNum_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentNum_FieldFocusGained
+        DefaultText(createStudentNum_Field, "Enter Student Number", DefaultFocus.GAINED);
+    }//GEN-LAST:event_createStudentNum_FieldFocusGained
+
+    private void createStudentNum_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentNum_FieldFocusLost
+        DefaultText(createStudentNum_Field, "Enter Student Number", DefaultFocus.LOST);
+    }//GEN-LAST:event_createStudentNum_FieldFocusLost
+
+    private void createStudentMail_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentMail_FieldFocusGained
+        DefaultText(createStudentMail_Field, "Enter CvSU Mail", DefaultFocus.GAINED);
+    }//GEN-LAST:event_createStudentMail_FieldFocusGained
+
+    private void createStudentMail_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentMail_FieldFocusLost
+       DefaultText(createStudentMail_Field, "Enter CvSU Mail", DefaultFocus.LOST);
+    }//GEN-LAST:event_createStudentMail_FieldFocusLost
+
+    private void createStudentNum_FieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_createStudentNum_FieldKeyTyped
+        NumbersOnly(evt);
+    }//GEN-LAST:event_createStudentNum_FieldKeyTyped
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -192,16 +338,16 @@ public class StudentCreateAccount1Frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel createAccount_Background;
-    private javax.swing.JTextField createStudentID_Field;
     private javax.swing.JTextField createStudentMail_Field;
     private javax.swing.JTextField createStudentName_Field;
+    private javax.swing.JTextField createStudentNum_Field;
     private javax.swing.JButton goBack_Button;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JButton next_Button;
-    private javax.swing.JComboBox<String> studentDept_Combobox;
+    private javax.swing.JComboBox<String> studentCourse_Combobox;
     private javax.swing.JLabel studentID_Label;
     private javax.swing.JLabel studentMail_Label;
     private javax.swing.JLabel studentName_Label;

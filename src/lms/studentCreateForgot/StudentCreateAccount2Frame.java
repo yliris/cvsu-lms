@@ -1,11 +1,35 @@
 package lms.studentCreateForgot;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import lms.InstructorHomeFrame;
+import lms.LoginStudentFrame;
+
 
 public class StudentCreateAccount2Frame extends javax.swing.JFrame {
 
-    public StudentCreateAccount2Frame() {
-        initComponents();
-    }
+    private String StudName;
+    private String StudNum;
+    private String StudMail;
+    private String StudCourse;
+    private int primaryID;
 
+    public StudentCreateAccount2Frame(String StudName, String StudNum, String StudMail, String StudCourse, int primaryID) {
+        initComponents();
+        this.StudName = StudName;
+        this.StudNum = StudNum;
+        this.StudMail = StudMail;
+        this.StudCourse = StudCourse;
+        this.primaryID = primaryID;
+    }
+    private StudentCreateAccount2Frame() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -128,7 +152,68 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_student_Submit_ButtonMouseReleased
 
     private void student_Submit_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_student_Submit_ButtonActionPerformed
-        // TODO add your handling code here:
+        String Password = createStudentPassword_Field.getText();
+        String ValAnswer = student_AnswerCreate_Field.getText();
+        String ValQuestion = (String) studentDept_Combobox.getSelectedItem();
+        String query;
+
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(StudentCreateAccount2Frame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+            String url = "jdbc:mysql://localhost:3306/lms_project";
+            String user = "root";
+            String pass = "";
+            boolean isValid = true;
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(url, user, pass);
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentCreateAccount2Frame.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        if ("".equals(createStudentPassword_Field.getText().trim())) {
+            JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if ("".equals((String) studentDept_Combobox.getSelectedItem())) {
+            JOptionPane.showMessageDialog(new JFrame(), "Validation Question is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if ("".equals(student_AnswerCreate_Field.getText().trim())) {
+            JOptionPane.showMessageDialog(new JFrame(), "Validation Answer is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else {
+
+            Password = createStudentPassword_Field.getText().trim().trim();
+            ValQuestion = (String) studentDept_Combobox.getSelectedItem();
+            ValAnswer = student_AnswerCreate_Field.getText().trim().trim();
+
+            query = "UPDATE tb_createinstructor SET Password = ?,  ValidationAnswer = ? WHERE ID = ?";
+            try {
+                PreparedStatement pst = con.prepareStatement(query);
+                pst.setString(1, Password);
+                pst.setString(2, ValAnswer);
+                pst.setInt(3, primaryID);
+
+                pst.executeUpdate();
+
+                JOptionPane.showMessageDialog(new JFrame(), "Welcome, Kabsuhenyo!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                dispose();
+                new InstructorHomeFrame().setVisible(true);
+
+            } catch (Exception e) {
+                System.out.println("Error " + e.getMessage());
+                JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+
+            }
+        }
+            
+            
+            
     }//GEN-LAST:event_student_Submit_ButtonActionPerformed
 
     private void checkPassword_CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPassword_CheckboxActionPerformed
