@@ -102,7 +102,6 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
         createStudentPassword_Field1.setBackground(new java.awt.Color(33, 125, 23));
         createStudentPassword_Field1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         createStudentPassword_Field1.setForeground(new java.awt.Color(255, 255, 255));
-        createStudentPassword_Field1.setText("Password");
         createStudentPassword_Field1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         createStudentPassword_Field1.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -112,7 +111,7 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
                 createStudentPassword_Field1FocusLost(evt);
             }
         });
-        getContentPane().add(createStudentPassword_Field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 191, 210, -1));
+        getContentPane().add(createStudentPassword_Field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 191, 230, -1));
 
         checkPassword_Checkbox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         checkPassword_Checkbox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/hidePass_Button.png"))); // NOI18N
@@ -245,8 +244,10 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
         if(checkPassword_Checkbox.isSelected()){
             checkPassword_Checkbox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/showPass_Button.png")));
             createStudentPassword_Field.setEchoChar((char)0);
+            createStudentPassword_Field1.setEchoChar((char)0);
         } else {
             checkPassword_Checkbox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/hidePass_Button.png")));
+            createStudentPassword_Field.setEchoChar('*');
             createStudentPassword_Field.setEchoChar('*');
         }
     }//GEN-LAST:event_checkPassword_CheckboxActionPerformed
