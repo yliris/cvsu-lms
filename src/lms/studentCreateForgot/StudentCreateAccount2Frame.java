@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import lms.InstructorHomeFrame;
 import lms.LoginStudentFrame;
 
 
@@ -38,7 +37,10 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
         student_AnswerCreate_Field = new javax.swing.JTextField();
         student_Submit_Button = new javax.swing.JButton();
         createStudentPassword_Field = new javax.swing.JPasswordField();
+        createStudentPassword_Field1 = new javax.swing.JPasswordField();
         checkPassword_Checkbox = new javax.swing.JCheckBox();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -95,7 +97,22 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
                 createStudentPassword_FieldFocusLost(evt);
             }
         });
-        getContentPane().add(createStudentPassword_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 175, 210, -1));
+        getContentPane().add(createStudentPassword_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 150, 210, -1));
+
+        createStudentPassword_Field1.setBackground(new java.awt.Color(33, 125, 23));
+        createStudentPassword_Field1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
+        createStudentPassword_Field1.setForeground(new java.awt.Color(255, 255, 255));
+        createStudentPassword_Field1.setText("Password");
+        createStudentPassword_Field1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        createStudentPassword_Field1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                createStudentPassword_Field1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                createStudentPassword_Field1FocusLost(evt);
+            }
+        });
+        getContentPane().add(createStudentPassword_Field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 191, 210, -1));
 
         checkPassword_Checkbox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         checkPassword_Checkbox.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/hidePass_Button.png"))); // NOI18N
@@ -104,15 +121,23 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
                 checkPassword_CheckboxActionPerformed(evt);
             }
         });
-        getContentPane().add(checkPassword_Checkbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 175, -1, -1));
+        getContentPane().add(checkPassword_Checkbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 150, -1, -1));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/field/Empty_Field.png"))); // NOI18N
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 185, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Re-enter password:");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Password:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 177, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 150, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/field/Empty_Field.png"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 170, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 145, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/field/Empty_FieldLong.png"))); // NOI18N
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, -1, -1));
@@ -203,7 +228,7 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(new JFrame(), "Welcome, Kabsuhenyo!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 dispose();
-                new InstructorHomeFrame().setVisible(true);
+                new StudentHomeFrame().setVisible(true);
 
             } catch (Exception e) {
                 System.out.println("Error " + e.getMessage());
@@ -251,6 +276,14 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_goBack_ButtonActionPerformed
 
+    private void createStudentPassword_Field1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentPassword_Field1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createStudentPassword_Field1FocusGained
+
+    private void createStudentPassword_Field1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentPassword_Field1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_createStudentPassword_Field1FocusLost
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -292,10 +325,13 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
     private javax.swing.JCheckBox checkPassword_Checkbox;
     private javax.swing.JLabel createAccount_Background;
     private javax.swing.JPasswordField createStudentPassword_Field;
+    private javax.swing.JPasswordField createStudentPassword_Field1;
     private javax.swing.JButton goBack_Button;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JComboBox<String> studentDept_Combobox;
     private javax.swing.JTextField student_AnswerCreate_Field;
     private javax.swing.JButton student_Submit_Button;
