@@ -98,7 +98,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
                 createInstructorPassword_Field1FocusLost(evt);
             }
         });
-        getContentPane().add(createInstructorPassword_Field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 191, 210, -1));
+        getContentPane().add(createInstructorPassword_Field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 191, 230, -1));
 
         createInstructorPassword_Field.setBackground(new java.awt.Color(33, 125, 23));
         createInstructorPassword_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
