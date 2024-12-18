@@ -67,7 +67,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         instructor_AnswerCreate_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(instructor_AnswerCreate_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 405, 280, -1));
 
-        instructor_Submit_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Submit_Button.png"))); // NOI18N
+        instructor_Submit_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Create&Login_Button.png"))); // NOI18N
         instructor_Submit_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         instructor_Submit_Button.setBorderPainted(false);
         instructor_Submit_Button.setContentAreaFilled(false);
@@ -84,7 +84,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
                 instructor_Submit_ButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(instructor_Submit_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 450, -1, -1));
+        getContentPane().add(instructor_Submit_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 450, -1, -1));
 
         createInstructorPassword_Field1.setBackground(new java.awt.Color(33, 125, 23));
         createInstructorPassword_Field1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
@@ -170,11 +170,11 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void instructor_Submit_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instructor_Submit_ButtonMousePressed
-        instructor_Submit_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Submit_ButtonClick.png")));
+        instructor_Submit_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Create&Login_ButtonClick.png")));
     }//GEN-LAST:event_instructor_Submit_ButtonMousePressed
 
     private void instructor_Submit_ButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instructor_Submit_ButtonMouseReleased
-        instructor_Submit_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Submit_Button.png")));
+        instructor_Submit_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Create&Login_Button.png")));
     }//GEN-LAST:event_instructor_Submit_ButtonMouseReleased
 
     private void instructor_Submit_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_Submit_ButtonActionPerformed
