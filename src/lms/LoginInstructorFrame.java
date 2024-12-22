@@ -3,16 +3,51 @@ package lms;
 import lms.instructorCreateForgot.InstructorForgotPassword1Frame;
 import lms.instructorCreateForgot.InstructorCreateAccount1Frame;
 import java.awt.Color;
+import javax.swing.JFrame;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import lms.InstructorHomeFrame;
+import lms.UtilityMethods.DefaultFocus;
 import static lms.UtilityMethods.DefaultText;
 import static lms.UtilityMethods.TransparentField;
 
 public class LoginInstructorFrame extends javax.swing.JFrame {
-
+   
+ 
     public LoginInstructorFrame() {
         initComponents();
-        TransparentField(instructorEmail_Login_Field, instructorPassword_Login_Field);
+        TransparentField(instructorEmail_Login_Field, instructorPassword_Login_Field);   
+       
     }
+    public boolean checkLogin() {
+    String enteredEmail = instructorEmail_Login_Field.getText().trim();
+    String enteredPassword = new String(instructorPassword_Login_Field.getPassword()).trim();  // Get entered password
 
+    try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "")) {
+        String query = "SELECT CvSU_Mail, Password FROM tb_createinstructor WHERE CvSU_Mail = ?";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, enteredEmail);
+        ResultSet rs = pst.executeQuery();
+
+        if (rs.next()) {
+            String dbEmail = rs.getString("CvSU_Mail");
+            String dbPassword = rs.getString("Password");
+
+            // Check if the entered email and password match the database values
+            if (enteredEmail.equals(dbEmail) && enteredPassword.equals(dbPassword)) {
+                return true;  // Login successful
+            }
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    }
+    return false;  // Login failed
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -45,7 +80,7 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
         instructorEmail_Login_Field.setBackground(new java.awt.Color(33, 125, 23));
         instructorEmail_Login_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
         instructorEmail_Login_Field.setForeground(new java.awt.Color(255, 255, 255));
-        instructorEmail_Login_Field.setText("Enter CvSU Email");
+        instructorEmail_Login_Field.setText("CvSU Email");
         instructorEmail_Login_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         instructorEmail_Login_Field.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
@@ -53,11 +88,6 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
             }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 instructorEmail_Login_FieldFocusLost(evt);
-            }
-        });
-        instructorEmail_Login_Field.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                instructorEmail_Login_FieldActionPerformed(evt);
             }
         });
         getContentPane().add(instructorEmail_Login_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 290, 200, 30));
@@ -92,6 +122,11 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 instructorLogin_ButtonMouseReleased(evt);
+            }
+        });
+        instructorLogin_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                instructorLogin_ButtonActionPerformed(evt);
             }
         });
         getContentPane().add(instructorLogin_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(425, 410, -1, -1));
@@ -209,26 +244,20 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructorPassword_Login_FieldActionPerformed
 
     private void instructorPassword_Login_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorPassword_Login_FieldFocusLost
-       DefaultText(instructorPassword_Login_Field, "Password", UtilityMethods.DefaultFocus.LOST);
+       DefaultText(instructorPassword_Login_Field, "Password", DefaultFocus.LOST);
 
     }//GEN-LAST:event_instructorPassword_Login_FieldFocusLost
 
     private void instructorPassword_Login_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorPassword_Login_FieldFocusGained
-        DefaultText(instructorPassword_Login_Field, "Password", UtilityMethods.DefaultFocus.GAINED);
+        DefaultText(instructorPassword_Login_Field, "Password", DefaultFocus.GAINED);
     }//GEN-LAST:event_instructorPassword_Login_FieldFocusGained
 
-    private void instructorEmail_Login_FieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorEmail_Login_FieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_instructorEmail_Login_FieldActionPerformed
-
     private void instructorEmail_Login_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorEmail_Login_FieldFocusLost
-        DefaultText(instructorEmail_Login_Field, "Enter CvSU Email", UtilityMethods.DefaultFocus.LOST);
-
+        DefaultText(instructorEmail_Login_Field, "CvSU Email", DefaultFocus.LOST);
     }//GEN-LAST:event_instructorEmail_Login_FieldFocusLost
 
     private void instructorEmail_Login_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorEmail_Login_FieldFocusGained
-        DefaultText(instructorEmail_Login_Field, "Enter CvSU Email", UtilityMethods.DefaultFocus.GAINED);
-
+       DefaultText(instructorEmail_Login_Field, "CvSU Email", DefaultFocus.GAINED);
     }//GEN-LAST:event_instructorEmail_Login_FieldFocusGained
 
     private void checkPassword_CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPassword_CheckboxActionPerformed
@@ -253,6 +282,17 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
         new InstructorCreateAccount1Frame().setVisible(true);
         dispose();
     }//GEN-LAST:event_instructorCreateAccount_ButtonActionPerformed
+
+    private void instructorLogin_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorLogin_ButtonActionPerformed
+         
+       if (checkLogin()) {
+        dispose();
+        new InstructorHomeFrame().setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(new JFrame(), "CvSU Email and Password do not match.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    }//GEN-LAST:event_instructorLogin_ButtonActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

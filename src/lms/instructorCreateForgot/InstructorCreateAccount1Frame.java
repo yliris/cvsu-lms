@@ -10,10 +10,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTextField;
+import lms.StartFrame;
 import static lms.UtilityMethods.*;
 
 public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
 
+     
     public InstructorCreateAccount1Frame() {
         initComponents();
 
@@ -276,7 +279,7 @@ public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_goBack_ButtonMouseReleased
 
     private void goBack_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBack_ButtonActionPerformed
-        new LoginInstructorFrame().setVisible(true);
+        new StartFrame().setVisible(true);
         dispose();
     }//GEN-LAST:event_goBack_ButtonActionPerformed
 

@@ -11,7 +11,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import lms.InstructorHomeFrame;
 import lms.UtilityMethods;
+import lms.UtilityMethods.DefaultFocus;
 import static lms.UtilityMethods.DefaultText;
+import static lms.UtilityMethods.TransparentField;
 
 public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
 
@@ -25,7 +27,11 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         this.InstID = InstID;
         this.InstDept = InstDept;
         this.primaryID = primaryID;
+        
+          TransparentField(createInstructorPassword_Field);  
     }
+        
+      
 
     private InstructorCreateAccount2Frame() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -180,6 +186,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     private void instructor_Submit_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_Submit_ButtonActionPerformed
         String Password;
         String ValAnswer;
+        String RePass;
         String ValQuestion;
         String query;
 
@@ -208,12 +215,21 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         if ("".equals(createInstructorPassword_Field.getText().trim())) {
             JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
+        } else if ("".equals(createInstructorPassword_Field1.getText())) {
+        // Check if passwords match
+        JOptionPane.showMessageDialog(new JFrame(), "Please confirm password", "Dialog", JOptionPane.ERROR_MESSAGE);
+        isValid = false;
+        } else if (!createInstructorPassword_Field.getText().equals(createInstructorPassword_Field1.getText())) {
+        // Check if passwords match
+        JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Dialog", JOptionPane.ERROR_MESSAGE);
+        isValid = false;
         } else if ("".equals((String) instructorQuestion_Combobox.getSelectedItem())) {
             JOptionPane.showMessageDialog(new JFrame(), "Validation Question is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
         } else if ("".equals(instructor_AnswerCreate_Field.getText().trim())) {
             JOptionPane.showMessageDialog(new JFrame(), "Validation Answer is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
+            
         } else {
 
             Password = createInstructorPassword_Field.getText().trim().trim();
@@ -268,19 +284,19 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_goBack_ButtonActionPerformed
 
     private void createInstructorPassword_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_FieldFocusGained
-        // TODO add your handling code here:
+         DefaultText(createInstructorPassword_Field, "Password", DefaultFocus.GAINED);
     }//GEN-LAST:event_createInstructorPassword_FieldFocusGained
 
     private void createInstructorPassword_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_FieldFocusLost
-        // TODO add your handling code here:
+         DefaultText(createInstructorPassword_Field, "Password", DefaultFocus.LOST);
     }//GEN-LAST:event_createInstructorPassword_FieldFocusLost
 
     private void createInstructorPassword_Field1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_Field1FocusGained
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_createInstructorPassword_Field1FocusGained
 
     private void createInstructorPassword_Field1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_Field1FocusLost
-        // TODO add your handling code here:
+     
     }//GEN-LAST:event_createInstructorPassword_Field1FocusLost
 
     public static void main(String args[]) {

@@ -203,6 +203,14 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
         if ("".equals(createStudentPassword_Field.getText().trim())) {
             JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
+        } else if ("".equals(createStudentPassword_Field1.getText())) {
+        // Check if passwords match
+        JOptionPane.showMessageDialog(new JFrame(), "Please confirm password", "Dialog", JOptionPane.ERROR_MESSAGE);
+        isValid = false;
+        } else if (!createStudentPassword_Field.getText().equals(createStudentPassword_Field1.getText())) {
+        // Check if passwords match
+        JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Dialog", JOptionPane.ERROR_MESSAGE);
+        isValid = false;
         } else if ("".equals((String) studentDept_Combobox.getSelectedItem())) {
             JOptionPane.showMessageDialog(new JFrame(), "Validation Question is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
@@ -215,7 +223,7 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
             ValQuestion = (String) studentDept_Combobox.getSelectedItem();
             ValAnswer = student_AnswerCreate_Field.getText().trim().trim();
 
-            query = "UPDATE tb_createinstructor SET Password = ?,  ValidationAnswer = ? WHERE ID = ?";
+            query = "UPDATE tb_createstudent SET Password = ?,  ValidationAnswer = ? WHERE ID = ?";
             try {
                 PreparedStatement pst = con.prepareStatement(query);
                 pst.setString(1, Password);
