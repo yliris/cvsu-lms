@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import lms.homeMenu.MenuItem;
 import lms.instructorForm.About;
 import lms.instructorForm.Courses;
+import lms.instructorForm.Class;
 import lms.instructorForm.Dashboard1;
 import lms.instructorForm.Dashboard2;
 import lms.instructorForm.Dashboard3;
@@ -23,7 +24,8 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
     private void execute(){
         ImageIcon iconHome = new ImageIcon(getClass().getResource("/lms/homeMenu/home.png"));
         ImageIcon iconDashboard = new ImageIcon(getClass().getResource("/lms/homeMenu/dashboard.png"));
-        ImageIcon iconCourses = new ImageIcon(getClass().getResource("/lms/homeMenu/courses.png"));
+        ImageIcon iconCourses = new ImageIcon(getClass().getResource("/lms/homeMenu/course.png"));
+        ImageIcon iconClass = new ImageIcon(getClass().getResource("/lms/homeMenu/class.png"));
         ImageIcon iconProfile = new ImageIcon(getClass().getResource("/lms/homeMenu/profile.png"));
         ImageIcon iconAbout = new ImageIcon(getClass().getResource("/lms/homeMenu/about.png"));
         ImageIcon iconLogout = new ImageIcon(getClass().getResource("/lms/homeMenu/logout.png"));
@@ -80,6 +82,15 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
             }
         });
         
+        MenuItem menuClass = new MenuItem(iconClass, "Class", new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                panelBody.removeAll();
+                panelBody.add(new Class());
+                panelBody.repaint();
+                panelBody.revalidate();
+            }
+        });
+        
         MenuItem menuProfile = new MenuItem(iconProfile, "Profile", new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -100,8 +111,15 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
             }
         });
         
-        MenuItem menuLogout = new MenuItem(iconLogout, "Logout", null);
-        addMenu(menuHome, menuDashboard, menuCourses, menuProfile, menuAbout, menuLogout);
+        MenuItem menuLogout = new MenuItem(iconLogout, "Logout", new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                InstructorHomeFrame.this.dispose();
+                new StartFrame().setVisible(true);
+            }
+        });
+        
+        addMenu(menuHome, menuDashboard, menuCourses, menuClass, menuProfile, menuAbout, menuLogout);
     }
     
     private void addMenu(MenuItem...menu){
@@ -126,7 +144,9 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Instructor Home");
+        setBackground(new java.awt.Color(33, 125, 25));
         setResizable(false);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panelHeader.setBackground(new java.awt.Color(148, 96, 185));
         panelHeader.setPreferredSize(new java.awt.Dimension(980, 50));
@@ -142,35 +162,31 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
             .addGap(0, 50, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panelHeader, java.awt.BorderLayout.PAGE_START);
+        getContentPane().add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        panelMenu.setBackground(new java.awt.Color(255, 255, 255));
-        panelMenu.setPreferredSize(new java.awt.Dimension(180, 490));
+        panelMenu.setBackground(new java.awt.Color(118, 196, 111));
+        panelMenu.setPreferredSize(new java.awt.Dimension(180, 450));
 
+        menus.setBackground(new java.awt.Color(118, 196, 111));
+        menus.setPreferredSize(new java.awt.Dimension(180, 540));
         menus.setLayout(new javax.swing.BoxLayout(menus, javax.swing.BoxLayout.Y_AXIS));
 
         javax.swing.GroupLayout panelMenuLayout = new javax.swing.GroupLayout(panelMenu);
         panelMenu.setLayout(panelMenuLayout);
         panelMenuLayout.setHorizontalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMenuLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(menus, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(menus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelMenuLayout.setVerticalGroup(
             panelMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panelMenuLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(menus, javax.swing.GroupLayout.PREFERRED_SIZE, 490, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(menus, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panelMenu, java.awt.BorderLayout.LINE_START);
+        getContentPane().add(panelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 200, 490));
 
         panelBody.setBackground(new java.awt.Color(33, 125, 25));
         panelBody.setLayout(new java.awt.BorderLayout());
-        getContentPane().add(panelBody, java.awt.BorderLayout.CENTER);
+        getContentPane().add(panelBody, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 50, 780, 490));
 
         setSize(new java.awt.Dimension(996, 548));
         setLocationRelativeTo(null);

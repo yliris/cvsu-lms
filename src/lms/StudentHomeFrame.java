@@ -100,7 +100,14 @@ public class StudentHomeFrame extends javax.swing.JFrame {
             }
         });
         
-        MenuItem menuLogout = new MenuItem(iconLogout, "Logout", null);
+        MenuItem menuLogout = new MenuItem(iconLogout, "Logout", new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StudentHomeFrame.this.dispose();
+                new StartFrame().setVisible(true);
+            }
+        });
+        
         addMenu(menuHome, menuDashboard, menuSubjects, menuProfile, menuAbout, menuLogout);
     }
     

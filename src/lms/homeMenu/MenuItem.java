@@ -1,5 +1,6 @@
 package lms.homeMenu;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -25,9 +26,9 @@ public class MenuItem extends javax.swing.JPanel {
         if(act != null){
             this.act = act;
         }
-        this.setSize(new Dimension(Integer.MAX_VALUE,45));
-        this.setMaximumSize(new Dimension(Integer.MAX_VALUE,45));
-        this.setMinimumSize(new Dimension(Integer.MAX_VALUE,45));
+        this.setSize(new Dimension(Short.MAX_VALUE,40));
+        this.setMaximumSize(new Dimension(Short.MAX_VALUE,40));
+        this.setMinimumSize(new Dimension(0 ,40));
         for(int i=0; i<subMenu.length;i++){
             this.subMenu.add(subMenu[i]);
             subMenu[i].setVisible(false);
@@ -38,46 +39,54 @@ public class MenuItem extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSeparator1 = new javax.swing.JSeparator();
+        panel = new javax.swing.JPanel();
         lbIcon = new javax.swing.JLabel();
         lbName = new javax.swing.JLabel();
 
-        setBackground(new java.awt.Color(255, 255, 255));
+        setBackground(new java.awt.Color(118, 196, 111));
         addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                formMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                formMouseExited(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 formMousePressed(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                formMouseReleased(evt);
+            }
         });
 
+        panel.setBackground(new java.awt.Color(118, 196, 111));
+        panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        panel.add(lbIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, 40, 40));
+
+        lbName.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
+        lbName.setForeground(new java.awt.Color(255, 255, 255));
         lbName.setText("Dashboard");
+        panel.add(lbName, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 4, 190, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbName, javax.swing.GroupLayout.DEFAULT_SIZE, 24, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 4, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private boolean showing = false;
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        panel.setBackground(new Color(69,152,61));
         if(showing){
             hideMenu();
         } else{
@@ -87,6 +96,18 @@ public class MenuItem extends javax.swing.JPanel {
             act.actionPerformed(null);
         }
     }//GEN-LAST:event_formMousePressed
+
+    private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
+        panel.setBackground(new Color(81, 177, 72));
+    }//GEN-LAST:event_formMouseEntered
+
+    private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
+        panel.setBackground(new Color(118, 196, 111));
+    }//GEN-LAST:event_formMouseExited
+
+    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
+        panel.setBackground(new Color(81, 177, 72));
+    }//GEN-LAST:event_formMouseReleased
 
     private void showMenu(){
         new Thread(new Runnable(){
@@ -127,8 +148,8 @@ public class MenuItem extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbIcon;
     private javax.swing.JLabel lbName;
+    private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 }
