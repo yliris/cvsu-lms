@@ -61,7 +61,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         instructorQuestion_Combobox.setBackground(new java.awt.Color(33, 125, 23));
         instructorQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         instructorQuestion_Combobox.setForeground(new java.awt.Color(255, 255, 255));
-        instructorQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What year did you start working at CvSU?", "Who is the school administrator on your first year working?", "What is your first advisory section?" }));
+        instructorQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is the name of the school where you completed your student teaching?", "What was the name of the first school where you taught?", "What year did you start working at CvSU?", "Who was the school administrator on your first year working at CvSU?", "What was your first advisory section?", "What was grade level of your first teaching position?", "What is the name of your favorite subject to teach?", "What was the title of the first course you taught?", " " }));
         instructorQuestion_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(instructorQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 400, -1));
 
@@ -234,7 +234,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
             ValQuestion = (String) instructorQuestion_Combobox.getSelectedItem();
             ValAnswer = instructor_AnswerCreate_Field.getText().trim().trim();
 
-            query = "UPDATE tb_createinstructor SET Password = ?, SecurityQuestion = ? ValidationAnswer = ? WHERE ID = ?";
+            query = "UPDATE tb_createinstructor SET Password = ?, SecurityQuestion = ?, ValidationAnswer = ? WHERE ID = ?";
             try {
                 PreparedStatement pst = con.prepareStatement(query);
                 pst.setString(1, Password);

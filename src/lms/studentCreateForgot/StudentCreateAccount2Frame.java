@@ -55,7 +55,7 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
         studentDept_Combobox.setBackground(new java.awt.Color(33, 125, 23));
         studentDept_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         studentDept_Combobox.setForeground(new java.awt.Color(255, 255, 255));
-        studentDept_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What year did you enroll at CvSU?", "Who is the school adminstrator?", "What are the university tenets?", "When was CvSU established?", "How many campuses does CvSU have?" }));
+        studentDept_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What year did you start your studies at this school?", "Who was the school administrator during your time?", "Who was your adviser during your first year at CvSU?", "What is the name of your favorite class or course?", "What is the name of the first class you ever attended at your current school?", "What year did you graduate from your previous school?" }));
         studentDept_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(studentDept_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 400, -1));
 
