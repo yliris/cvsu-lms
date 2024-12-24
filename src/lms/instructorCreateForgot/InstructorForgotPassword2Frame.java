@@ -12,9 +12,9 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
 
         instructorReset_Answer_Field = new javax.swing.JTextField();
         instructor_ResetPass_Button = new javax.swing.JButton();
-        answer = new javax.swing.JLabel();
         question = new javax.swing.JLabel();
         instructor_Answer_Label = new javax.swing.JLabel();
+        answer = new javax.swing.JLabel();
         goBack_Button = new javax.swing.JButton();
         instructorQuestion_Combobox = new javax.swing.JComboBox<>();
         instructorResetPass_Background = new javax.swing.JLabel();
@@ -50,11 +50,6 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
         });
         getContentPane().add(instructor_ResetPass_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 320, -1, -1));
 
-        answer.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
-        answer.setForeground(new java.awt.Color(255, 255, 255));
-        answer.setText("Answer:");
-        getContentPane().add(answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, -1, -1));
-
         question.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
         question.setForeground(new java.awt.Color(255, 255, 255));
         question.setText("Question:");
@@ -62,6 +57,11 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
 
         instructor_Answer_Label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/field/Empty_FieldLong.png"))); // NOI18N
         getContentPane().add(instructor_Answer_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 245, -1, -1));
+
+        answer.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
+        answer.setForeground(new java.awt.Color(255, 255, 255));
+        answer.setText("Answer:");
+        getContentPane().add(answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, -1, -1));
 
         goBack_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/navLeft_Button(1).png"))); // NOI18N
         goBack_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));

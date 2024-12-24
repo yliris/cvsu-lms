@@ -155,11 +155,11 @@ public class InstructorHomeFrame extends javax.swing.JFrame {
         panelHeader.setLayout(panelHeaderLayout);
         panelHeaderLayout.setHorizontalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 980, Short.MAX_VALUE)
+            .addGap(0, 802, Short.MAX_VALUE)
         );
         panelHeaderLayout.setVerticalGroup(
             panelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50, Short.MAX_VALUE)
+            .addGap(0, 540, Short.MAX_VALUE)
         );
 
         getContentPane().add(panelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

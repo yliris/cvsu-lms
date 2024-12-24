@@ -1,11 +1,26 @@
 package lms.instructorCreateForgot;
 
 import lms.LoginInstructorFrame;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 public class InstructorForgotPassword1Frame extends javax.swing.JFrame {
+    private String securityQuestion;
+    private JComboBox<String> instructorQuestion_Combobox;
 
     public InstructorForgotPassword1Frame() {
         initComponents();
+}
+    public void SecurityQuestion(String question){
+        this.securityQuestion = question;
+        instructorQuestion_Combobox.setSelectedItem(securityQuestion);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -90,6 +105,26 @@ public class InstructorForgotPassword1Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructor_Continue_ButtonMousePressed
 
     private void instructor_Continue_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_Continue_ButtonActionPerformed
+        String username=instructor_Email_Reset_Field.getText();
+            
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project","root", "");
+                Statement st =con.createStatement();    
+                ResultSet rs= st.executeQuery("SELECT SecurityQuestion from tb_createinstructor WHERE CvSU_Mail = '"+username+"'");
+                    if (rs.next())
+                    {
+                        instructorQuestion_Combobox.setSelectedItem(rs.getString(1));
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(null,"Please write correct CvSU Mail");
+                        con.close();
+                        rs.close();
+                    }
+            }
+            catch(Exception e)
+            {}
+        
         new InstructorForgotPassword2Frame().setVisible(true);
         dispose();
     }//GEN-LAST:event_instructor_Continue_ButtonActionPerformed

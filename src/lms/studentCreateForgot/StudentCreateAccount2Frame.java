@@ -223,12 +223,13 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
             ValQuestion = (String) studentDept_Combobox.getSelectedItem();
             ValAnswer = student_AnswerCreate_Field.getText().trim().trim();
 
-            query = "UPDATE tb_createstudent SET Password = ?,  ValidationAnswer = ? WHERE ID = ?";
+            query = "UPDATE tb_createstudent SET Password = ?, SecurityQuestion = ? ValidationAnswer = ? WHERE ID = ?";
             try {
                 PreparedStatement pst = con.prepareStatement(query);
                 pst.setString(1, Password);
-                pst.setString(2, ValAnswer);
-                pst.setInt(3, primaryID);
+                pst.setString(2, ValQuestion);
+                pst.setString(3, ValAnswer);
+                pst.setInt(4, primaryID);
 
                 pst.executeUpdate();
 

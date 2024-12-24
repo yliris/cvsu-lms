@@ -1,6 +1,5 @@
 package lms.instructorCreateForgot;
 
-import lms.LoginInstructorFrame;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.sql.Connection;
@@ -10,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lms.InstructorHomeFrame;
-import lms.UtilityMethods;
 import lms.UtilityMethods.DefaultFocus;
 import static lms.UtilityMethods.DefaultText;
 import static lms.UtilityMethods.TransparentField;
@@ -236,12 +234,13 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
             ValQuestion = (String) instructorQuestion_Combobox.getSelectedItem();
             ValAnswer = instructor_AnswerCreate_Field.getText().trim().trim();
 
-            query = "UPDATE tb_createinstructor SET Password = ?,  ValidationAnswer = ? WHERE ID = ?";
+            query = "UPDATE tb_createinstructor SET Password = ?, SecurityQuestion = ? ValidationAnswer = ? WHERE ID = ?";
             try {
                 PreparedStatement pst = con.prepareStatement(query);
                 pst.setString(1, Password);
-                pst.setString(2, ValAnswer);
-                pst.setInt(3, primaryID);
+                pst.setString(2, ValQuestion);
+                pst.setString(3, ValAnswer);
+                pst.setInt(4, primaryID);
 
                 pst.executeUpdate();
 
