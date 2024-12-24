@@ -45,6 +45,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         createInstructorPassword_Field1 = new javax.swing.JPasswordField();
         createInstructorPassword_Field = new javax.swing.JPasswordField();
         checkPassword_Checkbox = new javax.swing.JCheckBox();
+        jLabel6 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -59,17 +60,17 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         instructorQuestion_Combobox.setBackground(new java.awt.Color(33, 125, 23));
-        instructorQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
+        instructorQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
         instructorQuestion_Combobox.setForeground(new java.awt.Color(255, 255, 255));
         instructorQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is the name of the school where you completed your student teaching?", "What was the name of the first school where you taught?", "What year did you start working at CvSU?", "Who was the school administrator on your first year working at CvSU?", "What was your first advisory section?", "What was grade level of your first teaching position?", "What is the name of your favorite subject to teach?", "What was the title of the first course you taught?", " " }));
         instructorQuestion_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(instructorQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 400, -1));
+        getContentPane().add(instructorQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 560, -1));
 
         instructor_AnswerCreate_Field.setBackground(new java.awt.Color(33, 125, 23));
         instructor_AnswerCreate_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         instructor_AnswerCreate_Field.setForeground(new java.awt.Color(255, 255, 255));
         instructor_AnswerCreate_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(instructor_AnswerCreate_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 405, 280, -1));
+        getContentPane().add(instructor_AnswerCreate_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 355, 280, -1));
 
         instructor_Submit_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Create&Login_Button.png"))); // NOI18N
         instructor_Submit_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -88,7 +89,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
                 instructor_Submit_ButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(instructor_Submit_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 450, -1, -1));
+        getContentPane().add(instructor_Submit_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 410, -1, -1));
 
         createInstructorPassword_Field1.setBackground(new java.awt.Color(33, 125, 23));
         createInstructorPassword_Field1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
@@ -128,6 +129,11 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         });
         getContentPane().add(checkPassword_Checkbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 150, -1, -1));
 
+        jLabel6.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("Create Account");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, -1, -1));
+
         jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Password:");
@@ -145,7 +151,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 145, -1, -1));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/field/Empty_FieldLong.png"))); // NOI18N
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 350, -1, -1));
 
         goBack_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/navLeft_Button(1).png"))); // NOI18N
         goBack_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -345,5 +351,6 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }

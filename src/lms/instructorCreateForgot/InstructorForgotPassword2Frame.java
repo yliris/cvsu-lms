@@ -12,6 +12,7 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
 
         instructorReset_Answer_Field = new javax.swing.JTextField();
         instructor_ResetPass_Button = new javax.swing.JButton();
+        label = new javax.swing.JLabel();
         question = new javax.swing.JLabel();
         instructor_Answer_Label = new javax.swing.JLabel();
         answer = new javax.swing.JLabel();
@@ -28,7 +29,7 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
         instructorReset_Answer_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
         instructorReset_Answer_Field.setForeground(new java.awt.Color(255, 255, 255));
         instructorReset_Answer_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(instructorReset_Answer_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, 280, 20));
+        getContentPane().add(instructorReset_Answer_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 310, 280, 20));
 
         instructor_ResetPass_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/ResetPassword_Button.png"))); // NOI18N
         instructor_ResetPass_Button.setToolTipText("");
@@ -48,20 +49,25 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
                 instructor_ResetPass_ButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(instructor_ResetPass_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 320, -1, -1));
+        getContentPane().add(instructor_ResetPass_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 350, -1, -1));
+
+        label.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
+        label.setForeground(new java.awt.Color(255, 255, 255));
+        label.setText("Forgot Password?");
+        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, -1, -1));
 
         question.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
         question.setForeground(new java.awt.Color(255, 255, 255));
         question.setText("Question:");
-        getContentPane().add(question, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 160, -1, -1));
+        getContentPane().add(question, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 238, -1, -1));
 
         instructor_Answer_Label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/field/Empty_FieldLong.png"))); // NOI18N
-        getContentPane().add(instructor_Answer_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 245, -1, -1));
+        getContentPane().add(instructor_Answer_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 305, -1, -1));
 
         answer.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 18)); // NOI18N
         answer.setForeground(new java.awt.Color(255, 255, 255));
         answer.setText("Answer:");
-        getContentPane().add(answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, -1, -1));
+        getContentPane().add(answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 310, -1, -1));
 
         goBack_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/navLeft_Button(1).png"))); // NOI18N
         goBack_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -83,13 +89,13 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
         getContentPane().add(goBack_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         instructorQuestion_Combobox.setBackground(new java.awt.Color(33, 125, 23));
-        instructorQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
+        instructorQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
         instructorQuestion_Combobox.setForeground(new java.awt.Color(255, 255, 255));
-        instructorQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What year did you start working at CvSU?", "Who is the school administrator on your first year working?", "What is your first advisory section?" }));
+        instructorQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is the name of the school where you completed your student teaching?", "What was the name of the first school where you taught?", "What year did you start working at CvSU?", "Who was the school administrator on your first year working at CvSU?", "What was your first advisory section?", "What was grade level of your first teaching position?", "What is the name of your favorite subject to teach?", "What was the title of the first course you taught?", " " }));
         instructorQuestion_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        getContentPane().add(instructorQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 400, -1));
+        getContentPane().add(instructorQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 560, -1));
 
-        instructorResetPass_Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/background/ForgotPassword.png"))); // NOI18N
+        instructorResetPass_Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/background/ForgotPass.png"))); // NOI18N
         getContentPane().add(instructorResetPass_Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -105,7 +111,7 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructor_ResetPass_ButtonMouseReleased
 
     private void instructor_ResetPass_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_ResetPass_ButtonActionPerformed
-        new InstructorCreateAccount1Frame().setVisible(true);
+        new InstructorNewPassFrame().setVisible(true);
         dispose();
     }//GEN-LAST:event_instructor_ResetPass_ButtonActionPerformed
 
@@ -161,6 +167,7 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
     private javax.swing.JTextField instructorReset_Answer_Field;
     private javax.swing.JLabel instructor_Answer_Label;
     private javax.swing.JButton instructor_ResetPass_Button;
+    private javax.swing.JLabel label;
     private javax.swing.JLabel question;
     // End of variables declaration//GEN-END:variables
 }
