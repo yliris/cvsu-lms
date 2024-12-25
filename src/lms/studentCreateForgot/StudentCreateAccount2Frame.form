@@ -39,15 +39,16 @@
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="8">
-            <StringItem index="0" value="What year did you start your studies at this school?"/>
-            <StringItem index="1" value="Who was the school administrator during your time?"/>
-            <StringItem index="2" value="Who was your adviser during your first year at CvSU?"/>
-            <StringItem index="3" value="What is the name of your favorite class or course?"/>
-            <StringItem index="4" value="What is the name of the first class you ever attended at your current school?"/>
-            <StringItem index="5" value="What year did you graduate from your previous school?"/>
-            <StringItem index="6" value=" "/>
-            <StringItem index="7" value=" "/>
+          <StringArray count="9">
+            <StringItem index="0" value="Select a question."/>
+            <StringItem index="1" value="What year did you start your studies at this school?"/>
+            <StringItem index="2" value="Who was the school administrator during your time?"/>
+            <StringItem index="3" value="Who was your adviser during your first year at CvSU?"/>
+            <StringItem index="4" value="What is the name of your favorite class or course?"/>
+            <StringItem index="5" value="What is the name of the first class you ever attended at your current school?"/>
+            <StringItem index="6" value="What year did you graduate from your previous school?"/>
+            <StringItem index="7" value=""/>
+            <StringItem index="8" value=""/>
           </StringArray>
         </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
@@ -76,12 +77,17 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
+        <Property name="text" type="java.lang.String" value="Enter Answer"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.EmptyBorderInfo">
             <EmptyBorder/>
           </Border>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="student_AnswerCreate_FieldFocusGained"/>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="student_AnswerCreate_FieldFocusLost"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="350" y="355" width="280" height="-1"/>

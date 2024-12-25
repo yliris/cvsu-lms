@@ -1,11 +1,52 @@
+
 package lms.instructorCreateForgot;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import lms.instructorCreateForgot.InstructorForgotPassword1Frame;
+import lms.instructorCreateForgot.InstructorNewPassFrame;
+import javax.swing.JOptionPane;
+import java.sql.SQLException;
+
+
 public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
+    private String username;
+    private String securityQuestion = getSecurityQuestionFromDatabase(username);
+    
+    
+    public InstructorForgotPassword2Frame(String username, String securityQuestion) {   
+        this.username = username;
+        this.securityQuestion = securityQuestion;
 
-    public InstructorForgotPassword2Frame() {
+
         initComponents();
-    }
+        setSecurityQuestionInComboBox(securityQuestion); // Set the question in the ComboBox 
+                  
+}
 
+    InstructorForgotPassword2Frame() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+         private boolean validateAnswer(String username, String question, String answer) {
+    boolean isValid = false;
+    try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "");
+         PreparedStatement stmt = conn.prepareStatement("SELECT ValidationAnswer FROM tb_createinstructor WHERE CvSU_Mail = ? AND SecurityQuestion = ?")) {
+        
+        stmt.setString(1, username);
+        stmt.setString(2, question);
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next() && rs.getString("ValidationAnswer").equals(answer)) {
+            isValid = true;
+        }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return isValid;
+} 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -111,8 +152,78 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructor_ResetPass_ButtonMouseReleased
 
     private void instructor_ResetPass_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_ResetPass_ButtonActionPerformed
-        new InstructorNewPassFrame().setVisible(true);
-        dispose();
+        String question = (String) instructorQuestion_Combobox.getSelectedItem();
+        String answer = instructorReset_Answer_Field.getText();
+
+        if (validateAnswer(username, question, answer)) {
+            JOptionPane.showMessageDialog(null, "Answer validated successfully. Proceed to reset password.");
+            new InstructorNewPassFrame(username).setVisible(true);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Incorrect answer. Please try again.");
+        }
+    }
+
+    private void setSecurityQuestionInComboBox(String securityQuestion) {
+        boolean questionExists = false;
+        if (securityQuestion != null && !securityQuestion.isEmpty()) {
+            for (int i = 0; i < instructorQuestion_Combobox.getItemCount(); i++) {
+                if (instructorQuestion_Combobox.getItemAt(i).equals(securityQuestion)) {
+                    instructorQuestion_Combobox.setSelectedItem(securityQuestion);
+                    questionExists = true;
+                    break;
+                }
+            }
+
+            if (!questionExists) {
+                JOptionPane.showMessageDialog(null, "The security question is not available in the list.");
+            } else {
+                JOptionPane.showMessageDialog(null, "CvSU Mail confirmed, proceed to validation section.");
+            }
+        }
+    }
+
+    private String getSecurityQuestionFromDatabase(String username) {
+        String securityQuestion = "";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish database connection (make sure the connection URL, username, password are correct)
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "");
+
+            // SQL query to get the security question based on the username
+            String sql = "SELECT SecurityQuestion FROM tb_createinstructor WHERE CvSU_Mail = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username); // Set the username in the query
+
+            rs = stmt.executeQuery();
+
+            // If a matching record is found, retrieve the security question
+            if (rs.next()) {
+                securityQuestion = rs.getString("SecurityQuestion");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return securityQuestion;
+    
+
     }//GEN-LAST:event_instructor_ResetPass_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed
@@ -124,40 +235,20 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_goBack_ButtonMouseReleased
 
     private void goBack_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBack_ButtonActionPerformed
-        new InstructorForgotPassword1Frame().setVisible(true);
+        new InstructorForgotPassword1Frame().setVisible(true); // Open the first frame
         dispose();
     }//GEN-LAST:event_goBack_ButtonActionPerformed
 
     public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(InstructorForgotPassword2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(InstructorForgotPassword2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(InstructorForgotPassword2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(InstructorForgotPassword2Frame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new InstructorForgotPassword2Frame().setVisible(true);
-            }
-        });
-    }
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            String username = "cjramss";
+            String securityQuestion = "What was the title of the first course you taught?";
+            new InstructorForgotPassword2Frame(username, securityQuestion).setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel answer;
@@ -170,4 +261,5 @@ public class InstructorForgotPassword2Frame extends javax.swing.JFrame {
     private javax.swing.JLabel label;
     private javax.swing.JLabel question;
     // End of variables declaration//GEN-END:variables
+
 }

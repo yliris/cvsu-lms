@@ -1,9 +1,42 @@
 package lms.studentCreateForgot;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import lms.instructorCreateForgot.InstructorNewPassFrame;
+
 public class StudentForgotPassword2Frame extends javax.swing.JFrame {
 
-    public StudentForgotPassword2Frame() {
+    private String username;
+    private String securityQuestion = getSecurityQuestionFromDatabase(username);
+
+    public StudentForgotPassword2Frame(String username, String securityQuestion) {
+        this.username = username;
+        this.securityQuestion = securityQuestion;
         initComponents();
+        setSecurityQuestionInComboBox(securityQuestion);
+    }
+
+    private boolean validateAnswer(String username, String question, String answer) {
+        boolean isValid = false;
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", ""); 
+                PreparedStatement stmt = conn.prepareStatement("SELECT ValidationAnswer FROM tb_createstudent WHERE CvSU_Email = ? AND SecurityQuestion = ?")) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, question);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next() && rs.getString("ValidationAnswer").equals(answer)) {
+                isValid = true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isValid;
     }
 
     @SuppressWarnings("unchecked")
@@ -54,7 +87,7 @@ public class StudentForgotPassword2Frame extends javax.swing.JFrame {
         studentQuestion_Combobox.setBackground(new java.awt.Color(33, 125, 23));
         studentQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
         studentQuestion_Combobox.setForeground(new java.awt.Color(255, 255, 255));
-        studentQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What year did you start your studies at this school?", "Who was the school administrator during your time?", "Who was your adviser during your first year at CvSU?", "What is the name of your favorite class or course?", "What is the name of the first class you ever attended at your current school?", "What year did you graduate from your previous school?", " ", " " }));
+        studentQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a question.", "What year did you start your studies at this school?", "Who was the school administrator during your time?", "Who was your adviser during your first year at CvSU?", "What is the name of your favorite class or course?", "What is the name of the first class you ever attended at your current school?", "What year did you graduate from your previous school?", " " }));
         studentQuestion_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(studentQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 560, -1));
 
@@ -111,8 +144,78 @@ public class StudentForgotPassword2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_student_ResetPass_ButtonMouseReleased
 
     private void student_ResetPass_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_student_ResetPass_ButtonActionPerformed
-        new StudentNewPassFrame().setVisible(true);
-        dispose();
+        String question = (String) studentQuestion_Combobox.getSelectedItem();
+        String answer = studentReset_Answer_Field.getText();
+
+        if (validateAnswer(username, question, answer)) {
+            JOptionPane.showMessageDialog(null, "Answer validated successfully. Proceed to reset password.");
+            new StudentNewPassFrame(username).setVisible(true);
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Incorrect answer. Please try again.");
+        }
+    }
+
+    private void setSecurityQuestionInComboBox(String securityQuestion) {
+        boolean questionExists = false;
+        if (securityQuestion != null && !securityQuestion.isEmpty()) {
+            for (int i = 0; i < studentQuestion_Combobox.getItemCount(); i++) {
+                if (studentQuestion_Combobox.getItemAt(i).equals(securityQuestion)) {
+                    studentQuestion_Combobox.setSelectedItem(securityQuestion);
+                    questionExists = true;
+                    break;
+                }
+            }
+
+            if (!questionExists) {
+                JOptionPane.showMessageDialog(null, "The security question is not available in the list.");
+            } else {
+                JOptionPane.showMessageDialog(null, "CvSU Mail confirmed, proceed to validation section.");
+            }
+        }
+    }
+
+    private String getSecurityQuestionFromDatabase(String username) {
+        String securityQuestion = "";
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            // Establish database connection (make sure the connection URL, username, password are correct)
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "");
+
+            // SQL query to get the security question based on the username
+            String sql = "SELECT SecurityQuestion FROM tb_createstudent WHERE CvSU_Email = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username); // Set the username in the query
+
+            rs = stmt.executeQuery();
+
+            // If a matching record is found, retrieve the security question
+            if (rs.next()) {
+                securityQuestion = rs.getString("SecurityQuestion");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmt != null) {
+                    stmt.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return securityQuestion;
+
+
     }//GEN-LAST:event_student_ResetPass_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed
@@ -160,7 +263,9 @@ public class StudentForgotPassword2Frame extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StudentForgotPassword2Frame().setVisible(true);
+                String username = "cj@cvsu";
+                String securityQuestion = "What year did you start your studies at this school?";
+                new StudentForgotPassword2Frame(username, securityQuestion).setVisible(true);
             }
         });
     }

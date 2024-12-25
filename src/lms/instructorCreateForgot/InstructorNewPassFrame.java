@@ -1,14 +1,26 @@
 package lms.instructorCreateForgot;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 import lms.InstructorHomeFrame;
 import lms.UtilityMethods.DefaultFocus;
 import static lms.UtilityMethods.DefaultText;
+import lms.instructorCreateForgot.InstructorForgotPassword2Frame;
 
 public class InstructorNewPassFrame extends javax.swing.JFrame {
-
-    public InstructorNewPassFrame() {
+    private String username;
+    
+    public InstructorNewPassFrame(String username) {
         initComponents();
-    }
+        this.username = username;
+    } 
+    
+   
+
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -172,8 +184,48 @@ public class InstructorNewPassFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_InstructorConfirmPass_FieldFocusLost
 
     private void instructor_ResetPass_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_ResetPass_ButtonActionPerformed
-        new InstructorHomeFrame().setVisible(true);
-        dispose();
+        String newPassword = InstructorNewPass_Field.getText().trim();
+        String confirmPassword = InstructorConfirmPass_Field.getText().trim();
+        boolean isValid = true;
+
+        if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill in both password fields", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return; // Exit if fields are empty
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(null, "Passwords do not match", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else {
+            // Assuming you've already validated the passwords match, proceed to database update
+            if (isValid) {
+                String query = "UPDATE tb_createinstructor SET Password = ? WHERE CvSU_Mail = ?";
+        
+        // Prepare database connection
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "")) {
+            // PreparedStatement to safely update the password
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, newPassword);  // Set the new password
+            // Assuming `CvSU_Mail` is a variable that holds the user's email
+            pst.setString(2, username); // Replace `yourEmailVariable` with the actual variable
+            
+            int rowsAffected = pst.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Password updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Redirect to InstructorHomeFrame
+                dispose();
+                new InstructorHomeFrame().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error updating password. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+       
     }//GEN-LAST:event_instructor_ResetPass_ButtonActionPerformed
 
     private void instructor_ResetPass_ButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instructor_ResetPass_ButtonMouseReleased
@@ -216,7 +268,8 @@ public class InstructorNewPassFrame extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InstructorNewPassFrame().setVisible(true);
+                String username = "cjramss";
+                new InstructorNewPassFrame(username).setVisible(true);
             }
         });
     }

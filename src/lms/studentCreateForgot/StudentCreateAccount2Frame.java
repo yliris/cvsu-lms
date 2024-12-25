@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import lms.StudentHomeFrame;
 import lms.UtilityMethods.DefaultFocus;
 import static lms.UtilityMethods.DefaultText;
@@ -25,14 +26,22 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
         initComponents();
         this.StudName = StudName;
         this.StudNum = StudNum;
-        this.StudMail = StudMail;   
+        this.StudMail = StudMail;
         this.StudCourse = StudCourse;
         this.primaryID = primaryID;
-        
-          TransparentField(createStudentPassword_Field);  
+
+        studentQuestion_Combobox.setModel(new DefaultComboBoxModel<>(new String[]{
+            "Select a question.",
+            "What year did you start your studies at this school?",
+            "Who was the school administrator during your time?",
+            "Who was your adviser during your first year at CvSU?",
+            "What is the name of your favorite class or course?",
+            "What is the name of the first class you ever attended at your current school?",
+            "What year did you graduate from your previous school?"
+
+        }));
+        TransparentField(createStudentPassword_Field, student_AnswerCreate_Field);
     }
-        
-      
 
     private StudentCreateAccount2Frame() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -65,14 +74,23 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
         studentQuestion_Combobox.setBackground(new java.awt.Color(33, 125, 23));
         studentQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
         studentQuestion_Combobox.setForeground(new java.awt.Color(255, 255, 255));
-        studentQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What year did you start your studies at this school?", "Who was the school administrator during your time?", "Who was your adviser during your first year at CvSU?", "What is the name of your favorite class or course?", "What is the name of the first class you ever attended at your current school?", "What year did you graduate from your previous school?", " ", " " }));
+        studentQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a question.", "What year did you start your studies at this school?", "Who was the school administrator during your time?", "Who was your adviser during your first year at CvSU?", "What is the name of your favorite class or course?", "What is the name of the first class you ever attended at your current school?", "What year did you graduate from your previous school?", "", "" }));
         studentQuestion_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(studentQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 560, -1));
 
         student_AnswerCreate_Field.setBackground(new java.awt.Color(33, 125, 23));
         student_AnswerCreate_Field.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 14)); // NOI18N
         student_AnswerCreate_Field.setForeground(new java.awt.Color(255, 255, 255));
+        student_AnswerCreate_Field.setText("Enter Answer");
         student_AnswerCreate_Field.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        student_AnswerCreate_Field.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                student_AnswerCreate_FieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                student_AnswerCreate_FieldFocusLost(evt);
+            }
+        });
         getContentPane().add(student_AnswerCreate_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 355, 280, -1));
 
         student_Submit_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lms/resources/images/buttons/Create&Login_Button.png"))); // NOI18N
@@ -202,10 +220,10 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
             Logger.getLogger(StudentCreateAccount2Frame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-            String url = "jdbc:mysql://localhost:3306/lms_project";
-            String user = "root";
-            String pass = "";
-            boolean isValid = true;
+        String url = "jdbc:mysql://localhost:3306/lms_project";
+        String user = "root";
+        String pass = "";
+        boolean isValid = true;
 
         Connection con = null;
         try {
@@ -219,13 +237,13 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
         } else if ("".equals(createStudentPassword_Field1.getText())) {
-        // Check if passwords match
-        JOptionPane.showMessageDialog(new JFrame(), "Please confirm password", "Dialog", JOptionPane.ERROR_MESSAGE);
-        isValid = false;
+            // Check if passwords match
+            JOptionPane.showMessageDialog(new JFrame(), "Please confirm password", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
         } else if (!createStudentPassword_Field.getText().equals(createStudentPassword_Field1.getText())) {
-        // Check if passwords match
-        JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Dialog", JOptionPane.ERROR_MESSAGE);
-        isValid = false;
+            // Check if passwords match
+            JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
         } else if ("".equals((String) studentQuestion_Combobox.getSelectedItem())) {
             JOptionPane.showMessageDialog(new JFrame(), "Validation Question is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
@@ -238,7 +256,7 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
             ValQuestion = (String) studentQuestion_Combobox.getSelectedItem();
             ValAnswer = student_AnswerCreate_Field.getText().trim().trim();
 
-            query = "UPDATE tb_createstudent SET Password = ?, SecurityQuestion = ? ValidationAnswer = ? WHERE ID = ?";
+            query = "UPDATE tb_createstudent SET Password = ?, SecurityQuestion = ?, ValidationAnswer = ? WHERE ID = ?";
             try {
                 PreparedStatement pst = con.prepareStatement(query);
                 pst.setString(1, Password);
@@ -287,20 +305,30 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_goBack_ButtonActionPerformed
 
     private void createStudentPassword_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentPassword_FieldFocusGained
-         DefaultText(createStudentPassword_Field, "Password", DefaultFocus.GAINED);
+        DefaultText(createStudentPassword_Field, "Password", DefaultFocus.GAINED);
     }//GEN-LAST:event_createStudentPassword_FieldFocusGained
 
     private void createStudentPassword_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentPassword_FieldFocusLost
-         DefaultText(createStudentPassword_Field, "Password", DefaultFocus.LOST);
+        DefaultText(createStudentPassword_Field, "Password", DefaultFocus.LOST);
     }//GEN-LAST:event_createStudentPassword_FieldFocusLost
 
     private void createStudentPassword_Field1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentPassword_Field1FocusGained
-        
+
     }//GEN-LAST:event_createStudentPassword_Field1FocusGained
 
     private void createStudentPassword_Field1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createStudentPassword_Field1FocusLost
-     
+
     }//GEN-LAST:event_createStudentPassword_Field1FocusLost
+
+    private void student_AnswerCreate_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_student_AnswerCreate_FieldFocusGained
+        DefaultText(student_AnswerCreate_Field, "Enter Answer", DefaultFocus.GAINED);
+
+    }//GEN-LAST:event_student_AnswerCreate_FieldFocusGained
+
+    private void student_AnswerCreate_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_student_AnswerCreate_FieldFocusLost
+        DefaultText(student_AnswerCreate_Field, "Enter Answer", DefaultFocus.LOST);
+
+    }//GEN-LAST:event_student_AnswerCreate_FieldFocusLost
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

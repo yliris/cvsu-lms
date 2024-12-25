@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import lms.instructorCreateForgot.InstructorForgotPassword2Frame;
+
+
 
 public class InstructorForgotPassword1Frame extends javax.swing.JFrame {
     private String securityQuestion;
@@ -16,7 +19,19 @@ public class InstructorForgotPassword1Frame extends javax.swing.JFrame {
 
     public InstructorForgotPassword1Frame() {
         initComponents();
-}
+        
+        instructorQuestion_Combobox = new javax.swing.JComboBox<>(new String[] {
+            "Select a question.",
+            "What is the name of the school where you completed your student teaching?",
+            "What was the name of the first school where you taught?",
+            "What year did you start working at CvSU?",
+            "Who was the school administrator on your first year working at CvSU?",
+            "What was your first advisory section?",
+            "What was grade level of your first teaching position?",
+            "What is the name of your favorite subject to teach?",
+            "What was the title of the first course you taught?"
+        });
+    }
     public void SecurityQuestion(String question){
         this.securityQuestion = question;
         instructorQuestion_Combobox.setSelectedItem(securityQuestion);
@@ -105,28 +120,68 @@ public class InstructorForgotPassword1Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructor_Continue_ButtonMousePressed
 
     private void instructor_Continue_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_Continue_ButtonActionPerformed
-        String username=instructor_Email_Reset_Field.getText();
-            
-            try{
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project","root", "");
-                Statement st =con.createStatement();    
-                ResultSet rs= st.executeQuery("SELECT SecurityQuestion from tb_createinstructor WHERE CvSU_Mail = '"+username+"'");
-                    if (rs.next())
-                    {
-                        instructorQuestion_Combobox.setSelectedItem(rs.getString(1));
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(null,"Please write correct CvSU Mail");
-                        con.close();
-                        rs.close();
-                    }
+        String username = instructor_Email_Reset_Field.getText(); // Get email input
+        String securityQuestion;
+        String query;
+
+    // Step 1: Validate if the email field is empty
+    if (username.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter your CvSU Mail.");
+        return;
+    }
+
+    try {
+        // Step 2: Establish database connection
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "");
+
+        // Step 3: Query the database to retrieve the security question
+        query = "SELECT SecurityQuestion FROM tb_createinstructor WHERE CvSU_Mail = ?";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, username); // Set the email parameter
+
+        ResultSet rs = pst.executeQuery();
+
+        // Step 4: Check if the user exists in the database
+        if (rs.next()) {
+            // If a record is found, retrieve the security question
+            securityQuestion = rs.getString("SecurityQuestion");
+
+            // Step 5: Check if the retrieved question exists in the ComboBox
+            boolean questionExists = false;
+            for (int i = 0; i < instructorQuestion_Combobox.getItemCount(); i++) {
+                if (instructorQuestion_Combobox.getItemAt(i).equals(securityQuestion)) {
+                    instructorQuestion_Combobox.setSelectedItem(securityQuestion); // Set the selected item
+                    questionExists = true;
+                    break;
+                }
             }
-            catch(Exception e)
-            {}
-        
-        new InstructorForgotPassword2Frame().setVisible(true);
-        dispose();
+            // If question is not found in the ComboBox, show an error message
+            if (!questionExists) {
+                JOptionPane.showMessageDialog(null, "The security question is not available in the list.");
+            } else {
+                // Step 6: If everything is successful, open the next frame
+                // Example: Open a new frame to proceed with 
+                new InstructorForgotPassword2Frame(username, securityQuestion).setVisible(true);  // New frame to handle security question validation
+                dispose();  // Close the current frame (optional)
+            }
+
+        } else {
+            // If no record is found for the given email
+            JOptionPane.showMessageDialog(null, "Please enter a correct CvSU Mail.");
+        }
+
+        // Close resources
+        rs.close();
+        pst.close();
+        con.close();
+
+    } catch (Exception e) {
+        // Handle exceptions
+        e.printStackTrace(); // Print the stack trace for debugging
+        JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage());
+    }
+
     }//GEN-LAST:event_instructor_Continue_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed
@@ -165,7 +220,8 @@ public class InstructorForgotPassword1Frame extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-
+//    InstructorForgotPassword2Frame secondFrame = new InstructorForgotPassword2Frame();
+    
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new InstructorForgotPassword1Frame().setVisible(true);

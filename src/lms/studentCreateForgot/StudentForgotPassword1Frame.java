@@ -1,13 +1,38 @@
 package lms.studentCreateForgot;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import lms.LoginStudentFrame;
+import lms.studentCreateForgot.StudentForgotPassword2Frame;
 
 public class StudentForgotPassword1Frame extends javax.swing.JFrame {
+    private String securityQuestion;
+    private JComboBox<String> studentQuestion_Combobox;
+
 
     public StudentForgotPassword1Frame() {
         initComponents();
+        
+        studentQuestion_Combobox = new javax.swing.JComboBox<>(new String[] {
+            "Select a question.",
+            "What year did you start your studies at this school?",
+            "Who was the school administrator during your time?",
+            "Who was your adviser during your first year at CvSU?",
+            "What is the name of your favorite class or course?",
+            "What is the name of the first class you ever attended at your current school?",
+            "What year did you graduate from your previous school?",
+        });
     }
-
+         public void SecurityQuestion(String question){
+        this.securityQuestion = question;
+        studentQuestion_Combobox.setSelectedItem(securityQuestion);
+        
+    
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,8 +115,66 @@ public class StudentForgotPassword1Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_student_Continue_ButtonMousePressed
 
     private void student_Continue_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_student_Continue_ButtonActionPerformed
-        new StudentForgotPassword2Frame().setVisible(true);
-        dispose();
+        String username = student_Email_Reset_Field.getText(); // Get email input
+        String securityQuestion;
+        String query;
+        if (username.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please enter your CvSU Mail.");
+        return;
+    }
+
+    try {
+        // Step 2: Establish database connection
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "");
+
+        // Step 3: Query the database to retrieve the security question
+        query = "SELECT SecurityQuestion FROM tb_createstudent WHERE CvSU_Email = ?";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setString(1, username); // Set the email parameter
+
+        ResultSet rs = pst.executeQuery();
+
+        // Step 4: Check if the user exists in the database
+        if (rs.next()) {
+            // If a record is found, retrieve the security question
+            securityQuestion = rs.getString("SecurityQuestion");
+
+            // Step 5: Check if the retrieved question exists in the ComboBox
+            boolean questionExists = false;
+            for (int i = 0; i < studentQuestion_Combobox.getItemCount(); i++) {
+                if (studentQuestion_Combobox.getItemAt(i).equals(securityQuestion)) {
+                    studentQuestion_Combobox.setSelectedItem(securityQuestion); // Set the selected item
+                    questionExists = true;
+                    break;
+                }
+            }
+            // If question is not found in the ComboBox, show an error message
+            if (!questionExists) {
+                JOptionPane.showMessageDialog(null, "The security question is not available in the list.");
+            } else {
+                // Step 6: If everything is successful, open the next frame
+                // Example: Open a new frame to proceed with 
+                new StudentForgotPassword2Frame(username, securityQuestion).setVisible(true);  // New frame to handle security question validation
+                dispose();  // Close the current frame (optional)
+            }
+
+        } else {
+            // If no record is found for the given email
+            JOptionPane.showMessageDialog(null, "Please enter a correct CvSU Mail.");
+        }
+
+        // Close resources
+        rs.close();
+        pst.close();
+        con.close();
+
+    } catch (Exception e) {
+        // Handle exceptions
+        e.printStackTrace(); // Print the stack trace for debugging
+        JOptionPane.showMessageDialog(null, "An error occurred: " + e.getMessage());
+    }
+        
     }//GEN-LAST:event_student_Continue_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed

@@ -1,13 +1,22 @@
 package lms.studentCreateForgot;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import lms.InstructorHomeFrame;
 import lms.StudentHomeFrame;
 import lms.UtilityMethods.DefaultFocus;
 import static lms.UtilityMethods.DefaultText;
 
 public class StudentNewPassFrame extends javax.swing.JFrame {
 
-    public StudentNewPassFrame() {
+    private String username;
+
+    public StudentNewPassFrame(String username) {
         initComponents();
+          this.username = username;
     }
 
     @SuppressWarnings("unchecked")
@@ -139,8 +148,9 @@ public class StudentNewPassFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_goBack_ButtonMouseReleased
 
     private void goBack_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goBack_ButtonActionPerformed
-        new StudentForgotPassword2Frame().setVisible(true);
+        new StudentForgotPassword1Frame().setVisible(true);
         dispose();
+        
     }//GEN-LAST:event_goBack_ButtonActionPerformed
 
     private void checkPassword_CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPassword_CheckboxActionPerformed
@@ -172,8 +182,48 @@ public class StudentNewPassFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_studentConfirmPass_FieldFocusLost
 
     private void student_ResetPass_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_student_ResetPass_ButtonActionPerformed
-        new StudentHomeFrame().setVisible(true);
-        dispose();
+        String newPassword = studentNewPass_Field.getText().trim();
+        String confirmPassword = studentConfirmPass_Field.getText().trim();
+        boolean isValid = true;
+
+        if (newPassword.isEmpty() || confirmPassword.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Please fill in both password fields", "Input Error", JOptionPane.ERROR_MESSAGE);
+            return; // Exit if fields are empty
+        }
+
+        if (!newPassword.equals(confirmPassword)) {
+            JOptionPane.showMessageDialog(null, "Passwords do not match", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else {
+            // Assuming you've already validated the passwords match, proceed to database update
+            if (isValid) {
+                String query = "UPDATE tb_createstudent SET Password = ? WHERE CvSU_Email = ?";
+        
+        // Prepare database connection
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "")) {
+            // PreparedStatement to safely update the password
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, newPassword);  // Set the new password
+            // Assuming `CvSU_Mail` is a variable that holds the user's email
+            pst.setString(2, username); // Replace `yourEmailVariable` with the actual variable
+            
+            int rowsAffected = pst.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(null, "Password updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                
+                // Redirect to InstructorHomeFrame
+                dispose();
+                new StudentHomeFrame().setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error updating password. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+}
+        
     }//GEN-LAST:event_student_ResetPass_ButtonActionPerformed
 
     private void student_ResetPass_ButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_student_ResetPass_ButtonMouseReleased
@@ -272,7 +322,8 @@ public class StudentNewPassFrame extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new StudentNewPassFrame().setVisible(true);
+                String username ="cj@cvsu";
+                new StudentNewPassFrame(username).setVisible(true);
             }
         });
     }

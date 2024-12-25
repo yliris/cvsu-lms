@@ -1,5 +1,9 @@
 package lms.instructorCreateForgot;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import java.sql.Connection;
@@ -8,6 +12,8 @@ import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.SwingUtilities;
 import lms.InstructorHomeFrame;
 import lms.UtilityMethods.DefaultFocus;
 import static lms.UtilityMethods.DefaultText;
@@ -18,6 +24,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     private String InstName, InstMail, InstID, InstDept;
     private int primaryID;
 
+
     public InstructorCreateAccount2Frame(String InstName, String InstMail, String InstID, String InstDept, int primaryID) {
         initComponents();
         this.InstName = InstName;
@@ -26,11 +33,20 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         this.InstDept = InstDept;
         this.primaryID = primaryID;
         
-          TransparentField(createInstructorPassword_Field);  
-    }
-        
-      
-
+        instructorQuestion_Combobox.setModel(new DefaultComboBoxModel<>(new String[]{
+        "Select a question.",
+        "What is the name of the school where you completed your student teaching?",
+        "What was the name of the first school where you taught?",
+        "What year did you start working at CvSU?",
+        "Who was the school administrator on your first year working at CvSU?",
+        "What was your first advisory section?",
+        "What was grade level of your first teaching position?",
+        "What is the name of your favorite subject to teach?",
+        "What was the title of the first course you taught?"
+    }));
+        TransparentField(createInstructorPassword_Field);  
+    
+        }
     private InstructorCreateAccount2Frame() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -62,7 +78,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         instructorQuestion_Combobox.setBackground(new java.awt.Color(33, 125, 23));
         instructorQuestion_Combobox.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
         instructorQuestion_Combobox.setForeground(new java.awt.Color(255, 255, 255));
-        instructorQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "What is the name of the school where you completed your student teaching?", "What was the name of the first school where you taught?", "What year did you start working at CvSU?", "Who was the school administrator on your first year working at CvSU?", "What was your first advisory section?", "What was grade level of your first teaching position?", "What is the name of your favorite subject to teach?", "What was the title of the first course you taught?", " " }));
+        instructorQuestion_Combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a question.", "What is the name of the school where you completed your student teaching?", "What was the name of the first school where you taught?", "What year did you start working at CvSU?", "Who was the school administrator on your first year working at CvSU?", "What was your first advisory section?", "What was grade level of your first teaching position?", "What is the name of your favorite subject to teach?", "What was the title of the first course you taught?", " " }));
         instructorQuestion_Combobox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         getContentPane().add(instructorQuestion_Combobox, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 560, -1));
 
@@ -188,12 +204,15 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructor_Submit_ButtonMouseReleased
 
     private void instructor_Submit_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_Submit_ButtonActionPerformed
+       
         String Password;
         String ValAnswer;
         String RePass;
         String ValQuestion;
         String query;
-
+        String selectedQuestion = (String) instructorQuestion_Combobox.getSelectedItem();
+        boolean isValid = true;
+        
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
@@ -206,8 +225,8 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         String user = "root";
         String pass = "";
 
-        boolean isValid = true;
-
+       
+        
         Connection con = null;
         try {
             con = DriverManager.getConnection(url, user, pass);
@@ -215,11 +234,12 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
             Logger.getLogger(InstructorCreateAccount2Frame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-
+        
+    
         if ("".equals(createInstructorPassword_Field.getText().trim())) {
             JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-        } else if ("".equals(createInstructorPassword_Field1.getText())) {
+        } else if ("".equals(createInstructorPassword_Field1.getText    ())) {
         // Check if passwords match
         JOptionPane.showMessageDialog(new JFrame(), "Please confirm password", "Dialog", JOptionPane.ERROR_MESSAGE);
         isValid = false;
@@ -227,19 +247,22 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         // Check if passwords match
         JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Dialog", JOptionPane.ERROR_MESSAGE);
         isValid = false;
-        } else if ("".equals((String) instructorQuestion_Combobox.getSelectedItem())) {
-            JOptionPane.showMessageDialog(new JFrame(), "Validation Question is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+        } else if ("Select a question.".equals(selectedQuestion)){
+            JOptionPane.showMessageDialog(new JFrame(), "Please select a security question", "Dialog", JOptionPane.ERROR_MESSAGE); 
             isValid = false;
         } else if ("".equals(instructor_AnswerCreate_Field.getText().trim())) {
             JOptionPane.showMessageDialog(new JFrame(), "Validation Answer is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+                            System.out.println("Selected question: " + selectedQuestion);
             isValid = false;
+        } 
+          else {
+
+            Password = createInstructorPassword_Field.getText().trim();
+            ValQuestion = selectedQuestion;
+            ValAnswer = instructor_AnswerCreate_Field.getText().trim();
             
-        } else {
-
-            Password = createInstructorPassword_Field.getText().trim().trim();
-            ValQuestion = (String) instructorQuestion_Combobox.getSelectedItem();
-            ValAnswer = instructor_AnswerCreate_Field.getText().trim().trim();
-
+            
+        if(isValid){
             query = "UPDATE tb_createinstructor SET Password = ?, SecurityQuestion = ?, ValidationAnswer = ? WHERE ID = ?";
             try {
                 PreparedStatement pst = con.prepareStatement(query);
@@ -259,8 +282,12 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
                 System.out.println("Error " + e.getMessage());
                 JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
+              
             }
-        }
+        }}
+        
+       
+        
     }//GEN-LAST:event_instructor_Submit_ButtonActionPerformed
 
     private void checkPassword_CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPassword_CheckboxActionPerformed
