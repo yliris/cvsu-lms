@@ -59,16 +59,16 @@ public class MenuItem extends javax.swing.JPanel {
             }
         });
 
-        panel.setBackground(new java.awt.Color(118, 196, 111));
+        panel.setBackground(new java.awt.Color(202, 154, 221));
         panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         panel.add(lbIcon, new org.netbeans.lib.awtextra.AbsoluteConstraints(5, 0, 40, 40));
 
-        lbName.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
+        lbName.setFont(new java.awt.Font("JetBrains Mono", 1, 10)); // NOI18N
         lbName.setForeground(new java.awt.Color(255, 255, 255));
-        lbName.setText("Dashboard");
-        panel.add(lbName, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 4, 190, 30));
+        lbName.setText("DASHBOARD");
+        panel.add(lbName, new org.netbeans.lib.awtextra.AbsoluteConstraints(52, 6, 190, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -86,7 +86,7 @@ public class MenuItem extends javax.swing.JPanel {
 
     private boolean showing = false;
     private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        panel.setBackground(new Color(69,152,61));
+        panel.setBackground(new Color(186,125,211));
         if(showing){
             hideMenu();
         } else{
@@ -98,15 +98,15 @@ public class MenuItem extends javax.swing.JPanel {
     }//GEN-LAST:event_formMousePressed
 
     private void formMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseEntered
-        panel.setBackground(new Color(81, 177, 72));
+        panel.setBackground(new Color(214,178,229));
     }//GEN-LAST:event_formMouseEntered
 
     private void formMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseExited
-        panel.setBackground(new Color(118, 196, 111));
+        panel.setBackground(new Color(202,154,221));
     }//GEN-LAST:event_formMouseExited
 
     private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
-        panel.setBackground(new Color(81, 177, 72));
+        panel.setBackground(new Color(214,178,229));
     }//GEN-LAST:event_formMouseReleased
 
     private void showMenu(){
