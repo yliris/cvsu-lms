@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JTextField;
 import lms.StartFrame;
 import static lms.UtilityMethods.*;
@@ -223,17 +225,35 @@ public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
         if (createInstructorName_Field.getText().trim().isEmpty() || createInstructorName_Field.getText().equals("Enter Name")) {
             JOptionPane.showMessageDialog(new JFrame(), "Name is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-        } else if (createInstructorMail_Field.getText().trim().isEmpty() || createInstructorMail_Field.getText().equals("Enter CvSU Mail")) {
+        } 
+        // Check if the email is empty or has default text
+        else if (createInstructorMail_Field.getText().trim().isEmpty() || createInstructorMail_Field.getText().equals("Enter CvSU Mail")) {
             JOptionPane.showMessageDialog(new JFrame(), "CvSU Mail is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-        } else if (createInstructorID_Field.getText().trim().isEmpty() || createInstructorMail_Field.getText().equals("Enter Employee ID")) {
+        } 
+        // Validate the email format to ensure it ends with @cvsu.edu.ph
+        else {
+            String email = createInstructorMail_Field.getText().trim();
+            String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@cvsu\\.edu\\.ph$";
+            Pattern pattern = Pattern.compile(emailRegex);
+            Matcher matcher = pattern.matcher(email);
+            if (!matcher.matches()) {
+                JOptionPane.showMessageDialog(new JFrame(), "Invalid email format. Please enter a valid CvSU email.", "Dialog", JOptionPane.ERROR_MESSAGE);
+                isValid = false;
+            }
+
+        // Check if the ID is empty or has a default text
+        else if (createInstructorID_Field.getText().trim().isEmpty() || createInstructorMail_Field.getText().equals("Enter Employee ID")) {
             JOptionPane.showMessageDialog(new JFrame(), "ID is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-        } else if (instructorDept_Combobox.getSelectedItem().toString().isEmpty()) {
+        } 
+        // Check if the department is selected
+        else if (instructorDept_Combobox.getSelectedItem().toString().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Department is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
         }
 
+        // If all validations pass, proceed
         if (isValid) {
             InstName = createInstructorName_Field.getText().trim();
             InstMail = createInstructorMail_Field.getText().trim();
@@ -268,6 +288,7 @@ public class InstructorCreateAccount1Frame extends javax.swing.JFrame {
 
             }
         }
+    }
     }//GEN-LAST:event_next_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed

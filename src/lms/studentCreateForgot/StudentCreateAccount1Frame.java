@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import static lms.UtilityMethods.*;
 
 public class StudentCreateAccount1Frame extends javax.swing.JFrame {
@@ -222,7 +224,18 @@ public class StudentCreateAccount1Frame extends javax.swing.JFrame {
         } else if (createStudentMail_Field.getText().trim().isEmpty() || createStudentMail_Field.getText().equals("Enter CvSU Mail")) {
             JOptionPane.showMessageDialog(new JFrame(), " CvSU Email is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-        } else if (studentCourse_Combobox.getSelectedItem().toString().isEmpty()) {
+        }  
+            else {
+            String email = createStudentMail_Field.getText().trim();
+            String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@cvsu\\.edu\\.ph$";
+            Pattern pattern = Pattern.compile(emailRegex);
+            Matcher matcher = pattern.matcher(email);
+            if (!matcher.matches()) {
+                JOptionPane.showMessageDialog(new JFrame(), "Invalid email format. Please enter a valid CvSU email.", "Dialog", JOptionPane.ERROR_MESSAGE);
+                isValid = false;
+            }
+
+        else if (studentCourse_Combobox.getSelectedItem().toString().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Course is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
         }
@@ -259,7 +272,9 @@ public class StudentCreateAccount1Frame extends javax.swing.JFrame {
                 System.out.println("Error " + e.getMessage());
                 JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
-            }}
+            }
+            }
+        }
     }//GEN-LAST:event_next_ButtonActionPerformed
 
     private void goBack_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_goBack_ButtonMousePressed
