@@ -130,6 +130,7 @@ public class StartFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_studentLogin_ButtonActionPerformed
 
     private void adminLogin_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_adminLogin_ButtonActionPerformed
+  
         new LoginAdminFrame().setVisible(true);
         dispose();
     }//GEN-LAST:event_adminLogin_ButtonActionPerformed

@@ -39,7 +39,7 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
             String dbPassword = rs.getString("Password");
 
             // Check if the entered email and password match the database values
-            if (enteredEmail.equals(dbEmail) && enteredPassword.equals(dbPassword)) {
+            if (enteredEmail.equalsIgnoreCase(dbEmail) && enteredPassword.equals(dbPassword)) {
                 return true;  // Login successful
             }
         }

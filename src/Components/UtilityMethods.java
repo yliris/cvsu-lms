@@ -34,6 +34,14 @@ public class UtilityMethods {
         }
     }
 
+    
+    public static void TransparentField2(JTextField... fields) {
+        for (JTextField f : fields) {
+            f.setForeground(new Color(102, 102, 102, 100));
+        }
+    }
+    
+    
     public static void DefaultText(JTextField field, String defaultText, DefaultFocus enumFocus) {
         if (enumFocus == DefaultFocus.GAINED) {
             if (field.getText().equals(defaultText)) {
@@ -47,5 +55,21 @@ public class UtilityMethods {
             }
         }
     }
+    
+    
+    public static void DefaultText2(JTextField field, String defaultText, DefaultFocus enumFocus) {
+        if (enumFocus == DefaultFocus.GAINED) {
+            if (field.getText().equals(defaultText)) {
+                field.setText("");
+                field.setForeground(new Color(102, 102, 102, 255));
+            }
+        } else if (enumFocus == DefaultFocus.LOST) {
+            if (field.getText().equals("")) {
+                field.setText(defaultText);
+                field.setForeground(new Color(102, 102, 102, 100));
+            }
+        }
+    }
+    
     
 }

@@ -215,7 +215,7 @@ public class LoginAdminFrame extends javax.swing.JFrame {
         String admin = adminEmail_Login_Field.getText().trim();
         String password = String.valueOf(adminPassword_Login_Field.getPassword()).trim();
 
-        if ("admin@cvsu.edu.ph".equals(admin) && "a1d2m3i4n5".equals(password)) {
+        if ("admin@cvsu.edu.ph".equalsIgnoreCase(admin) && "a1d2m3i4n5".equals(password)) {
             JOptionPane.showMessageDialog(null, "Admin Login Success!");
             dispose();
             new AdminHome().setVisible(true);
