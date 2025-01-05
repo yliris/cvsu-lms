@@ -1,3 +1,4 @@
+
 package Home;
 
 import static Components.UtilityMethods.*;
@@ -28,6 +29,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
+
 public class AdminHome extends javax.swing.JFrame {
 
     public AdminHome() {
@@ -36,7 +38,6 @@ public class AdminHome extends javax.swing.JFrame {
         displayDataInCoursesTable();
         displayDataInInstructorTable();
         displayDataInStudentTable();
-        
 
     }
 
@@ -115,9 +116,7 @@ public class AdminHome extends javax.swing.JFrame {
         String user = "root";
         String pass = "";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass); 
-                PreparedStatement pst = con.prepareStatement(query); 
-                ResultSet rs = pst.executeQuery()) {
+        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
 
             // Create a DefaultTableModel to hold the data
             DefaultTableModel model = (DefaultTableModel) CoursesTable.getModel();
@@ -125,7 +124,7 @@ public class AdminHome extends javax.swing.JFrame {
             // Clear the existing rows in the table model before adding new ones
             model.setRowCount(0);
             while (rs.next()) {
-
+                String program = rs.getString("Program");
                 String courseCode = rs.getString("CourseCode");
                 String courseName = rs.getString("CourseName");
                 String credits = rs.getString("Credits");
@@ -133,7 +132,7 @@ public class AdminHome extends javax.swing.JFrame {
                 String year = rs.getString("Year");
                 String sem = rs.getString("Semester");
 
-                model.addRow(new Object[]{courseCode, courseName, credits, prerequisite, year, sem});
+                model.addRow(new Object[]{program, courseCode, courseName, credits, prerequisite, year, sem});
             }
 
             // Refresh JTable UI
@@ -145,18 +144,23 @@ public class AdminHome extends javax.swing.JFrame {
         }
     }
 
-    private void filterData(String selectedYear, String selectedSemester) {
+    private void filterData(String selectedProgram, String selectedYear, String selectedSemester) {
         // Construct the query based on selected Year and Semester
         String query = "SELECT * FROM tb_subjects WHERE 1=1"; // Default query to show all records
 
+        if (selectedProgram != null && !selectedProgram.isEmpty() && !selectedProgram.equals("All")) {
+            // Add program filter
+            query += " AND Program = '" + selectedProgram + "'";
+        }
         if (selectedYear != null && !selectedYear.isEmpty() && !selectedYear.equals("All")) {
-            // Add year filter if not "All" (if you have a default "All" option in the combobox)
+            // Add year filter if not "All"
             query += " AND Year = '" + selectedYear + "'";
         }
         if (selectedSemester != null && !selectedSemester.isEmpty() && !selectedSemester.equals("All")) {
             // Add semester filter if not "All"
             query += " AND Semester = '" + selectedSemester + "'";
         }
+
         // Now, apply the query to fetch filtered data from the database
         updateTable(query);
     }
@@ -172,6 +176,7 @@ public class AdminHome extends javax.swing.JFrame {
 
             // Loop through result set and add rows to the table model
             while (rs.next()) {
+                String program = rs.getString("Program");
                 String courseCode = rs.getString("CourseCode");
                 String courseName = rs.getString("CourseName");
                 String credits = rs.getString("Credits");
@@ -179,7 +184,7 @@ public class AdminHome extends javax.swing.JFrame {
                 String year = rs.getString("Year");
                 String semester = rs.getString("Semester");
 
-                model.addRow(new Object[]{courseCode, courseName, credits, prerequisite, year, semester});
+                model.addRow(new Object[]{program, courseCode, courseName, credits, prerequisite, year, semester});
             }
 
             // Refresh the JTable to reflect new data
@@ -270,6 +275,10 @@ public class AdminHome extends javax.swing.JFrame {
         credits_field = new javax.swing.JTextField();
         credits1 = new javax.swing.JLabel();
         ClearFormButton = new javax.swing.JButton();
+        jLabel24 = new javax.swing.JLabel();
+        acadyear_field = new javax.swing.JTextField();
+        program_field = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         CoursesTable = new javax.swing.JTable();
         coursesearch_bar = new javax.swing.JTextField();
@@ -577,27 +586,27 @@ public class AdminHome extends javax.swing.JFrame {
 
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel19.setText("Semester:");
-        course_form.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 90, 20));
+        course_form.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 250, 90, 20));
 
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel18.setText("Course Code:");
-        course_form.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 20));
+        course_form.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 90, 20));
 
         credits.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         credits.setText("Pre-requisite");
-        course_form.add(credits, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 90, 20));
+        course_form.add(credits, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 90, 20));
 
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel21.setText("Year:");
-        course_form.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 90, 20));
-        course_form.add(coursecode_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 170, -1));
-        course_form.add(prerequisite_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 170, -1));
+        course_form.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 90, 20));
+        course_form.add(coursecode_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 170, -1));
+        course_form.add(prerequisite_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, 170, -1));
 
         sem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd" }));
-        course_form.add(sem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 170, 20));
+        course_form.add(sem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 250, 170, 20));
 
         year_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th" }));
-        course_form.add(year_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 170, 20));
+        course_form.add(year_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 170, 20));
 
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Course Table");
@@ -609,7 +618,7 @@ public class AdminHome extends javax.swing.JFrame {
                 deletecourse_btnActionPerformed(evt);
             }
         });
-        course_form.add(deletecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 260, -1));
+        course_form.add(deletecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 260, -1));
 
         addcourse_btn.setText("Add Course");
         addcourse_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -617,7 +626,7 @@ public class AdminHome extends javax.swing.JFrame {
                 addcourse_btnActionPerformed(evt);
             }
         });
-        course_form.add(addcourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 260, -1));
+        course_form.add(addcourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 260, -1));
 
         updatecourse_btn.setText("Update Course");
         updatecourse_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -625,17 +634,17 @@ public class AdminHome extends javax.swing.JFrame {
                 updatecourse_btnActionPerformed(evt);
             }
         });
-        course_form.add(updatecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 260, -1));
-        course_form.add(coursetitle_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 170, -1));
+        course_form.add(updatecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 350, 260, -1));
+        course_form.add(coursetitle_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 130, 170, -1));
 
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel25.setText("Course Title:");
-        course_form.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 90, 20));
-        course_form.add(credits_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 170, -1));
+        course_form.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 90, 20));
+        course_form.add(credits_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 170, -1));
 
         credits1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         credits1.setText("Credits:");
-        course_form.add(credits1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 90, 20));
+        course_form.add(credits1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 90, 20));
 
         ClearFormButton.setText("Clear form");
         ClearFormButton.addActionListener(new java.awt.event.ActionListener() {
@@ -645,17 +654,25 @@ public class AdminHome extends javax.swing.JFrame {
         });
         course_form.add(ClearFormButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 90, 20));
 
+        jLabel24.setText("Academic Year:");
+        course_form.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
+        course_form.add(acadyear_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 170, -1));
+        course_form.add(program_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 170, -1));
+
+        jLabel26.setText("Program:");
+        course_form.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
+
         courses.add(course_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 280, 460));
 
         CoursesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Course Code", "Course Title", "Credits", "Pre-requisite", "Year", "Semester"
+                "Program", "Course Code", "Course Title", "Credits", "Pre-requisite", "Year", "Semester", "A.Y."
             }
         ));
         CoursesTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -719,7 +736,7 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel20.setText("Year");
         courses.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 40, 30));
 
-        coursesearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSCS", "BSCE", "BSIT", "BSIS", "BSOA" }));
+        coursesearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "BSCS", "BSCE", "BSIT", "BSIS", "BSOA" }));
         coursesearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 coursesearchActionPerformed(evt);
@@ -768,12 +785,14 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_instructor_btnActionPerformed
 
     private void addcourse_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addcourse_btnActionPerformed
+        String Program;
         String CourseCode;
         String CourseName;
         String Credit;
         String Prerequisite;
         String Year;
         String Sem;
+        String AY;
         String query;
 
         try {
@@ -798,13 +817,16 @@ public class AdminHome extends javax.swing.JFrame {
         }
 
 // Validation for empty fields
-        if (coursecode_field.getText().trim().isEmpty()) {
+        if (program_field.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "The Program is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (coursecode_field.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Course Code is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
         } else if (coursetitle_field.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Course Title is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-            } else if (credits_field.getText().trim().isEmpty()) {
+        } else if (credits_field.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Credit is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
         } else if (prerequisite_field.getText().trim().isEmpty()) {
@@ -816,28 +838,35 @@ public class AdminHome extends javax.swing.JFrame {
         } else if (sem_cbox.getSelectedItem().toString().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Semester is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
+        } else if (acadyear_field.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Academic Year is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
         }
 
         if (isValid) {
             // Retrieve input values
+            Program = program_field.getText().trim();
             CourseCode = coursecode_field.getText().trim();
             CourseName = coursetitle_field.getText().trim();
             Credit = credits_field.getText().trim(); // Store as String initially
             Prerequisite = prerequisite_field.getText().trim();
             Year = (String) year_cbox.getSelectedItem();
             Sem = (String) sem_cbox.getSelectedItem();
+            AY = acadyear_field.getText().trim();
 
             // Proceed if all inputs are valid
             if (isValid) {
-                query = "INSERT INTO tb_subjects (CourseCode, CourseName, Credits, `Pre-requisite`, Year, Semester) VALUES (?, ?, ?, ?, ?, ?)";
+                query = "INSERT INTO tb_subjects (Program, CourseCode, CourseName, Credits, `Pre-requisite`, Year, Semester, AcademicYear) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 try {
                     PreparedStatement pst = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-                    pst.setString(1, CourseCode);
-                    pst.setString(2, CourseName);
-                    pst.setString(3, Credit);  // Store Credit as int (converted from String)
-                    pst.setString(4, Prerequisite);
-                    pst.setString(5, Year);
-                    pst.setString(6, Sem);
+                    pst.setString(1, Program);
+                    pst.setString(2, CourseCode);
+                    pst.setString(3, CourseName);
+                    pst.setString(4, Credit);  // Store Credit as int (converted from String)
+                    pst.setString(5, Prerequisite);
+                    pst.setString(6, Year);
+                    pst.setString(7, Sem);
+                    pst.setString(8, AY);
 
                     pst.executeUpdate();
 
@@ -854,36 +883,42 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_addcourse_btnActionPerformed
 
     private void updatecourse_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updatecourse_btnActionPerformed
+        String updProgram = null;
         String updCode = null;
         String updTitle = null;
         String updCredits = null;
         String updPrerequisite = null;
         String updYear = null;
         String updSem = null;
+        String updAY = null;
 
         DefaultTableModel model = (DefaultTableModel) CoursesTable.getModel();
 
         if (CoursesTable.getSelectedRowCount() == 1) {
 
             // kukunin yung nasa table tas ilalagay sa jtextfield para maedit
+            updProgram = program_field.getText();
             updCode = coursecode_field.getText();
             updTitle = coursetitle_field.getText();
             updCredits = credits_field.getText();
             updPrerequisite = prerequisite_field.getText();
             updYear = (String) year_cbox.getSelectedItem();
             updSem = (String) sem_cbox.getSelectedItem();
+            updAY = acadyear_field.getText();
 
-            if (updCode.isEmpty() || updTitle.isEmpty() || updCredits.isEmpty() || updPrerequisite == null || updYear == null || updSem == null) {
+            if (updProgram.isEmpty() || updCode.isEmpty() || updTitle.isEmpty() || updCredits.isEmpty() || updPrerequisite == null || updYear == null || updSem == null || updAY == null) {
                 JOptionPane.showMessageDialog(null, "Please fill in all fields!");
                 return;
             }
 
-            model.setValueAt(updCode, CoursesTable.getSelectedRow(), 0);
-            model.setValueAt(updTitle, CoursesTable.getSelectedRow(), 1);
-            model.setValueAt(updCredits, CoursesTable.getSelectedRow(), 2);
-            model.setValueAt(updPrerequisite, CoursesTable.getSelectedRow(), 3);
-            model.setValueAt(updYear, CoursesTable.getSelectedRow(), 4);
-            model.setValueAt(updSem, CoursesTable.getSelectedRow(), 5);
+            model.setValueAt(updProgram, CoursesTable.getSelectedRow(), 0);
+            model.setValueAt(updCode, CoursesTable.getSelectedRow(), 1);
+            model.setValueAt(updTitle, CoursesTable.getSelectedRow(), 2);
+            model.setValueAt(updCredits, CoursesTable.getSelectedRow(), 3);
+            model.setValueAt(updPrerequisite, CoursesTable.getSelectedRow(), 4);
+            model.setValueAt(updYear, CoursesTable.getSelectedRow(), 5);
+            model.setValueAt(updSem, CoursesTable.getSelectedRow(), 6);
+            model.setValueAt(updAY, CoursesTable.getSelectedRow(), 7);
 
             JOptionPane.showMessageDialog(null, "Updated Successfully!");
 
@@ -899,17 +934,19 @@ public class AdminHome extends javax.swing.JFrame {
         String dbPassword = "";
 
         // SQL Update query
-        String updateQuery = "UPDATE tb_subjects SET CourseName = ?, Credits = ?, `Pre-requisite` = ?, Year = ?, Semester = ? WHERE CourseCode = ?";
+        String updateQuery = "UPDATE tb_subjects SET Program = ?, CourseName = ?, Credits = ?, `Pre-requisite` = ?, Year = ?, Semester = ?, AcademicYear = ? WHERE CourseCode = ?";
 
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(updateQuery)) {
 
             // Set the parameters for the SQL update
-            pst.setString(1, updTitle);
-            pst.setString(2, updCredits);
-            pst.setString (3, updPrerequisite);
-            pst.setString(4, updYear);
-            pst.setString(5, updSem);
-            pst.setString(6, updCode);
+            pst.setString(1, updProgram);
+            pst.setString(2, updTitle);
+            pst.setString(3, updCredits);
+            pst.setString(4, updPrerequisite);
+            pst.setString(5, updYear);
+            pst.setString(6, updSem);
+            pst.setString(7, updAY);
+            pst.setString(8, updCode);
 
             // Execute the update
             int rowsAffected = pst.executeUpdate();
@@ -939,20 +976,33 @@ public class AdminHome extends javax.swing.JFrame {
             // Get the CourseCode from the selected row (assuming it's in the first column)
             String delCode = model.getValueAt(selectedRow, 0).toString();
 
-            // Remove the row from the JTable
-            model.removeRow(selectedRow);
+            int confirmDelete = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to delete this course?",
+                    "Delete Course",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
 
-            // Now delete the course from the database
-            deleteCourseFromDatabase(delCode);
+            // If the user confirms the deletion
+            if (confirmDelete == JOptionPane.YES_OPTION) {
+                // Remove the row from the JTable
+                model.removeRow(selectedRow);
 
-            // Show a success message
-            JOptionPane.showMessageDialog(null, "Course deleted successfully!");
+                // Now delete the course from the database
+                deleteCourseFromDatabase(delCode);
+                // Show a success message
+                JOptionPane.showMessageDialog(null, "Course deleted successfully!");
+            } else {
+                // If the user cancels, you can add any additional logic here (optional)
+                JOptionPane.showMessageDialog(null, "Course deletion cancelled.");
+            }
+
         } else {
             // Handle the case where no row is selected
             if (CoursesTable.getRowCount() == 0) {
                 JOptionPane.showMessageDialog(null, "The table has no values.");
             } else {
                 JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
+
             }
         }
     }
@@ -1015,37 +1065,57 @@ public class AdminHome extends javax.swing.JFrame {
 
     private void CoursesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CoursesTableMouseClicked
         DefaultTableModel model = (DefaultTableModel) CoursesTable.getModel();
+        int selectedRow = CoursesTable.getSelectedRow();
 
-        String Code = model.getValueAt(CoursesTable.getSelectedRow(), 0).toString();
-        String Title = model.getValueAt(CoursesTable.getSelectedRow(), 1).toString();
-        String Credits = model.getValueAt(CoursesTable.getSelectedRow(), 2).toString();
-        String Prerequisite = model.getValueAt(CoursesTable.getSelectedRow(), 3).toString();     
-        String Year = model.getValueAt(CoursesTable.getSelectedRow(), 4).toString();
-        String Sem = model.getValueAt(CoursesTable.getSelectedRow(), 5).toString();
+// Check if a valid row is selected
+        if (selectedRow != -1) {
+            // Safely get values from the table and check for null
+            String Program = getValueOrDefault(model, selectedRow, 0);
+            String Code = getValueOrDefault(model, selectedRow, 1);
+            String Title = getValueOrDefault(model, selectedRow, 2);
+            String Credits = getValueOrDefault(model, selectedRow, 3);
+            String Prerequisite = getValueOrDefault(model, selectedRow, 4);
+            String Year = getValueOrDefault(model, selectedRow, 5);
+            String Sem = getValueOrDefault(model, selectedRow, 6);
+            String AY = getValueOrDefault(model, selectedRow, 7);
 
-        coursecode_field.setText(Code);
-        coursetitle_field.setText(Title);
-        credits_field.setText(Credits);
-        prerequisite_field.setText(Prerequisite);
-        year_cbox.setSelectedItem(Year);
-        sem_cbox.setSelectedItem(Sem);
+            // Set the values to the corresponding fields
+            program_field.setText(Program);
+            coursecode_field.setText(Code);
+            coursetitle_field.setText(Title);
+            credits_field.setText(Credits);
+            prerequisite_field.setText(Prerequisite);
+            year_cbox.setSelectedItem(Year);
+            sem_cbox.setSelectedItem(Sem);
+            acadyear_field.setText(AY);
+        } else {
+            // Handle case where no row is selected
+            System.out.println("No row selected.");
+        }
 
+}
+    private String getValueOrDefault(DefaultTableModel model, int row, int column) {
+        Object value = model.getValueAt(row, column);
+        return (value != null) ? value.toString() : "No Data";  // You can customize the default value
+    
 
     }//GEN-LAST:event_CoursesTableMouseClicked
 
     private void searchyear_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchyear_cboxActionPerformed
+        String selectedProgram = (String) coursesearch.getSelectedItem();
         String selectedYear = (String) searchyear_cbox.getSelectedItem();
         String selectedSemester = (String) searchsem_cbox.getSelectedItem();
 
-        filterData(selectedYear, selectedSemester);
+        filterData(selectedProgram, selectedYear, selectedSemester);
 
     }//GEN-LAST:event_searchyear_cboxActionPerformed
 
     private void searchsem_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchsem_cboxActionPerformed
+        String selectedProgram = (String) coursesearch.getSelectedItem();
         String selectedYear = (String) searchyear_cbox.getSelectedItem();
         String selectedSemester = (String) searchsem_cbox.getSelectedItem();
 
-        filterData(selectedYear, selectedSemester);
+        filterData(selectedProgram, selectedYear, selectedSemester);
 
     }//GEN-LAST:event_searchsem_cboxActionPerformed
 
@@ -1221,61 +1291,74 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_updateinstructor_btnActionPerformed
 
     private void deleteinstructor_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteinstructor_btnActionPerformed
-        DefaultTableModel model = (DefaultTableModel) InstructorsTable.getModel();
+    DefaultTableModel model = (DefaultTableModel) InstructorsTable.getModel();
 
-        // Get the selected row index
-        int selectedRow = InstructorsTable.getSelectedRow();
+    // Get the selected row index
+    int selectedRow = InstructorsTable.getSelectedRow();
 
-        // Check if a row is selected
-        if (selectedRow != -1) {
-            // Get the CourseCode from the selected row (assuming it's in the first column)
-            String delName = model.getValueAt(selectedRow, 0).toString();
+    // Check if a row is selected
+    if (selectedRow != -1) {
+        // Get the CourseCode from the selected row (assuming it's in the first column)
+        String delName = model.getValueAt(selectedRow, 0).toString();
+        int confirmDelete = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to delete this instructor?",
+                "Delete Instructor",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
 
+        // If the user confirms the deletion
+        if (confirmDelete == JOptionPane.YES_OPTION) {
             // Remove the row from the JTable
             model.removeRow(selectedRow);
 
             // Now delete the course from the database
             deleteInstructorFromDatabase(delName);
-
             // Show a success message
             JOptionPane.showMessageDialog(null, "Instructor deleted successfully!");
         } else {
-            // Handle the case where no row is selected
-            if (InstructorsTable.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "The table has no values.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
-            }
+            // If the user cancels, you can add any additional logic here (optional)
+            JOptionPane.showMessageDialog(null, "Instructor deletion cancelled.");
+        }
+
+    } else {
+        // Handle the case where no row is selected
+        if (InstructorsTable.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "The table has no values.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
+
         }
     }
 
+}
+
     private void deleteInstructorFromDatabase(String instName) {
-        // Database connection parameters
-        String dbUrl = "jdbc:mysql://localhost:3306/lms_project";
-        String dbUser = "root";
-        String dbPassword = "";
+    // Database connection parameters
+    String dbUrl = "jdbc:mysql://localhost:3306/lms_project";
+    String dbUser = "root";
+    String dbPassword = "";
 
-        // SQL Delete query
-        String deleteQuery = "DELETE FROM tb_createinstructor WHERE Name = ?";
+    // SQL Delete query
+    String deleteQuery = "DELETE FROM tb_createinstructor WHERE Name = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(deleteQuery)) {
+    try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(deleteQuery)) {
 
-            // Set the parameters for the SQL delete
-            pst.setString(1, instName);
+        // Set the parameters for the SQL delete
+        pst.setString(1, instName);
 
-            // Execute the delete query
-            int rowsAffected = pst.executeUpdate();
+        // Execute the delete query
+        int rowsAffected = pst.executeUpdate();
 
-            if (rowsAffected > 0) {
-                System.out.println("Database row deleted successfully.");
-            } else {
-                System.out.println("No records deleted.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error deleting the course from the database!");
+        if (rowsAffected > 0) {
+            System.out.println("Database row deleted successfully.");
+        } else {
+            System.out.println("No records deleted.");
         }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error deleting the course from the database!");
+    }
     }//GEN-LAST:event_deleteinstructor_btnActionPerformed
 
     private void InstructorsTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_InstructorsTableMouseClicked
@@ -1329,7 +1412,7 @@ public class AdminHome extends javax.swing.JFrame {
         try {
             con = DriverManager.getConnection(url, user, pass);
         } catch (SQLException ex) {
-     
+
             JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -1488,61 +1571,74 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_StudentsTableMouseClicked
 
     private void studDelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studDelButtonActionPerformed
-        DefaultTableModel model = (DefaultTableModel) StudentsTable.getModel();
+    DefaultTableModel model = (DefaultTableModel) StudentsTable.getModel();
 
-        // Get the selected row index
-        int selectedRow = StudentsTable.getSelectedRow();
+    // Get the selected row index
+    int selectedRow = StudentsTable.getSelectedRow();
 
-        // Check if a row is selected
-        if (selectedRow != -1) {
-            // Get the CourseCode from the selected row (assuming it's in the first column)
-            String delName = model.getValueAt(selectedRow, 0).toString();
+    // Check if a row is selected
+    if (selectedRow != -1) {
+        // Get the CourseCode from the selected row (assuming it's in the first column)
+        String delName = model.getValueAt(selectedRow, 0).toString();
+        int confirmDelete = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to delete this student?",
+                "Delete Student",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
 
+        // If the user confirms the deletion
+        if (confirmDelete == JOptionPane.YES_OPTION) {
             // Remove the row from the JTable
             model.removeRow(selectedRow);
 
             // Now delete the course from the database
             deleteStudentFromDatabase(delName);
-
             // Show a success message
             JOptionPane.showMessageDialog(null, "Student deleted successfully!");
         } else {
-            // Handle the case where no row is selected
-            if (StudentsTable.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "The table has no values.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
-            }
+            // If the user cancels, you can add any additional logic here (optional)
+            JOptionPane.showMessageDialog(null, "Student deletion cancelled.");
+        }
+
+    } else {
+        // Handle the case where no row is selected
+        if (InstructorsTable.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(null, "The table has no values.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
+
         }
     }
 
+}
+
     private void deleteStudentFromDatabase(String studName) {
-        // Database connection parameters
-        String dbUrl = "jdbc:mysql://localhost:3306/lms_project";
-        String dbUser = "root";
-        String dbPassword = "";
+    // Database connection parameters
+    String dbUrl = "jdbc:mysql://localhost:3306/lms_project";
+    String dbUser = "root";
+    String dbPassword = "";
 
-        // SQL Delete query
-        String deleteQuery = "DELETE FROM tb_createstudent WHERE Name = ?";
+    // SQL Delete query
+    String deleteQuery = "DELETE FROM tb_createstudent WHERE Name = ?";
 
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(deleteQuery)) {
+    try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(deleteQuery)) {
 
-            // Set the parameters for the SQL delete
-            pst.setString(1, studName);
+        // Set the parameters for the SQL delete
+        pst.setString(1, studName);
 
-            // Execute the delete query
-            int rowsAffected = pst.executeUpdate();
+        // Execute the delete query
+        int rowsAffected = pst.executeUpdate();
 
-            if (rowsAffected > 0) {
-                System.out.println("Database row deleted successfully.");
-            } else {
-                System.out.println("No records deleted.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error deleting the course from the database!");
+        if (rowsAffected > 0) {
+            System.out.println("Database row deleted successfully.");
+        } else {
+            System.out.println("No records deleted.");
         }
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error deleting the course from the database!");
+    }
     }//GEN-LAST:event_studDelButtonActionPerformed
 
     private void usersearch_barFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_usersearch_barFocusGained
@@ -1554,7 +1650,7 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_usersearch_barFocusLost
 
     private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
-       DefaultTableModel model = (DefaultTableModel) InstructorsTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) InstructorsTable.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         InstructorsTable.setRowSorter(sorter);
 
@@ -1566,16 +1662,20 @@ public class AdminHome extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) StudentsTable.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         StudentsTable.setRowSorter(sorter);
-        
-         sorter.setRowFilter(RowFilter.regexFilter("(?i)" + usersearch_bar.getText()));
+
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + usersearch_bar.getText()));
     }//GEN-LAST:event_usersearch_barKeyReleased
 
     private void coursesearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesearchActionPerformed
-        // TODO add your handling code here:
+        String selectedProgram = (String) coursesearch.getSelectedItem();
+        String selectedYear = (String) searchyear_cbox.getSelectedItem();
+        String selectedSemester = (String) searchsem_cbox.getSelectedItem();
+
+        filterData(selectedProgram, selectedYear, selectedSemester);
     }//GEN-LAST:event_coursesearchActionPerformed
 
     private void ClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearFormButtonActionPerformed
-          
+
         coursecode_field.setText("");
         coursetitle_field.setText("");
         credits_field.setText("");
@@ -1601,34 +1701,34 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_ClearFormButton2ActionPerformed
 
     public static void main(String args[]) {
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+     */
+    try {
+        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+            if ("Nimbus".equals(info.getName())) {
+                javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                break;
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AdminHome().setVisible(true);
-            }
-        });
+    } catch (ClassNotFoundException ex) {
+        java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (InstantiationException ex) {
+        java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (IllegalAccessException ex) {
+        java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        java.util.logging.Logger.getLogger(AdminHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
     }
+    //</editor-fold>
+
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new AdminHome().setVisible(true);
+        }
+    });
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton ClearFormButton;
@@ -1637,6 +1737,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JTable CoursesTable;
     private javax.swing.JTable InstructorsTable;
     private javax.swing.JTable StudentsTable;
+    private javax.swing.JTextField acadyear_field;
     private javax.swing.JButton addcourse_btn;
     private javax.swing.JButton addinstructor_btn;
     private javax.swing.JButton addstudent_btn;
@@ -1677,7 +1778,9 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1694,6 +1797,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JButton logout_btn;
     private javax.swing.JTabbedPane panels;
     private javax.swing.JTextField prerequisite_field;
+    private javax.swing.JTextField program_field;
     private javax.swing.JTextField search;
     private javax.swing.JComboBox<String> searchsem_cbox;
     private javax.swing.JComboBox<String> searchyear_cbox;
