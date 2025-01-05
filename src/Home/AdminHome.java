@@ -279,7 +279,7 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel17 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        searchyear_cbox1 = new javax.swing.JComboBox<>();
+        coursesearch = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Learning Management System - Admin Home");
@@ -683,13 +683,13 @@ public class AdminHome extends javax.swing.JFrame {
         });
         courses.add(coursesearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 230, 30));
 
-        searchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSCS", "BSCE", "BSIT", "BSIS", "BSOA" }));
+        searchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th", " " }));
         searchyear_cbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchyear_cboxActionPerformed(evt);
             }
         });
-        courses.add(searchyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 100, 30));
+        courses.add(searchyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 60, 30));
 
         searchsem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
         searchsem_cbox.addActionListener(new java.awt.event.ActionListener() {
@@ -719,13 +719,13 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel20.setText("Year");
         courses.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 40, 30));
 
-        searchyear_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
-        searchyear_cbox1.addActionListener(new java.awt.event.ActionListener() {
+        coursesearch.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSCS", "BSCE", "BSIT", "BSIS", "BSOA" }));
+        coursesearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchyear_cbox1ActionPerformed(evt);
+                coursesearchActionPerformed(evt);
             }
         });
-        courses.add(searchyear_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 60, 30));
+        courses.add(coursesearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 90, 30));
 
         panels.addTab("tab2", courses);
 
@@ -1570,9 +1570,9 @@ public class AdminHome extends javax.swing.JFrame {
          sorter.setRowFilter(RowFilter.regexFilter("(?i)" + usersearch_bar.getText()));
     }//GEN-LAST:event_usersearch_barKeyReleased
 
-    private void searchyear_cbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchyear_cbox1ActionPerformed
+    private void coursesearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_searchyear_cbox1ActionPerformed
+    }//GEN-LAST:event_coursesearchActionPerformed
 
     private void ClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearFormButtonActionPerformed
           
@@ -1645,6 +1645,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JPanel course_form;
     private javax.swing.JTextField coursecode_field;
     private javax.swing.JPanel courses;
+    private javax.swing.JComboBox<String> coursesearch;
     private javax.swing.JTextField coursesearch_bar;
     private javax.swing.JTextField coursetitle_field;
     private javax.swing.JLabel credits;
@@ -1696,7 +1697,6 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JTextField search;
     private javax.swing.JComboBox<String> searchsem_cbox;
     private javax.swing.JComboBox<String> searchyear_cbox;
-    private javax.swing.JComboBox<String> searchyear_cbox1;
     private javax.swing.JComboBox<String> sem_cbox;
     private javax.swing.JButton studDelButton;
     private javax.swing.JPanel student;
