@@ -683,7 +683,7 @@ public class AdminHome extends javax.swing.JFrame {
         });
         courses.add(coursesearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 230, 30));
 
-        searchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th", " " }));
+        searchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th", " " }));
         searchyear_cbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchyear_cboxActionPerformed(evt);
