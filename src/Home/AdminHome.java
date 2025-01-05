@@ -115,7 +115,9 @@ public class AdminHome extends javax.swing.JFrame {
         String user = "root";
         String pass = "";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+        try (Connection con = DriverManager.getConnection(url, user, pass); 
+                PreparedStatement pst = con.prepareStatement(query); 
+                ResultSet rs = pst.executeQuery()) {
 
             // Create a DefaultTableModel to hold the data
             DefaultTableModel model = (DefaultTableModel) CoursesTable.getModel();
@@ -127,10 +129,11 @@ public class AdminHome extends javax.swing.JFrame {
                 String courseCode = rs.getString("CourseCode");
                 String courseName = rs.getString("CourseName");
                 String credits = rs.getString("Credits");
+                String prerequisite = rs.getString("Pre-requisite");
                 String year = rs.getString("Year");
                 String sem = rs.getString("Semester");
 
-                model.addRow(new Object[]{courseCode, courseName, credits, year, sem});
+                model.addRow(new Object[]{courseCode, courseName, credits, prerequisite, year, sem});
             }
 
             // Refresh JTable UI
@@ -172,10 +175,11 @@ public class AdminHome extends javax.swing.JFrame {
                 String courseCode = rs.getString("CourseCode");
                 String courseName = rs.getString("CourseName");
                 String credits = rs.getString("Credits");
+                String prerequisite = rs.getString("Pre-requisite");
                 String year = rs.getString("Year");
                 String semester = rs.getString("Semester");
 
-                model.addRow(new Object[]{courseCode, courseName, credits, year, semester});
+                model.addRow(new Object[]{courseCode, courseName, credits, prerequisite, year, semester});
             }
 
             // Refresh the JTable to reflect new data
@@ -202,8 +206,8 @@ public class AdminHome extends javax.swing.JFrame {
         panels = new javax.swing.JTabbedPane();
         users = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        student_btn = new javax.swing.JButton();
         instructor_btn = new javax.swing.JButton();
+        student_btn = new javax.swing.JButton();
         user_tables = new javax.swing.JTabbedPane();
         student = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -222,6 +226,7 @@ public class AdminHome extends javax.swing.JFrame {
         updStudentButton = new javax.swing.JButton();
         studDelButton = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
+        ClearFormButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         StudentsTable = new javax.swing.JTable();
         usersearch_bar = new javax.swing.JTextField();
@@ -242,6 +247,7 @@ public class AdminHome extends javax.swing.JFrame {
         department_cbox = new javax.swing.JComboBox<>();
         instructorpass_field = new javax.swing.JPasswordField();
         jLabel15 = new javax.swing.JLabel();
+        ClearFormButton1 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         InstructorsTable = new javax.swing.JTable();
         search = new javax.swing.JTextField();
@@ -252,7 +258,7 @@ public class AdminHome extends javax.swing.JFrame {
         credits = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         coursecode_field = new javax.swing.JTextField();
-        credits_field = new javax.swing.JTextField();
+        prerequisite_field = new javax.swing.JTextField();
         sem_cbox = new javax.swing.JComboBox<>();
         year_cbox = new javax.swing.JComboBox<>();
         jLabel22 = new javax.swing.JLabel();
@@ -261,6 +267,9 @@ public class AdminHome extends javax.swing.JFrame {
         updatecourse_btn = new javax.swing.JButton();
         coursetitle_field = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
+        credits_field = new javax.swing.JTextField();
+        credits1 = new javax.swing.JLabel();
+        ClearFormButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         CoursesTable = new javax.swing.JTable();
         coursesearch_bar = new javax.swing.JTextField();
@@ -269,7 +278,8 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        searchyear_cbox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Learning Management System - Admin Home");
@@ -286,11 +296,11 @@ public class AdminHome extends javax.swing.JFrame {
                 user_btnActionPerformed(evt);
             }
         });
-        jPanel2.add(user_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 220, 30));
+        jPanel2.add(user_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 220, 30));
 
         jLabel3.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 18)); // NOI18N
         jLabel3.setText("Hello, Admin!");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, 30));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 170, 30));
 
         course_btn.setText("Courses");
         course_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -298,7 +308,7 @@ public class AdminHome extends javax.swing.JFrame {
                 course_btnActionPerformed(evt);
             }
         });
-        jPanel2.add(course_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 220, 30));
+        jPanel2.add(course_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 220, 30));
 
         logout_btn.setText("Logout");
         logout_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -306,23 +316,15 @@ public class AdminHome extends javax.swing.JFrame {
                 logout_btnActionPerformed(evt);
             }
         });
-        jPanel2.add(logout_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(882, 10, 90, 30));
+        jPanel2.add(logout_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 30, 90, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 60));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 980, 80));
 
         users.setBackground(new java.awt.Color(153, 153, 153));
         users.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        student_btn.setText("Students");
-        student_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                student_btnActionPerformed(evt);
-            }
-        });
-        jPanel3.add(student_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, 40));
 
         instructor_btn.setText("Instructors");
         instructor_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -331,6 +333,14 @@ public class AdminHome extends javax.swing.JFrame {
             }
         });
         jPanel3.add(instructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, 40));
+
+        student_btn.setText("Students");
+        student_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                student_btnActionPerformed(evt);
+            }
+        });
+        jPanel3.add(student_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, 40));
 
         users.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 960, 60));
 
@@ -348,34 +358,34 @@ public class AdminHome extends javax.swing.JFrame {
                 addstudent_btnActionPerformed(evt);
             }
         });
-        student_form.add(addstudent_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 260, -1));
+        student_form.add(addstudent_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 260, -1));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Name:");
-        student_form.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 80, 20));
+        student_form.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 80, 20));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Student No.:");
-        student_form.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 80, 20));
+        student_form.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 80, 20));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("CvSU Mail:");
-        student_form.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 80, 20));
+        student_form.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 80, 20));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Program:");
-        student_form.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 80, 20));
+        student_form.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 80, 20));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel7.setText("Password:");
-        student_form.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 80, 20));
-        student_form.add(studentname_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 180, -1));
-        student_form.add(studentnumber_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 180, -1));
-        student_form.add(studentemail_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 180, -1));
+        student_form.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 80, 20));
+        student_form.add(studentname_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 180, -1));
+        student_form.add(studentnumber_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 180, -1));
+        student_form.add(studentemail_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 180, -1));
 
         course_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BS in Computer Science" }));
-        student_form.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 180, -1));
-        student_form.add(studentpass_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 180, -1));
+        student_form.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 180, -1));
+        student_form.add(studentpass_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 180, -1));
 
         updStudentButton.setText("Update Student");
         updStudentButton.addActionListener(new java.awt.event.ActionListener() {
@@ -383,7 +393,7 @@ public class AdminHome extends javax.swing.JFrame {
                 updStudentButtonActionPerformed(evt);
             }
         });
-        student_form.add(updStudentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 260, -1));
+        student_form.add(updStudentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 260, -1));
 
         studDelButton.setText("Delete Student");
         studDelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -391,11 +401,19 @@ public class AdminHome extends javax.swing.JFrame {
                 studDelButtonActionPerformed(evt);
             }
         });
-        student_form.add(studDelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 260, -1));
+        student_form.add(studDelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 260, -1));
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Student Form");
         student_form.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 280, 40));
+
+        ClearFormButton2.setText("Clear form");
+        ClearFormButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClearFormButton2ActionPerformed(evt);
+            }
+        });
+        student_form.add(ClearFormButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 90, 20));
 
         student.add(student_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 280, 370));
 
@@ -451,7 +469,7 @@ public class AdminHome extends javax.swing.JFrame {
                 addinstructor_btnActionPerformed(evt);
             }
         });
-        instructor_form.add(addinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 260, -1));
+        instructor_form.add(addinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 260, -1));
 
         updateinstructor_btn.setText("Update Instructor");
         updateinstructor_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -459,7 +477,7 @@ public class AdminHome extends javax.swing.JFrame {
                 updateinstructor_btnActionPerformed(evt);
             }
         });
-        instructor_form.add(updateinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 260, -1));
+        instructor_form.add(updateinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 260, -1));
 
         deleteinstructor_btn.setText("Delete Instructor");
         deleteinstructor_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -467,38 +485,46 @@ public class AdminHome extends javax.swing.JFrame {
                 deleteinstructor_btnActionPerformed(evt);
             }
         });
-        instructor_form.add(deleteinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 260, -1));
+        instructor_form.add(deleteinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 260, -1));
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel9.setText("Name:");
-        instructor_form.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 80, 20));
+        instructor_form.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 80, 20));
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel10.setText("CvSU Mail:");
-        instructor_form.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 80, 20));
+        instructor_form.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 80, 20));
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel11.setText("Employee ID:");
-        instructor_form.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 80, 20));
+        instructor_form.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 80, 20));
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel12.setText("Department:");
-        instructor_form.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 190, 80, 20));
+        instructor_form.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 80, 20));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel13.setText("Password:");
-        instructor_form.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 80, 20));
-        instructor_form.add(instructorname_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 180, -1));
-        instructor_form.add(instructormail_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 180, -1));
-        instructor_form.add(employeeid_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 180, -1));
+        instructor_form.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 80, 20));
+        instructor_form.add(instructorname_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 180, -1));
+        instructor_form.add(instructormail_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 180, -1));
+        instructor_form.add(employeeid_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 180, -1));
 
         department_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DIT" }));
-        instructor_form.add(department_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, 180, -1));
-        instructor_form.add(instructorpass_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 230, 180, -1));
+        instructor_form.add(department_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 180, -1));
+        instructor_form.add(instructorpass_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 180, -1));
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Instructor Form");
         instructor_form.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 280, 40));
+
+        ClearFormButton1.setText("Clear form");
+        ClearFormButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClearFormButton1ActionPerformed(evt);
+            }
+        });
+        instructor_form.add(ClearFormButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 90, 20));
 
         instructor.add(instructor_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 280, 370));
 
@@ -551,27 +577,27 @@ public class AdminHome extends javax.swing.JFrame {
 
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel19.setText("Semester:");
-        course_form.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 90, 20));
+        course_form.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 90, 20));
 
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel18.setText("Course Code:");
         course_form.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 20));
 
         credits.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        credits.setText("Credits:");
-        course_form.add(credits, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 90, 20));
+        credits.setText("Pre-requisite");
+        course_form.add(credits, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 90, 20));
 
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel21.setText("Year:");
-        course_form.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 90, 20));
+        course_form.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 90, 20));
         course_form.add(coursecode_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 170, -1));
-        course_form.add(credits_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 170, -1));
+        course_form.add(prerequisite_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 170, 170, -1));
 
         sem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd" }));
-        course_form.add(sem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 210, 170, 20));
+        course_form.add(sem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, 170, 20));
 
         year_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th" }));
-        course_form.add(year_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 170, 20));
+        course_form.add(year_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 170, 20));
 
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Course Table");
@@ -583,7 +609,7 @@ public class AdminHome extends javax.swing.JFrame {
                 deletecourse_btnActionPerformed(evt);
             }
         });
-        course_form.add(deletecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 260, -1));
+        course_form.add(deletecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 260, -1));
 
         addcourse_btn.setText("Add Course");
         addcourse_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -591,7 +617,7 @@ public class AdminHome extends javax.swing.JFrame {
                 addcourse_btnActionPerformed(evt);
             }
         });
-        course_form.add(addcourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 260, -1));
+        course_form.add(addcourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 260, -1));
 
         updatecourse_btn.setText("Update Course");
         updatecourse_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -599,24 +625,37 @@ public class AdminHome extends javax.swing.JFrame {
                 updatecourse_btnActionPerformed(evt);
             }
         });
-        course_form.add(updatecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 260, -1));
+        course_form.add(updatecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 260, -1));
         course_form.add(coursetitle_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 100, 170, -1));
 
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel25.setText("Course Title:");
         course_form.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 90, 20));
+        course_form.add(credits_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 170, -1));
+
+        credits1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        credits1.setText("Credits:");
+        course_form.add(credits1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 90, 20));
+
+        ClearFormButton.setText("Clear form");
+        ClearFormButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ClearFormButtonActionPerformed(evt);
+            }
+        });
+        course_form.add(ClearFormButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 420, 90, 20));
 
         courses.add(course_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 280, 460));
 
         CoursesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Course Code", "Course Title", "Credits", "Year", "Semester"
+                "Course Code", "Course Title", "Credits", "Pre-requisite", "Year", "Semester"
             }
         ));
         CoursesTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -644,13 +683,13 @@ public class AdminHome extends javax.swing.JFrame {
         });
         courses.add(coursesearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 230, 30));
 
-        searchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "4th" }));
+        searchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSCS", "BSCE", "BSIT", "BSIS", "BSOA" }));
         searchyear_cbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchyear_cboxActionPerformed(evt);
             }
         });
-        courses.add(searchyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 110, 30));
+        courses.add(searchyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, 100, 30));
 
         searchsem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
         searchsem_cbox.addActionListener(new java.awt.event.ActionListener() {
@@ -658,7 +697,7 @@ public class AdminHome extends javax.swing.JFrame {
                 searchsem_cboxActionPerformed(evt);
             }
         });
-        courses.add(searchsem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 20, 110, 30));
+        courses.add(searchsem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 50, 30));
 
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
@@ -667,18 +706,26 @@ public class AdminHome extends javax.swing.JFrame {
 
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel17.setText("Year");
-        courses.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 40, 30));
+        jLabel17.setText("Program");
+        courses.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 80, 30));
 
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel23.setText("Sem");
-        courses.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 40, 30));
+        courses.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 40, 30));
 
-        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel24.setText("Sem");
-        courses.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 20, 40, 30));
+        jLabel20.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel20.setText("Year");
+        courses.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 40, 30));
+
+        searchyear_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
+        searchyear_cbox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchyear_cbox1ActionPerformed(evt);
+            }
+        });
+        courses.add(searchyear_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 60, 30));
 
         panels.addTab("tab2", courses);
 
@@ -724,6 +771,7 @@ public class AdminHome extends javax.swing.JFrame {
         String CourseCode;
         String CourseName;
         String Credit;
+        String Prerequisite;
         String Year;
         String Sem;
         String query;
@@ -756,7 +804,10 @@ public class AdminHome extends javax.swing.JFrame {
         } else if (coursetitle_field.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Course Title is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-        } else if (credits_field.getText().trim().isEmpty()) {
+            } else if (credits_field.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Credit is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (prerequisite_field.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Credit is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
         } else if (year_cbox.getSelectedItem().toString().isEmpty()) {
@@ -772,20 +823,21 @@ public class AdminHome extends javax.swing.JFrame {
             CourseCode = coursecode_field.getText().trim();
             CourseName = coursetitle_field.getText().trim();
             Credit = credits_field.getText().trim(); // Store as String initially
-
+            Prerequisite = prerequisite_field.getText().trim();
             Year = (String) year_cbox.getSelectedItem();
             Sem = (String) sem_cbox.getSelectedItem();
 
             // Proceed if all inputs are valid
             if (isValid) {
-                query = "INSERT INTO tb_subjects (CourseCode, CourseName, Credits, Year, Semester) VALUES (?, ?, ?, ?, ?)";
+                query = "INSERT INTO tb_subjects (CourseCode, CourseName, Credits, `Pre-requisite`, Year, Semester) VALUES (?, ?, ?, ?, ?, ?)";
                 try {
                     PreparedStatement pst = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
                     pst.setString(1, CourseCode);
                     pst.setString(2, CourseName);
                     pst.setString(3, Credit);  // Store Credit as int (converted from String)
-                    pst.setString(4, Year);
-                    pst.setString(5, Sem);
+                    pst.setString(4, Prerequisite);
+                    pst.setString(5, Year);
+                    pst.setString(6, Sem);
 
                     pst.executeUpdate();
 
@@ -805,6 +857,7 @@ public class AdminHome extends javax.swing.JFrame {
         String updCode = null;
         String updTitle = null;
         String updCredits = null;
+        String updPrerequisite = null;
         String updYear = null;
         String updSem = null;
 
@@ -816,10 +869,11 @@ public class AdminHome extends javax.swing.JFrame {
             updCode = coursecode_field.getText();
             updTitle = coursetitle_field.getText();
             updCredits = credits_field.getText();
+            updPrerequisite = prerequisite_field.getText();
             updYear = (String) year_cbox.getSelectedItem();
             updSem = (String) sem_cbox.getSelectedItem();
 
-            if (updCode.isEmpty() || updTitle.isEmpty() || updCredits.isEmpty() || updYear == null || updSem == null) {
+            if (updCode.isEmpty() || updTitle.isEmpty() || updCredits.isEmpty() || updPrerequisite == null || updYear == null || updSem == null) {
                 JOptionPane.showMessageDialog(null, "Please fill in all fields!");
                 return;
             }
@@ -827,8 +881,9 @@ public class AdminHome extends javax.swing.JFrame {
             model.setValueAt(updCode, CoursesTable.getSelectedRow(), 0);
             model.setValueAt(updTitle, CoursesTable.getSelectedRow(), 1);
             model.setValueAt(updCredits, CoursesTable.getSelectedRow(), 2);
-            model.setValueAt(updYear, CoursesTable.getSelectedRow(), 3);
-            model.setValueAt(updSem, CoursesTable.getSelectedRow(), 4);
+            model.setValueAt(updPrerequisite, CoursesTable.getSelectedRow(), 3);
+            model.setValueAt(updYear, CoursesTable.getSelectedRow(), 4);
+            model.setValueAt(updSem, CoursesTable.getSelectedRow(), 5);
 
             JOptionPane.showMessageDialog(null, "Updated Successfully!");
 
@@ -844,16 +899,17 @@ public class AdminHome extends javax.swing.JFrame {
         String dbPassword = "";
 
         // SQL Update query
-        String updateQuery = "UPDATE tb_subjects SET CourseName = ?, Credits = ?, Year = ?, Semester = ? WHERE CourseCode = ?";
+        String updateQuery = "UPDATE tb_subjects SET CourseName = ?, Credits = ?, `Pre-requisite` = ?, Year = ?, Semester = ? WHERE CourseCode = ?";
 
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(updateQuery)) {
 
             // Set the parameters for the SQL update
             pst.setString(1, updTitle);
             pst.setString(2, updCredits);
-            pst.setString(3, updYear);
-            pst.setString(4, updSem);
-            pst.setString(5, updCode);
+            pst.setString (3, updPrerequisite);
+            pst.setString(4, updYear);
+            pst.setString(5, updSem);
+            pst.setString(6, updCode);
 
             // Execute the update
             int rowsAffected = pst.executeUpdate();
@@ -963,12 +1019,14 @@ public class AdminHome extends javax.swing.JFrame {
         String Code = model.getValueAt(CoursesTable.getSelectedRow(), 0).toString();
         String Title = model.getValueAt(CoursesTable.getSelectedRow(), 1).toString();
         String Credits = model.getValueAt(CoursesTable.getSelectedRow(), 2).toString();
-        String Year = model.getValueAt(CoursesTable.getSelectedRow(), 3).toString();
-        String Sem = model.getValueAt(CoursesTable.getSelectedRow(), 4).toString();
+        String Prerequisite = model.getValueAt(CoursesTable.getSelectedRow(), 3).toString();     
+        String Year = model.getValueAt(CoursesTable.getSelectedRow(), 4).toString();
+        String Sem = model.getValueAt(CoursesTable.getSelectedRow(), 5).toString();
 
         coursecode_field.setText(Code);
         coursetitle_field.setText(Title);
         credits_field.setText(Credits);
+        prerequisite_field.setText(Prerequisite);
         year_cbox.setSelectedItem(Year);
         sem_cbox.setSelectedItem(Sem);
 
@@ -1512,6 +1570,36 @@ public class AdminHome extends javax.swing.JFrame {
          sorter.setRowFilter(RowFilter.regexFilter("(?i)" + usersearch_bar.getText()));
     }//GEN-LAST:event_usersearch_barKeyReleased
 
+    private void searchyear_cbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchyear_cbox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchyear_cbox1ActionPerformed
+
+    private void ClearFormButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearFormButtonActionPerformed
+          
+        coursecode_field.setText("");
+        coursetitle_field.setText("");
+        credits_field.setText("");
+        prerequisite_field.setText("");
+        year_cbox.setSelectedItem("1st");
+        sem_cbox.setSelectedItem("1st");
+    }//GEN-LAST:event_ClearFormButtonActionPerformed
+
+    private void ClearFormButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearFormButton1ActionPerformed
+        instructorname_field.setText("");
+        instructorname_field.setText("");
+        employeeid_field.setText("");
+        department_cbox.setSelectedItem("DIT");
+        instructorpass_field.setText("");
+    }//GEN-LAST:event_ClearFormButton1ActionPerformed
+
+    private void ClearFormButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearFormButton2ActionPerformed
+        studentname_field.setText("");
+        studentnumber_field.setText("");
+        studentemail_field.setText("");
+        course_cbox.setSelectedItem("BS in Computer Science");
+        studentpass_field.setText("");
+    }//GEN-LAST:event_ClearFormButton2ActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1543,6 +1631,9 @@ public class AdminHome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton ClearFormButton;
+    private javax.swing.JButton ClearFormButton1;
+    private javax.swing.JButton ClearFormButton2;
     private javax.swing.JTable CoursesTable;
     private javax.swing.JTable InstructorsTable;
     private javax.swing.JTable StudentsTable;
@@ -1557,6 +1648,7 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JTextField coursesearch_bar;
     private javax.swing.JTextField coursetitle_field;
     private javax.swing.JLabel credits;
+    private javax.swing.JLabel credits1;
     private javax.swing.JTextField credits_field;
     private javax.swing.JButton deletecourse_btn;
     private javax.swing.JButton deleteinstructor_btn;
@@ -1580,10 +1672,10 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1600,9 +1692,11 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton logout_btn;
     private javax.swing.JTabbedPane panels;
+    private javax.swing.JTextField prerequisite_field;
     private javax.swing.JTextField search;
     private javax.swing.JComboBox<String> searchsem_cbox;
     private javax.swing.JComboBox<String> searchyear_cbox;
+    private javax.swing.JComboBox<String> searchyear_cbox1;
     private javax.swing.JComboBox<String> sem_cbox;
     private javax.swing.JButton studDelButton;
     private javax.swing.JPanel student;
