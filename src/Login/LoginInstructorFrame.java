@@ -59,11 +59,11 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
         checkPassword_Checkbox = new javax.swing.JCheckBox();
         instructorEmail_Login_Field = new javax.swing.JTextField();
         instructorPassword_Login_Field = new javax.swing.JPasswordField();
+        instructorForgotPassword_Button = new javax.swing.JButton();
         instructorLogin_Button = new javax.swing.JButton();
         goBack_Button = new javax.swing.JButton();
         instructorEmail_Label = new javax.swing.JLabel();
         instructorPassword_Label = new javax.swing.JLabel();
-        instructorCreateAccount_Button = new javax.swing.JButton();
         instructorLogin_Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -115,6 +115,27 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
         });
         getContentPane().add(instructorPassword_Login_Field, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 330, 180, 30));
 
+        instructorForgotPassword_Button.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
+        instructorForgotPassword_Button.setForeground(new java.awt.Color(255, 255, 255));
+        instructorForgotPassword_Button.setText("Forgot password");
+        instructorForgotPassword_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        instructorForgotPassword_Button.setBorderPainted(false);
+        instructorForgotPassword_Button.setContentAreaFilled(false);
+        instructorForgotPassword_Button.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                instructorForgotPassword_ButtonMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                instructorForgotPassword_ButtonMouseReleased(evt);
+            }
+        });
+        instructorForgotPassword_Button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                instructorForgotPassword_ButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(instructorForgotPassword_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 370, -1, -1));
+
         instructorLogin_Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/buttons/Login_Button.png"))); // NOI18N
         instructorLogin_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         instructorLogin_Button.setBorderPainted(false);
@@ -158,27 +179,6 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
 
         instructorPassword_Label.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/fields/Password_Field.png"))); // NOI18N
         getContentPane().add(instructorPassword_Label, new org.netbeans.lib.awtextra.AbsoluteConstraints(368, 330, -1, -1));
-
-        instructorCreateAccount_Button.setFont(new java.awt.Font("Copperplate Gothic Light", 0, 12)); // NOI18N
-        instructorCreateAccount_Button.setForeground(new java.awt.Color(255, 255, 255));
-        instructorCreateAccount_Button.setText("Create Account");
-        instructorCreateAccount_Button.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        instructorCreateAccount_Button.setBorderPainted(false);
-        instructorCreateAccount_Button.setContentAreaFilled(false);
-        instructorCreateAccount_Button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                instructorCreateAccount_ButtonMousePressed(evt);
-            }
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                instructorCreateAccount_ButtonMouseReleased(evt);
-            }
-        });
-        instructorCreateAccount_Button.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                instructorCreateAccount_ButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(instructorCreateAccount_Button, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 460, -1, -1));
 
         instructorLogin_Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/backgrounds/LoginFrame.png"))); // NOI18N
         getContentPane().add(instructorLogin_Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -239,19 +239,6 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_checkPassword_CheckboxActionPerformed
 
-    private void instructorCreateAccount_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instructorCreateAccount_ButtonMousePressed
-        instructorCreateAccount_Button.setForeground(Color.lightGray);
-    }//GEN-LAST:event_instructorCreateAccount_ButtonMousePressed
-
-    private void instructorCreateAccount_ButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instructorCreateAccount_ButtonMouseReleased
-        instructorCreateAccount_Button.setForeground(Color.white);
-    }//GEN-LAST:event_instructorCreateAccount_ButtonMouseReleased
-
-    private void instructorCreateAccount_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorCreateAccount_ButtonActionPerformed
-        new InstructorCreateAccount1Frame().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_instructorCreateAccount_ButtonActionPerformed
-
     private void instructorLogin_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorLogin_ButtonActionPerformed
 
         if (checkLogin()) {
@@ -263,6 +250,19 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_instructorLogin_ButtonActionPerformed
+
+    private void instructorForgotPassword_ButtonMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instructorForgotPassword_ButtonMousePressed
+        instructorForgotPassword_Button.setForeground(Color.lightGray);
+    }//GEN-LAST:event_instructorForgotPassword_ButtonMousePressed
+
+    private void instructorForgotPassword_ButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instructorForgotPassword_ButtonMouseReleased
+        instructorForgotPassword_Button.setForeground(Color.white);
+    }//GEN-LAST:event_instructorForgotPassword_ButtonMouseReleased
+
+    private void instructorForgotPassword_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorForgotPassword_ButtonActionPerformed
+        new InstructorForgotPassword1Frame().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_instructorForgotPassword_ButtonActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -300,9 +300,9 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checkPassword_Checkbox;
     private javax.swing.JButton goBack_Button;
-    private javax.swing.JButton instructorCreateAccount_Button;
     private javax.swing.JLabel instructorEmail_Label;
     private javax.swing.JTextField instructorEmail_Login_Field;
+    private javax.swing.JButton instructorForgotPassword_Button;
     private javax.swing.JLabel instructorLogin_Background;
     private javax.swing.JButton instructorLogin_Button;
     private javax.swing.JLabel instructorPassword_Label;
