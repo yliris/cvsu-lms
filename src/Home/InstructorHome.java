@@ -18,22 +18,28 @@ import javax.swing.table.DefaultTableModel;
 
 public class InstructorHome extends javax.swing.JFrame {
 
-    public InstructorHome() {
+    private static int userID;
+
+    public InstructorHome(int userID) {
+        InstructorHome.userID = userID;
         initComponents();
         displayDataInCoursesTable();
     }
-    
-    
-     private void displayDataInCoursesTable() {
+
+    public static void setUserID(int userID) {
+        InstructorHome.userID = userID;
+
+//        System.out.println(userID);
+    }
+
+    private void displayDataInCoursesTable() {
         String query = "SELECT * FROM tb_subjects";
 
         String url = "jdbc:mysql://localhost:3306/lms_project";
         String user = "root";
         String pass = "";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass); 
-                PreparedStatement pst = con.prepareStatement(query); 
-                ResultSet rs = pst.executeQuery()) {
+        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
 
             // Create a DefaultTableModel to hold the data
             DefaultTableModel model = (DefaultTableModel) CoursesTable.getModel();
@@ -41,14 +47,14 @@ public class InstructorHome extends javax.swing.JFrame {
             // Clear the existing rows in the table model before adding new ones
             model.setRowCount(0);
             while (rs.next()) {
-               
+
                 String courseCode = rs.getString("CourseCode");
                 String courseName = rs.getString("CourseName");
-                String credits = rs.getString("Credits");            
+                String credits = rs.getString("Credits");
                 String year = rs.getString("Year");
                 String sem = rs.getString("Semester");
 
-                model.addRow(new Object[]{ courseCode, courseName, credits, year, sem});
+                model.addRow(new Object[]{courseCode, courseName, credits, year, sem});
             }
 
             // Refresh JTable UI
@@ -60,7 +66,7 @@ public class InstructorHome extends javax.swing.JFrame {
         }
     }
 
-    private void filterData( String selectedYear, String selectedSemester) {
+    private void filterData(String selectedYear, String selectedSemester) {
         // Construct the query based on selected Year and Semester
         String query = "SELECT * FROM tb_subjects WHERE 1=1"; // Default query to show all records
 
@@ -72,11 +78,12 @@ public class InstructorHome extends javax.swing.JFrame {
             // Add semester filter if not "All"
             query += " AND Semester = '" + selectedSemester + "'";
         }
-        
+
         // Now, apply the query to fetch filtered data from the database
         updateTable(query);
     }
-private void updateTable(String query) {
+
+    private void updateTable(String query) {
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", ""); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
 
             // Get the table model
@@ -87,14 +94,14 @@ private void updateTable(String query) {
 
             // Loop through result set and add rows to the table model
             while (rs.next()) {
- 
+
                 String courseCode = rs.getString("CourseCode");
                 String courseName = rs.getString("CourseName");
-                String credits = rs.getString("Credits");            
+                String credits = rs.getString("Credits");
                 String year = rs.getString("Year");
                 String semester = rs.getString("Semester");
 
-                model.addRow(new Object[]{ courseCode, courseName, credits, year, semester});
+                model.addRow(new Object[]{courseCode, courseName, credits, year, semester});
             }
 
             // Refresh the JTable to reflect new data
@@ -107,6 +114,40 @@ private void updateTable(String query) {
         }
 
     }
+    
+    public void refreshProfile(){
+        String query = "SELECT * FROM tb_instructorinfo WHERE info_id = " + userID;
+
+        String url = "jdbc:mysql://localhost:3306/lms_project";
+        String user = "root";
+        String pass = "";
+
+        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                age_field.setText(rs.getString("info_age"));
+                sex_field.setText(rs.getString("info_sex"));
+                contactnum_field.setText(rs.getString("info_contact_number"));
+                address_field.setText(rs.getString("info_address"));
+                bday_field.setText(rs.getString("info_birthday"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Error fetching data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        query = "SELECT * FROM tb_createinstructor WHERE EmployeeID = " + userID;
+
+        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                name_field.setText(rs.getString("Name"));
+                cvsum_field.setText(rs.getString("CvSU_Mail"));
+                dept_field.setText(rs.getString("Department"));
+                id_field.setText(String.valueOf(userID));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Error fetching data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -655,10 +696,10 @@ private void updateTable(String query) {
         profile_background.add(delete_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
 
         dept_field.setText("dept");
-        profile_background.add(dept_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 80, -1));
+        profile_background.add(dept_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 260, -1));
 
         name_field.setText("name");
-        profile_background.add(name_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 190, -1));
+        profile_background.add(name_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 280, -1));
 
         age_field.setText("age");
         profile_background.add(age_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 80, -1));
@@ -667,16 +708,16 @@ private void updateTable(String query) {
         profile_background.add(sex_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 80, -1));
 
         contactnum_field.setText("cp num");
-        profile_background.add(contactnum_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 80, -1));
+        profile_background.add(contactnum_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 180, -1));
 
         address_field.setText("address");
-        profile_background.add(address_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 80, -1));
+        profile_background.add(address_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 200, -1));
 
         bday_field.setText("bday");
-        profile_background.add(bday_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 80, -1));
+        profile_background.add(bday_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 180, -1));
 
         cvsum_field.setText("cvsu");
-        profile_background.add(cvsum_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, 80, -1));
+        profile_background.add(cvsum_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, 340, -1));
 
         id_field.setText("id");
         profile_background.add(id_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, 80, -1));
@@ -859,6 +900,8 @@ private void updateTable(String query) {
 
     private void profile_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profile_btnActionPerformed
         instructor_panels.setSelectedIndex(3);
+
+        refreshProfile();
     }//GEN-LAST:event_profile_btnActionPerformed
 
     private void about_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_about_btnActionPerformed
@@ -927,7 +970,8 @@ private void updateTable(String query) {
     }//GEN-LAST:event_delete_btnMouseReleased
 
     private void edit_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edit_btnActionPerformed
-        new InstructorEditProfile().setVisible(true);
+        new InstructorEditProfile(userID, this).setVisible(true);
+        InstructorEditProfile.setUserID(userID);
     }//GEN-LAST:event_edit_btnActionPerformed
 
     private void delete_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delete_btnActionPerformed
@@ -949,7 +993,7 @@ private void updateTable(String query) {
         String Year;
         String Sem;
         String query;
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
@@ -987,7 +1031,7 @@ private void updateTable(String query) {
         } else if (sem_cbox.getSelectedItem().toString().isEmpty()) {
             JOptionPane.showMessageDialog(new JFrame(), "Semester is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-        
+
         }
         if (isValid) {
             // Retrieve input values
@@ -996,19 +1040,17 @@ private void updateTable(String query) {
             Credit = credits_field.getText().trim(); // Store as String initiall         
             Year = (String) year_cbox.getSelectedItem();
             Sem = (String) sem_cbox.getSelectedItem();
-  
 
             // Proceed if all inputs are valid
             if (isValid) {
                 query = "INSERT INTO tb_subjects (CourseCode, CourseName, Credits, Year, Semester) VALUES (?, ?, ?, ?, ?)";
                 try {
-                    PreparedStatement pst = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);        
+                    PreparedStatement pst = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
                     pst.setString(1, CourseCode);
                     pst.setString(2, CourseTitle);
-                    pst.setString(3, Credit);                 
+                    pst.setString(3, Credit);
                     pst.setString(4, Year);
                     pst.setString(5, Sem);
-                
 
                     pst.executeUpdate();
 
@@ -1028,10 +1070,9 @@ private void updateTable(String query) {
 
         String updCode = null;
         String updTitle = null;
-        String updCredits = null; 
+        String updCredits = null;
         String updYear = null;
         String updSem = null;
-    
 
         DefaultTableModel model = (DefaultTableModel) CoursesTable.getModel();
 
@@ -1040,23 +1081,20 @@ private void updateTable(String query) {
             // kukunin yung nasa table tas ilalagay sa jtextfield para maedit          
             updCode = coursecode_field.getText();
             updTitle = coursetitle_field.getText();
-            updCredits = credits_field.getText();       
+            updCredits = credits_field.getText();
             updYear = (String) year_cbox.getSelectedItem();
             updSem = (String) sem_cbox.getSelectedItem();
-        
 
             if (updCode.isEmpty() || updTitle.isEmpty() || updCredits.isEmpty() || updYear == null || updSem == null) {
                 JOptionPane.showMessageDialog(null, "Please fill in all fields!");
                 return;
             }
-            
-           
+
             model.setValueAt(updCode, CoursesTable.getSelectedRow(), 0);
             model.setValueAt(updTitle, CoursesTable.getSelectedRow(), 1);
-            model.setValueAt(updCredits, CoursesTable.getSelectedRow(), 2);         
+            model.setValueAt(updCredits, CoursesTable.getSelectedRow(), 2);
             model.setValueAt(updYear, CoursesTable.getSelectedRow(), 3);
             model.setValueAt(updSem, CoursesTable.getSelectedRow(), 4);
-      
 
             JOptionPane.showMessageDialog(null, "Updated Successfully!");
 
@@ -1077,11 +1115,10 @@ private void updateTable(String query) {
         try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(updateQuery)) {
 
             // Set the parameters for the SQL update
-       
             pst.setString(1, updTitle);
-            pst.setString(2, updCredits);           
+            pst.setString(2, updCredits);
             pst.setString(3, updYear);
-            pst.setString(4, updSem);          
+            pst.setString(4, updSem);
             pst.setString(5, updCode);
 
             // Execute the update
@@ -1100,7 +1137,7 @@ private void updateTable(String query) {
     }//GEN-LAST:event_updatecourse_btnActionPerformed
 
     private void deletecourse_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deletecourse_btnActionPerformed
-       DefaultTableModel model = (DefaultTableModel) CoursesTable.getModel();
+        DefaultTableModel model = (DefaultTableModel) CoursesTable.getModel();
 
         // Get the selected row index
         int selectedRow = CoursesTable.getSelectedRow();
@@ -1110,36 +1147,37 @@ private void updateTable(String query) {
             // Get the CourseCode from the selected row (assuming it's in the first column)
             String delCode = model.getValueAt(selectedRow, 0).toString();
 
-             int confirmDelete = JOptionPane.showConfirmDialog(null, 
-                "Are you sure you want to delete this course?", 
-                "Delete Course",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.WARNING_MESSAGE);
+            int confirmDelete = JOptionPane.showConfirmDialog(null,
+                    "Are you sure you want to delete this course?",
+                    "Delete Course",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE);
 
-        // If the user confirms the deletion
-        if (confirmDelete == JOptionPane.YES_OPTION) {
-            // Remove the row from the JTable
-            model.removeRow(selectedRow);
+            // If the user confirms the deletion
+            if (confirmDelete == JOptionPane.YES_OPTION) {
+                // Remove the row from the JTable
+                model.removeRow(selectedRow);
 
-            // Now delete the course from the database
-            deleteCourseFromDatabase(delCode);
-            // Show a success message
-            JOptionPane.showMessageDialog(null, "Course deleted successfully!");
+                // Now delete the course from the database
+                deleteCourseFromDatabase(delCode);
+                // Show a success message
+                JOptionPane.showMessageDialog(null, "Course deleted successfully!");
+            } else {
+                // If the user cancels, you can add any additional logic here (optional)
+                JOptionPane.showMessageDialog(null, "Course deletion cancelled.");
+            }
+
         } else {
-            // If the user cancels, you can add any additional logic here (optional)
-            JOptionPane.showMessageDialog(null, "Course deletion cancelled.");
-        }
+            // Handle the case where no row is selected
+            if (CoursesTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "The table has no values.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
 
-    } else {
-        // Handle the case where no row is selected
-        if (CoursesTable.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "The table has no values.");
-        } else {
-            JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
-        
+            }
         }
     }
-    }
+
     private void deleteCourseFromDatabase(String courseCode) {
         // Database connection parameters
         String dbUrl = "jdbc:mysql://localhost:3306/lms_project";
@@ -1171,16 +1209,16 @@ private void updateTable(String query) {
     }//GEN-LAST:event_deletecourse_btnActionPerformed
 
     private void searchyear_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchyear_cboxActionPerformed
-      
+
         String selectedYear = (String) searchyear_cbox.getSelectedItem();
         String selectedSemester = (String) searchsem_cbox.getSelectedItem();
 
         filterData(selectedYear, selectedSemester);
-        
+
     }//GEN-LAST:event_searchyear_cboxActionPerformed
 
     private void searchsem_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchsem_cboxActionPerformed
-         
+
         String selectedYear = (String) searchyear_cbox.getSelectedItem();
         String selectedSemester = (String) searchsem_cbox.getSelectedItem();
 
@@ -1213,7 +1251,7 @@ private void updateTable(String query) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InstructorHome().setVisible(true);
+                new InstructorHome(0).setVisible(true);
             }
         });
     }

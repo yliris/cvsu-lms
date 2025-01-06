@@ -1,17 +1,119 @@
 package Components;
 
+import Home.InstructorHome;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class InstructorEditProfile extends javax.swing.JFrame {
 
-    public InstructorEditProfile() {
+    static InstructorHome InstructorHome;
+    private static int userID;
+
+    public InstructorEditProfile(int userID, InstructorHome InstructorHome) {
+        this.InstructorHome = InstructorHome;
+        InstructorEditProfile.userID = userID;
         initComponents();
         ButtonGroup sex = new ButtonGroup();
         sex.add(male_rdb);
         sex.add(female_rdb);
         sex.add(other_rdb);
         mover.initMoving(InstructorEditProfile.this);
+    }
+
+    public static void setUserID(int userID) {
+        InstructorEditProfile.userID = userID;
+
+        String query = "SELECT * FROM tb_instructorinfo WHERE info_id = " + userID;
+
+        String url = "jdbc:mysql://localhost:3306/lms_project";
+        String user = "root";
+        String pass = "";
+
+        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                age_field.setText(rs.getString("info_age"));
+                String infoSex = rs.getString("info_sex");
+                if (infoSex == null) {
+                    other_rdb.setSelected(true);
+                } else {
+                    switch (infoSex) {
+                        case "MALE" ->
+                            male_rdb.setSelected(true);
+                        case "FEMALE" ->
+                            female_rdb.setSelected(true);
+                        default ->
+                            other_rdb.setSelected(true);
+                    }
+                }
+
+                try {
+                    String dbDate = rs.getString("info_birthday");
+
+                    if (dbDate == null) {
+                        bday_chooser.setDate(null);
+                    } else {
+
+                        SimpleDateFormat dbFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        SimpleDateFormat displayFormat = new SimpleDateFormat("MMM d, yyyy");
+
+                        Date date = dbFormat.parse(dbDate);
+                        String formattedDate = displayFormat.format(date);
+
+                        date = displayFormat.parse(formattedDate);
+
+                        bday_chooser.setDate(date);
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                number_field.setText(String.valueOf(rs.getInt("info_contact_number")));
+                address_field.setText(rs.getString("info_address"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Error fetching data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        query = "SELECT * FROM tb_createinstructor WHERE EmployeeID = " + userID;
+
+        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+            if (rs.next()) {
+                name_field.setText(rs.getString("Name"));
+                email_field.setText(rs.getString("CvSU_Mail"));
+                id_field.setText(String.valueOf(userID));
+                String info_department = rs.getString("Department");
+                if (info_department == null) {
+                    department_cbox.setSelectedItem("N/A");
+                } else {
+                    switch (info_department) {
+                        case "DIT" ->
+                            department_cbox.setSelectedItem("DIT");
+                        case "DAS" ->
+                            department_cbox.setSelectedItem("DAS");
+                        case "DOM" ->
+                            department_cbox.setSelectedItem("DOM");
+                        case "TED" ->
+                            department_cbox.setSelectedItem("TED");
+                        default ->
+                            department_cbox.setSelectedItem("N/A");
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(new JFrame(), "Error fetching data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -46,7 +148,7 @@ public class InstructorEditProfile extends javax.swing.JFrame {
         email_field = new javax.swing.JTextField();
         id_field = new javax.swing.JTextField();
         department_cbox = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        bday_chooser = new com.toedter.calendar.JDateChooser();
         user_security = new javax.swing.JPanel();
         instructor_answer = new javax.swing.JLabel();
         instructor_question = new javax.swing.JLabel();
@@ -215,15 +317,16 @@ public class InstructorEditProfile extends javax.swing.JFrame {
         email_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         user_information.add(email_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 270, -1));
 
+        id_field.setEditable(false);
         id_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         user_information.add(id_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 270, -1));
 
         department_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        department_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DIT" }));
+        department_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DIT", "DAS", "DOM", "TED", "N/A" }));
         user_information.add(department_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 340, 270, -1));
 
-        jDateChooser1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_information.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 270, -1));
+        bday_chooser.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        user_information.add(bday_chooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, 270, -1));
 
         edit.addTab("tab1", user_information);
 
@@ -281,6 +384,11 @@ public class InstructorEditProfile extends javax.swing.JFrame {
         confirm_btn.setText("Confirm Edit");
         confirm_btn.setBorder(null);
         confirm_btn.setBorderPainted(false);
+        confirm_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirm_btnActionPerformed(evt);
+            }
+        });
         background.add(confirm_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 410, 130, 30));
 
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 450));
@@ -325,6 +433,75 @@ public class InstructorEditProfile extends javax.swing.JFrame {
         edit.setSelectedIndex(1);
     }//GEN-LAST:event_sec_btnActionPerformed
 
+    private void confirm_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirm_btnActionPerformed
+        String url = "jdbc:mysql://localhost:3306/lms_project";
+        String user = "root";
+        String pass = "";
+
+        Connection con = null;
+        try {
+            con = DriverManager.getConnection(url, user, pass);
+        } catch (SQLException ex) {
+            Logger.getLogger(InstructorEditProfile.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        String query = "UPDATE tb_instructorinfo SET info_age = ?, info_sex = ?, info_contact_number = ?, info_address = ?, info_birthday = ? WHERE info_id = ?";
+        try {
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, age_field.getText());
+
+            String sex;
+            if (male_rdb.isSelected()) {
+                sex = "MALE";
+            } else if (female_rdb.isSelected()) {
+                sex = "FEMALE";
+            } else {
+                sex = "N/A";
+            }
+
+            pst.setString(2, sex);
+            pst.setString(3, number_field.getText());
+            pst.setString(4, address_field.getText());
+
+            Date date = bday_chooser.getDate();
+            String strDate = DateFormat.getDateInstance().format(date);
+            SimpleDateFormat inputFormat = new SimpleDateFormat("MMM d, yyyy");
+            SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+            try {
+                date = inputFormat.parse(strDate);
+                String formattedDate = outputFormat.format(date);
+                pst.setString(5, formattedDate);
+            } catch (ParseException e) {
+                System.out.println("Error " + e.getMessage());
+            }
+
+            pst.setInt(6, userID);
+
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error " + e.getMessage());
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        query = "UPDATE tb_createinstructor SET Name = ?, CvSU_Mail = ?, Department = ? WHERE EmployeeID = ?";
+        try {
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, name_field.getText());
+            pst.setString(2, email_field.getText());
+            pst.setString(3, department_cbox.getSelectedItem().toString());
+            pst.setInt(4, userID);
+
+            pst.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Error " + e.getMessage());
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        InstructorHome.refreshProfile();
+        JOptionPane.showMessageDialog(new JFrame(), "Edit Profile Success!", "Success", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_confirm_btnActionPerformed
+
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -351,24 +528,25 @@ public class InstructorEditProfile extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new InstructorEditProfile().setVisible(true);
+                new InstructorEditProfile(0, InstructorHome).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea address_field;
-    private javax.swing.JTextField age_field;
+    private static javax.swing.JTextArea address_field;
+    private static javax.swing.JTextField age_field;
     private javax.swing.JTextField answer_field;
     private javax.swing.JPanel background;
+    private static com.toedter.calendar.JDateChooser bday_chooser;
     private javax.swing.JButton confirm_btn;
-    private javax.swing.JComboBox<String> department_cbox;
+    private static javax.swing.JComboBox<String> department_cbox;
     private javax.swing.JTabbedPane edit;
-    private javax.swing.JTextField email_field;
+    private static javax.swing.JTextField email_field;
     private javax.swing.JButton exit_btn;
-    private javax.swing.JRadioButton female_rdb;
+    private static javax.swing.JRadioButton female_rdb;
     private javax.swing.JPanel header;
-    private javax.swing.JTextField id_field;
+    private static javax.swing.JTextField id_field;
     private javax.swing.JButton info_btn;
     private javax.swing.JLabel instructor_ID;
     private javax.swing.JLabel instructor_address;
@@ -383,14 +561,13 @@ public class InstructorEditProfile extends javax.swing.JFrame {
     private javax.swing.JLabel instructor_question;
     private javax.swing.JLabel instructor_repassword;
     private javax.swing.JLabel instructor_sex;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JRadioButton male_rdb;
+    private static javax.swing.JRadioButton male_rdb;
     private Components.PanelMover mover;
-    private javax.swing.JTextField name_field;
-    private javax.swing.JTextField number_field;
-    private javax.swing.JRadioButton other_rdb;
+    private static javax.swing.JTextField name_field;
+    private static javax.swing.JTextField number_field;
+    private static javax.swing.JRadioButton other_rdb;
     private javax.swing.JPasswordField password_field;
     private javax.swing.JComboBox<String> question_cbox;
     private javax.swing.JPasswordField repassword_field;

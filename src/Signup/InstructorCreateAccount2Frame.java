@@ -18,12 +18,12 @@ import Home.InstructorHome;
 import Components.UtilityMethods.DefaultFocus;
 import static Components.UtilityMethods.DefaultText;
 import static Components.UtilityMethods.TransparentField;
+import static Components.UtilityMethods.getUserID;
 
 public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
 
     private String InstName, InstMail, InstID, InstDept;
     private int primaryID;
-
 
     public InstructorCreateAccount2Frame(String InstName, String InstMail, String InstID, String InstDept, int primaryID) {
         initComponents();
@@ -32,21 +32,22 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         this.InstID = InstID;
         this.InstDept = InstDept;
         this.primaryID = primaryID;
-        
+
         instructorQuestion_Combobox.setModel(new DefaultComboBoxModel<>(new String[]{
-        "Select a question.",
-        "What is the name of the school where you completed your student teaching?",
-        "What was the name of the first school where you taught?",
-        "What year did you start working at CvSU?",
-        "Who was the school administrator on your first year working at CvSU?",
-        "What was your first advisory section?",
-        "What was grade level of your first teaching position?",
-        "What is the name of your favorite subject to teach?",
-        "What was the title of the first course you taught?"
-    }));
-        TransparentField(createInstructorPassword_Field);  
-    
-        }
+            "Select a question.",
+            "What is the name of the school where you completed your student teaching?",
+            "What was the name of the first school where you taught?",
+            "What year did you start working at CvSU?",
+            "Who was the school administrator on your first year working at CvSU?",
+            "What was your first advisory section?",
+            "What was grade level of your first teaching position?",
+            "What is the name of your favorite subject to teach?",
+            "What was the title of the first course you taught?"
+        }));
+        TransparentField(createInstructorPassword_Field);
+
+    }
+
     private InstructorCreateAccount2Frame() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
@@ -204,7 +205,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructor_Submit_ButtonMouseReleased
 
     private void instructor_Submit_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructor_Submit_ButtonActionPerformed
-       
+
         String Password;
         String ValAnswer;
         String RePass;
@@ -212,7 +213,7 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         String query;
         String selectedQuestion = (String) instructorQuestion_Combobox.getSelectedItem();
         boolean isValid = true;
-        
+
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
@@ -225,8 +226,6 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
         String user = "root";
         String pass = "";
 
-       
-        
         Connection con = null;
         try {
             con = DriverManager.getConnection(url, user, pass);
@@ -234,60 +233,57 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
             Logger.getLogger(InstructorCreateAccount2Frame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-        
-    
+
         if ("".equals(createInstructorPassword_Field.getText().trim())) {
             JOptionPane.showMessageDialog(new JFrame(), "Password is required", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
-        } else if ("".equals(createInstructorPassword_Field1.getText    ())) {
-        // Check if passwords match
-        JOptionPane.showMessageDialog(new JFrame(), "Please confirm password", "Dialog", JOptionPane.ERROR_MESSAGE);
-        isValid = false;
+        } else if ("".equals(createInstructorPassword_Field1.getText())) {
+            // Check if passwords match
+            JOptionPane.showMessageDialog(new JFrame(), "Please confirm password", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
         } else if (!createInstructorPassword_Field.getText().equals(createInstructorPassword_Field1.getText())) {
-        // Check if passwords match
-        JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Dialog", JOptionPane.ERROR_MESSAGE);
-        isValid = false;
-        } else if ("Select a question.".equals(selectedQuestion)){
-            JOptionPane.showMessageDialog(new JFrame(), "Please select a security question", "Dialog", JOptionPane.ERROR_MESSAGE); 
+            // Check if passwords match
+            JOptionPane.showMessageDialog(new JFrame(), "Passwords do not match", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if ("Select a question.".equals(selectedQuestion)) {
+            JOptionPane.showMessageDialog(new JFrame(), "Please select a security question", "Dialog", JOptionPane.ERROR_MESSAGE);
             isValid = false;
         } else if ("".equals(instructor_AnswerCreate_Field.getText().trim())) {
             JOptionPane.showMessageDialog(new JFrame(), "Validation Answer is required", "Dialog", JOptionPane.ERROR_MESSAGE);
-                            System.out.println("Selected question: " + selectedQuestion);
+            System.out.println("Selected question: " + selectedQuestion);
             isValid = false;
-        } 
-          else {
+        } else {
 
             Password = createInstructorPassword_Field.getText().trim();
             ValQuestion = selectedQuestion;
             ValAnswer = instructor_AnswerCreate_Field.getText().trim();
-            
-            
-        if(isValid){
-            query = "UPDATE tb_createinstructor SET Password = ?, SecurityQuestion = ?, ValidationAnswer = ? WHERE ID = ?";
-            try {
-                PreparedStatement pst = con.prepareStatement(query);
-                pst.setString(1, Password);
-                pst.setString(2, ValQuestion);
-                pst.setString(3, ValAnswer);
-                pst.setInt(4, primaryID);
 
-                pst.executeUpdate();
+            if (isValid) {
+                query = "UPDATE tb_createinstructor SET Password = ?, SecurityQuestion = ?, ValidationAnswer = ? WHERE ID = ?";
+                try {
+                    PreparedStatement pst = con.prepareStatement(query);
+                    pst.setString(1, Password);
+                    pst.setString(2, ValQuestion);
+                    pst.setString(3, ValAnswer);
+                    pst.setInt(4, primaryID);
 
-                JOptionPane.showMessageDialog(new JFrame(), "Welcome, Instructor!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    pst.executeUpdate();
 
-                dispose();
-                new InstructorHome().setVisible(true);
+                    JOptionPane.showMessageDialog(new JFrame(), "Welcome, Instructor!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-            } catch (Exception e) {
-                System.out.println("Error " + e.getMessage());
-                JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    dispose();
+                    int userID = getUserID("EmployeeID", "tb_createinstructor", "ID", String.valueOf(primaryID));
+                    new InstructorHome(userID).setVisible(true);
+                    InstructorHome.setUserID(userID);
+                } catch (Exception e) {
+                    System.out.println("Error " + e.getMessage());
+                    JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 
-              
+                }
             }
-        }}
-        
-       
-        
+        }
+
+
     }//GEN-LAST:event_instructor_Submit_ButtonActionPerformed
 
     private void checkPassword_CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPassword_CheckboxActionPerformed
@@ -316,19 +312,19 @@ public class InstructorCreateAccount2Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_goBack_ButtonActionPerformed
 
     private void createInstructorPassword_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_FieldFocusGained
-         DefaultText(createInstructorPassword_Field, "Password", DefaultFocus.GAINED);
+        DefaultText(createInstructorPassword_Field, "Password", DefaultFocus.GAINED);
     }//GEN-LAST:event_createInstructorPassword_FieldFocusGained
 
     private void createInstructorPassword_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_FieldFocusLost
-         DefaultText(createInstructorPassword_Field, "Password", DefaultFocus.LOST);
+        DefaultText(createInstructorPassword_Field, "Password", DefaultFocus.LOST);
     }//GEN-LAST:event_createInstructorPassword_FieldFocusLost
 
     private void createInstructorPassword_Field1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_Field1FocusGained
-        
+
     }//GEN-LAST:event_createInstructorPassword_Field1FocusGained
 
     private void createInstructorPassword_Field1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_createInstructorPassword_Field1FocusLost
-     
+
     }//GEN-LAST:event_createInstructorPassword_Field1FocusLost
 
     public static void main(String args[]) {

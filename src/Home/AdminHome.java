@@ -1375,6 +1375,7 @@ public class AdminHome extends javax.swing.JFrame {
         employeeid_field.setText(ID);
         department_cbox.setSelectedItem(Dept);
         instructorpass_field.setText(Pass);
+        
 
 
     }//GEN-LAST:event_InstructorsTableMouseClicked

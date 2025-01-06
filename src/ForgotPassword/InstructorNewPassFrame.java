@@ -9,18 +9,17 @@ import javax.swing.JOptionPane;
 import Home.InstructorHome;
 import Components.UtilityMethods.DefaultFocus;
 import static Components.UtilityMethods.DefaultText;
+import static Components.UtilityMethods.getUserID;
 import ForgotPassword.InstructorForgotPassword2Frame;
 
 public class InstructorNewPassFrame extends javax.swing.JFrame {
+
     private String username;
-    
+
     public InstructorNewPassFrame(String username) {
         initComponents();
         this.username = username;
-    } 
-    
-   
-
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -200,32 +199,35 @@ public class InstructorNewPassFrame extends javax.swing.JFrame {
             // Assuming you've already validated the passwords match, proceed to database update
             if (isValid) {
                 String query = "UPDATE tb_createinstructor SET Password = ? WHERE CvSU_Mail = ?";
-        
-        // Prepare database connection
-        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "")) {
-            // PreparedStatement to safely update the password
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.setString(1, newPassword);  // Set the new password
-            // Assuming `CvSU_Mail` is a variable that holds the user's email
-            pst.setString(2, username); // Replace `yourEmailVariable` with the actual variable
-            
-            int rowsAffected = pst.executeUpdate();
-            
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Password updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-                
-                // Redirect to InstructorHomeFrame
-                dispose();
-                new InstructorHome().setVisible(true);
-            } else {
-                JOptionPane.showMessageDialog(null, "Error updating password. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+
+                // Prepare database connection
+                try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "")) {
+                    // PreparedStatement to safely update the password
+                    PreparedStatement pst = con.prepareStatement(query);
+                    pst.setString(1, newPassword);  // Set the new password
+                    // Assuming `CvSU_Mail` is a variable that holds the user's email
+                    pst.setString(2, username); // Replace `yourEmailVariable` with the actual variable
+
+                    int rowsAffected = pst.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        JOptionPane.showMessageDialog(null, "Password updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                        // Redirect to InstructorHomeFrame
+                        dispose();
+
+                        int userID = getUserID("EmployeeID", "tb_createinstructor", "CvSU_Mail", username);
+                        new InstructorHome(userID).setVisible(true);
+                        InstructorHome.setUserID(userID);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error updating password. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Database error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-}
-       
+
     }//GEN-LAST:event_instructor_ResetPass_ButtonActionPerformed
 
     private void instructor_ResetPass_ButtonMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_instructor_ResetPass_ButtonMouseReleased
