@@ -3,8 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/JayCee/Documents/GitHub/cvsu-lms/src/Home/AdminHome.java</file>
-            <file>file:/C:/Users/JayCee/Documents/GitHub/cvsu-lms/src/Components/InstructorEditProfile.java</file>
+            <file>file:/C:/Users/I%20A%20N%20CALZADO/Documents/GitHub/cvsu-lms/src/Home/AdminHome.java</file>
+            <file>file:/C:/Users/I%20A%20N%20CALZADO/Documents/GitHub/cvsu-lms/src/Login/LoginAdminFrame.java</file>
+            <file>file:/C:/Users/I%20A%20N%20CALZADO/Documents/GitHub/cvsu-lms/src/Home/InstructorHome.java</file>
+            <file>file:/C:/Users/I%20A%20N%20CALZADO/Documents/GitHub/cvsu-lms/src/Login/LoginInstructorFrame.java</file>
+            <file>file:/C:/Users/I%20A%20N%20CALZADO/Documents/GitHub/cvsu-lms/src/Signup/InstructorCreateAccount2Frame.java</file>
+            <file>file:/C:/Users/I%20A%20N%20CALZADO/Documents/GitHub/cvsu-lms/src/ForgotPassword/InstructorNewPassFrame.java</file>
+            <file>file:/C:/Users/I%20A%20N%20CALZADO/Documents/GitHub/cvsu-lms/src/Components/InstructorEditProfile.java</file>
         </group>
     </open-files>
 </project-private>

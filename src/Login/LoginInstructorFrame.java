@@ -17,37 +17,41 @@ import static Components.UtilityMethods.DefaultText;
 import static Components.UtilityMethods.TransparentField;
 
 public class LoginInstructorFrame extends javax.swing.JFrame {
-   
- 
+
+    int userID;
+    
     public LoginInstructorFrame() {
         initComponents();
-        TransparentField(instructorEmail_Login_Field, instructorPassword_Login_Field);   
-       
+        TransparentField(instructorEmail_Login_Field, instructorPassword_Login_Field);
+
     }
+
     public boolean checkLogin() {
-    String enteredEmail = instructorEmail_Login_Field.getText().trim();
-    String enteredPassword = new String(instructorPassword_Login_Field.getPassword()).trim();  // Get entered password
+        String enteredEmail = instructorEmail_Login_Field.getText().trim();
+        String enteredPassword = new String(instructorPassword_Login_Field.getPassword()).trim();  // Get entered password
 
-    try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "")) {
-        String query = "SELECT CvSU_Mail, Password FROM tb_createinstructor WHERE CvSU_Mail = ?";
-        PreparedStatement pst = con.prepareStatement(query);
-        pst.setString(1, enteredEmail);
-        ResultSet rs = pst.executeQuery();
+        try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "")) {
+            String query = "SELECT CvSU_Mail, Password, EmployeeID FROM tb_createinstructor WHERE CvSU_Mail = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, enteredEmail);
+            ResultSet rs = pst.executeQuery();
 
-        if (rs.next()) {
-            String dbEmail = rs.getString("CvSU_Mail");
-            String dbPassword = rs.getString("Password");
+            if (rs.next()) {
+                String dbEmail = rs.getString("CvSU_Mail");
+                String dbPassword = rs.getString("Password");
+                userID = rs.getInt("EmployeeID");
 
-            // Check if the entered email and password match the database values
-            if (enteredEmail.equalsIgnoreCase(dbEmail) && enteredPassword.equals(dbPassword)) {
-                return true;  // Login successful
+                // Check if the entered email and password match the database values
+                if (enteredEmail.equalsIgnoreCase(dbEmail) && enteredPassword.equals(dbPassword)) {
+                    return true;  // Login successful
+                }
             }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        return false;  // Login failed
     }
-    return false;  // Login failed
-}
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -209,7 +213,7 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructorPassword_Login_FieldActionPerformed
 
     private void instructorPassword_Login_FieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorPassword_Login_FieldFocusLost
-       DefaultText(instructorPassword_Login_Field, "Password", DefaultFocus.LOST);
+        DefaultText(instructorPassword_Login_Field, "Password", DefaultFocus.LOST);
 
     }//GEN-LAST:event_instructorPassword_Login_FieldFocusLost
 
@@ -222,7 +226,7 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructorEmail_Login_FieldFocusLost
 
     private void instructorEmail_Login_FieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_instructorEmail_Login_FieldFocusGained
-       DefaultText(instructorEmail_Login_Field, "CvSU Email", DefaultFocus.GAINED);
+        DefaultText(instructorEmail_Login_Field, "CvSU Email", DefaultFocus.GAINED);
     }//GEN-LAST:event_instructorEmail_Login_FieldFocusGained
 
     private void checkPassword_CheckboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkPassword_CheckboxActionPerformed
@@ -249,13 +253,14 @@ public class LoginInstructorFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_instructorCreateAccount_ButtonActionPerformed
 
     private void instructorLogin_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_instructorLogin_ButtonActionPerformed
-         
-       if (checkLogin()) {
-        dispose();
-        new InstructorHome().setVisible(true);
-    } else {
-        JOptionPane.showMessageDialog(new JFrame(), "CvSU Email and Password do not match.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
+
+        if (checkLogin()) {
+            dispose();
+            new InstructorHome(userID).setVisible(true);
+            InstructorHome.setUserID(userID);
+        } else {
+            JOptionPane.showMessageDialog(new JFrame(), "CvSU Email and Password do not match.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
 
     }//GEN-LAST:event_instructorLogin_ButtonActionPerformed
 
