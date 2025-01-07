@@ -17,6 +17,8 @@ import static Components.UtilityMethods.TransparentField;
 
 public class LoginStudentFrame extends javax.swing.JFrame {
 
+      int userID;
+      
     public LoginStudentFrame() {
         initComponents();
         TransparentField(studentEmail_Login_Field, studentPassword_Login_Field);
@@ -27,7 +29,7 @@ public class LoginStudentFrame extends javax.swing.JFrame {
         String enteredPassword = new String(studentPassword_Login_Field.getPassword()).trim();  // Get entered password
 
         try (Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/lms_project", "root", "")) {
-            String query = "SELECT CvSU_Email, Password FROM tb_createstudent WHERE CvSU_Email = ?";
+            String query = "SELECT CvSU_Email, Password, StudentNumber FROM tb_createstudent WHERE CvSU_Email = ?";
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, enteredEmail);
             ResultSet rs = pst.executeQuery();
@@ -35,6 +37,7 @@ public class LoginStudentFrame extends javax.swing.JFrame {
             if (rs.next()) {
                 String dbEmail = rs.getString("CvSU_Email");
                 String dbPassword = rs.getString("Password");
+                userID = rs.getInt("StudentNumber");
 
                 // Check if the entered email and password match the database values
                 if (enteredEmail.equalsIgnoreCase(dbEmail) && enteredPassword.equals(dbPassword)) {
@@ -258,7 +261,7 @@ public class LoginStudentFrame extends javax.swing.JFrame {
     private void studentLogin_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_studentLogin_ButtonActionPerformed
         if (checkLogin()) {
             dispose();
-            new StudentHome().setVisible(true);
+            new StudentHome(userID).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(new JFrame(), "CvSU Email and Password do not match.", "Error", JOptionPane.ERROR_MESSAGE);
         }

@@ -1686,11 +1686,13 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_ClearFormButtonActionPerformed
 
     private void ClearFormButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearFormButton1ActionPerformed
+        program_field.setText("");
         instructorname_field.setText("");
         instructorname_field.setText("");
         employeeid_field.setText("");
         department_cbox.setSelectedItem("DIT");
         instructorpass_field.setText("");
+        acadyear_field.setText("");
     }//GEN-LAST:event_ClearFormButton1ActionPerformed
 
     private void ClearFormButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClearFormButton2ActionPerformed

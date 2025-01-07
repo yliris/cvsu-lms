@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import Home.StudentHome;
 import Components.UtilityMethods.DefaultFocus;
 import static Components.UtilityMethods.DefaultText;
+import static Components.UtilityMethods.getUserID;
 
 public class StudentNewPassFrame extends javax.swing.JFrame {
 
@@ -213,7 +214,9 @@ public class StudentNewPassFrame extends javax.swing.JFrame {
                 
                 // Redirect to InstructorHomeFrame
                 dispose();
-                new StudentHome().setVisible(true);
+                int userID = getUserID("StudentNumber", "tb_createstudent", "CvSU_Email", username);
+                new StudentHome(userID).setVisible(true);
+                StudentHome.setUserID(userID);
             } else {
                 JOptionPane.showMessageDialog(null, "Error updating password. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }

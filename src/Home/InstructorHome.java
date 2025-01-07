@@ -15,7 +15,9 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class InstructorHome extends javax.swing.JFrame {
 
@@ -33,6 +35,26 @@ public class InstructorHome extends javax.swing.JFrame {
 //        System.out.println(userID);
     }
 
+    private void filterData1(String selectedProgram, String selectedYear, String selectedSemester) {
+        // Construct the query based on selected Year and Semester
+        String query = "SELECT * FROM tb_subjects WHERE 1=1"; // Default query to show all records
+
+        if (selectedProgram != null && !selectedProgram.isEmpty() && !selectedProgram.equals("All")) {
+            // Add program filter
+            query += " AND Program = '" + selectedProgram + "'";
+        }
+        if (selectedYear != null && !selectedYear.isEmpty() && !selectedYear.equals("All")) {
+            // Add year filter if not "All"
+            query += " AND Year = '" + selectedYear + "'";
+        }
+        if (selectedSemester != null && !selectedSemester.isEmpty() && !selectedSemester.equals("All")) {
+            // Add semester filter if not "All"
+            query += " AND Semester = '" + selectedSemester + "'";
+        }
+
+        // Now, apply the query to fetch filtered data from the database
+        updateTable(query);
+    }
     private void displayDataInCoursesTable() {
         String query = "SELECT * FROM tb_subjects";
 
@@ -174,9 +196,6 @@ public class InstructorHome extends javax.swing.JFrame {
         announcement = new javax.swing.JLabel();
         announcement_post = new javax.swing.JLabel();
         instructor_course = new javax.swing.JPanel();
-        course_header = new javax.swing.JPanel();
-        addcourse_btn = new javax.swing.JButton();
-        viewcourse_btn = new javax.swing.JButton();
         instructor_course_panels = new javax.swing.JTabbedPane();
         addcourse_panel = new javax.swing.JPanel();
         course_form = new javax.swing.JPanel();
@@ -194,6 +213,8 @@ public class InstructorHome extends javax.swing.JFrame {
         updatecourse_btn = new javax.swing.JButton();
         coursetitle_field = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
+        coursecode_field1 = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
         courses_table = new javax.swing.JPanel();
         coursesearchyear_cbox = new javax.swing.JComboBox<>();
         coursesearchsem_cbox = new javax.swing.JComboBox<>();
@@ -209,10 +230,11 @@ public class InstructorHome extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         InstructorCoursesTable = new javax.swing.JTable();
+        deleteclass_btn2 = new javax.swing.JButton();
+        course_header = new javax.swing.JPanel();
+        addcourse_btn = new javax.swing.JButton();
+        viewcourse_btn = new javax.swing.JButton();
         instructor_class = new javax.swing.JPanel();
-        class_header = new javax.swing.JPanel();
-        addcourse_btn2 = new javax.swing.JButton();
-        viewcourse_btn1 = new javax.swing.JButton();
         instructor_class_panels = new javax.swing.JTabbedPane();
         addclass_panel = new javax.swing.JPanel();
         course_form1 = new javax.swing.JPanel();
@@ -225,9 +247,7 @@ public class InstructorHome extends javax.swing.JFrame {
         classyear_cbox = new javax.swing.JComboBox<>();
         course_cbox = new javax.swing.JComboBox<>();
         jLabel26 = new javax.swing.JLabel();
-        deleteclass_btn = new javax.swing.JButton();
         addclass_btn = new javax.swing.JButton();
-        updateclass_btn = new javax.swing.JButton();
         classes_table1 = new javax.swing.JPanel();
         classsearchyear_cbox = new javax.swing.JComboBox<>();
         classsearchsem_cbox = new javax.swing.JComboBox<>();
@@ -239,10 +259,20 @@ public class InstructorHome extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         viewclass_panel = new javax.swing.JPanel();
         viewcourse_background1 = new javax.swing.JPanel();
-        courses_cbox1 = new javax.swing.JComboBox<>();
+        sem_cbox1 = new javax.swing.JComboBox<>();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         InstructorCoursesTable1 = new javax.swing.JTable();
+        class_header = new javax.swing.JPanel();
+        addcourse_btn2 = new javax.swing.JButton();
+        viewcourse_btn1 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        program_cbox2 = new javax.swing.JComboBox<>();
+        jLabel13 = new javax.swing.JLabel();
+        year_cbox3 = new javax.swing.JComboBox<>();
+        searchfield = new javax.swing.JTextField();
+        deleteclass_btn1 = new javax.swing.JButton();
         instructor_profile = new javax.swing.JPanel();
         profile_background = new javax.swing.JPanel();
         personal_info = new javax.swing.JLabel();
@@ -309,13 +339,13 @@ public class InstructorHome extends javax.swing.JFrame {
 
         top_performing_table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null},
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Name", "Student Number", "GWA"
             }
         ));
         jScrollPane2.setViewportView(top_performing_table);
@@ -334,8 +364,8 @@ public class InstructorHome extends javax.swing.JFrame {
         total_result.setFont(new java.awt.Font("Cascadia Mono", 1, 18)); // NOI18N
         total_result.setForeground(new java.awt.Color(255, 255, 255));
         total_result.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        total_result.setText("(number) Students");
-        total_enrolled_panel.add(total_result, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 210, 70));
+        total_result.setText("??");
+        total_enrolled_panel.add(total_result, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 90, 50));
 
         instructor_home.add(total_enrolled_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 210, 100));
 
@@ -370,6 +400,11 @@ public class InstructorHome extends javax.swing.JFrame {
         announce_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         announce_btn.setForeground(new java.awt.Color(255, 255, 255));
         announce_btn.setText("Announce");
+        announce_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                announce_btnActionPerformed(evt);
+            }
+        });
         post_announcement_panel.add(announce_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 125, 80, 20));
 
         home_background.add(post_announcement_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 390, 150));
@@ -411,6 +446,234 @@ public class InstructorHome extends javax.swing.JFrame {
         instructor_course.setBackground(new java.awt.Color(255, 255, 255));
         instructor_course.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        addcourse_panel.setBackground(new java.awt.Color(255, 255, 255));
+        addcourse_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        course_form.setBackground(new java.awt.Color(81, 199, 135));
+        course_form.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel19.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel19.setText("Semester:");
+        course_form.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 230, 90, 20));
+
+        jLabel18.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel18.setText("Program:");
+        course_form.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 80, 90, 20));
+
+        credits.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        credits.setForeground(new java.awt.Color(255, 255, 255));
+        credits.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        credits.setText("Credits:");
+        course_form.add(credits, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 170, 90, 20));
+
+        jLabel21.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel21.setText("Year:");
+        course_form.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 200, 90, 20));
+
+        coursecode_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        course_form.add(coursecode_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 130, -1));
+
+        credits_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        course_form.add(credits_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 170, 130, -1));
+
+        coursesem_cbox.setBackground(new java.awt.Color(3, 159, 75));
+        coursesem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        coursesem_cbox.setForeground(new java.awt.Color(255, 255, 255));
+        coursesem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd" }));
+        course_form.add(coursesem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 230, 80, 20));
+
+        courseyear_cbox.setBackground(new java.awt.Color(3, 159, 75));
+        courseyear_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        courseyear_cbox.setForeground(new java.awt.Color(255, 255, 255));
+        courseyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th" }));
+        course_form.add(courseyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 80, 20));
+
+        jLabel22.setFont(new java.awt.Font("Cascadia Mono", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("Course Form");
+        course_form.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 10, 260, 40));
+
+        deletecourse_btn.setBackground(new java.awt.Color(233, 82, 82));
+        deletecourse_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        deletecourse_btn.setForeground(new java.awt.Color(255, 255, 255));
+        deletecourse_btn.setText("Delete Course");
+        deletecourse_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deletecourse_btnActionPerformed(evt);
+            }
+        });
+        course_form.add(deletecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 170, 30));
+
+        addcourse_btn1.setBackground(new java.awt.Color(48, 150, 95));
+        addcourse_btn1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        addcourse_btn1.setForeground(new java.awt.Color(255, 255, 255));
+        addcourse_btn1.setText("Add Course");
+        addcourse_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addcourse_btn1ActionPerformed(evt);
+            }
+        });
+        course_form.add(addcourse_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 170, 30));
+
+        updatecourse_btn.setBackground(new java.awt.Color(170, 170, 23));
+        updatecourse_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        updatecourse_btn.setForeground(new java.awt.Color(255, 255, 255));
+        updatecourse_btn.setText("Update Course");
+        updatecourse_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updatecourse_btnActionPerformed(evt);
+            }
+        });
+        course_form.add(updatecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 170, 30));
+
+        coursetitle_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        course_form.add(coursetitle_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 130, -1));
+
+        jLabel25.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel25.setText("Course Title:");
+        course_form.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 140, 90, 20));
+
+        coursecode_field1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        course_form.add(coursecode_field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 110, 130, -1));
+
+        jLabel28.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel28.setText("Course Code:");
+        course_form.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 110, 90, 20));
+
+        addcourse_panel.add(course_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 210, 410));
+
+        courses_table.setBackground(new java.awt.Color(202, 154, 221));
+        courses_table.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        coursesearchyear_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        coursesearchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
+        coursesearchyear_cbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coursesearchyear_cboxActionPerformed(evt);
+            }
+        });
+        courses_table.add(coursesearchyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 140, 20));
+
+        coursesearchsem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        coursesearchsem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
+        coursesearchsem_cbox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coursesearchsem_cboxActionPerformed(evt);
+            }
+        });
+        courses_table.add(coursesearchsem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 130, 20));
+
+        coursesearch_bar.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        coursesearch_bar.setText("Enter Course Code / Title");
+        coursesearch_bar.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                coursesearch_barFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                coursesearch_barFocusLost(evt);
+            }
+        });
+        coursesearch_bar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coursesearch_barActionPerformed(evt);
+            }
+        });
+        courses_table.add(coursesearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 230, 20));
+
+        CoursesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Program", "Course Code", "Course Title", "Credits", "Year", "Semester"
+            }
+        ));
+        jScrollPane3.setViewportView(CoursesTable);
+
+        courses_table.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 570, 360));
+
+        jLabel4.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/search-icon.png"))); // NOI18N
+        courses_table.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, 20));
+
+        jLabel3.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Semester");
+        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        courses_table.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 0, 110, 20));
+
+        jLabel2.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Year");
+        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
+        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        courses_table.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 20));
+
+        addcourse_panel.add(courses_table, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 590, 410));
+
+        instructor_course_panels.addTab("tab1", addcourse_panel);
+
+        viewcourse_panel.setBackground(new java.awt.Color(255, 255, 255));
+        viewcourse_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        viewcourse_background.setBackground(new java.awt.Color(81, 199, 135));
+        viewcourse_background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        courses_cbox.setBackground(new java.awt.Color(164, 83, 197));
+        courses_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        courses_cbox.setForeground(new java.awt.Color(255, 255, 255));
+        courses_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        viewcourse_background.add(courses_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 230, -1));
+
+        jLabel5.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Your Courses:");
+        viewcourse_background.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        InstructorCoursesTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
+            },
+            new String [] {
+                "Program", "Course Code", "Course Title", "Year", "Semester", "Class Section"
+            }
+        ));
+        jScrollPane4.setViewportView(InstructorCoursesTable);
+
+        viewcourse_background.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 780, 320));
+
+        deleteclass_btn2.setBackground(new java.awt.Color(233, 82, 82));
+        deleteclass_btn2.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        deleteclass_btn2.setForeground(new java.awt.Color(255, 255, 255));
+        deleteclass_btn2.setText("Drop Class");
+        deleteclass_btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteclass_btn2ActionPerformed(evt);
+            }
+        });
+        viewcourse_background.add(deleteclass_btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, 240, 30));
+
+        viewcourse_panel.add(viewcourse_background, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 800, 410));
+
         course_header.setBackground(new java.awt.Color(255, 255, 255));
         course_header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -438,210 +701,7 @@ public class InstructorHome extends javax.swing.JFrame {
         });
         course_header.add(viewcourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 120, 30));
 
-        instructor_course.add(course_header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 820, 40));
-
-        addcourse_panel.setBackground(new java.awt.Color(255, 255, 255));
-        addcourse_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        course_form.setBackground(new java.awt.Color(81, 199, 135));
-        course_form.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel19.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel19.setText("Semester:");
-        course_form.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 90, 20));
-
-        jLabel18.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel18.setText("Course Code:");
-        course_form.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 20));
-
-        credits.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        credits.setForeground(new java.awt.Color(255, 255, 255));
-        credits.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        credits.setText("Credits:");
-        course_form.add(credits, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 90, 20));
-
-        jLabel21.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel21.setText("Year:");
-        course_form.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 90, 20));
-
-        coursecode_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        course_form.add(coursecode_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 160, -1));
-
-        credits_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        course_form.add(credits_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 160, -1));
-
-        coursesem_cbox.setBackground(new java.awt.Color(3, 159, 75));
-        coursesem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        coursesem_cbox.setForeground(new java.awt.Color(255, 255, 255));
-        coursesem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd" }));
-        course_form.add(coursesem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 160, 20));
-
-        courseyear_cbox.setBackground(new java.awt.Color(3, 159, 75));
-        courseyear_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        courseyear_cbox.setForeground(new java.awt.Color(255, 255, 255));
-        courseyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th" }));
-        course_form.add(courseyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 160, 20));
-
-        jLabel22.setFont(new java.awt.Font("Cascadia Mono", 1, 14)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Course Form");
-        course_form.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 260, 40));
-
-        deletecourse_btn.setBackground(new java.awt.Color(233, 82, 82));
-        deletecourse_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        deletecourse_btn.setForeground(new java.awt.Color(255, 255, 255));
-        deletecourse_btn.setText("Delete Course");
-        deletecourse_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deletecourse_btnActionPerformed(evt);
-            }
-        });
-        course_form.add(deletecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 240, 30));
-
-        addcourse_btn1.setBackground(new java.awt.Color(48, 150, 95));
-        addcourse_btn1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        addcourse_btn1.setForeground(new java.awt.Color(255, 255, 255));
-        addcourse_btn1.setText("Add Course");
-        addcourse_btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addcourse_btn1ActionPerformed(evt);
-            }
-        });
-        course_form.add(addcourse_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 240, 30));
-
-        updatecourse_btn.setBackground(new java.awt.Color(170, 170, 23));
-        updatecourse_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        updatecourse_btn.setForeground(new java.awt.Color(255, 255, 255));
-        updatecourse_btn.setText("Update Course");
-        updatecourse_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updatecourse_btnActionPerformed(evt);
-            }
-        });
-        course_form.add(updatecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 240, 30));
-
-        coursetitle_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        course_form.add(coursetitle_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 160, -1));
-
-        jLabel25.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel25.setText("Course Title:");
-        course_form.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 90, 20));
-
-        addcourse_panel.add(course_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 260, 410));
-
-        courses_table.setBackground(new java.awt.Color(202, 154, 221));
-        courses_table.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        coursesearchyear_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        coursesearchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
-        coursesearchyear_cbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coursesearchyear_cboxActionPerformed(evt);
-            }
-        });
-        courses_table.add(coursesearchyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 20));
-
-        coursesearchsem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        coursesearchsem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
-        coursesearchsem_cbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                coursesearchsem_cboxActionPerformed(evt);
-            }
-        });
-        courses_table.add(coursesearchsem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 110, 20));
-
-        coursesearch_bar.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        coursesearch_bar.setText("Enter Course Code / Title");
-        coursesearch_bar.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                coursesearch_barFocusGained(evt);
-            }
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                coursesearch_barFocusLost(evt);
-            }
-        });
-        courses_table.add(coursesearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 230, 20));
-
-        CoursesTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Course Code", "Course Title", "Credits", "Year", "Semester"
-            }
-        ));
-        jScrollPane3.setViewportView(CoursesTable);
-
-        courses_table.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 520, 360));
-
-        jLabel4.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(102, 102, 102));
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/search-icon.png"))); // NOI18N
-        courses_table.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, 20));
-
-        jLabel3.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Semester");
-        jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        courses_table.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 110, 20));
-
-        jLabel2.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Year");
-        jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        courses_table.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 20));
-
-        addcourse_panel.add(courses_table, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 540, 410));
-
-        instructor_course_panels.addTab("tab1", addcourse_panel);
-
-        viewcourse_panel.setBackground(new java.awt.Color(255, 255, 255));
-        viewcourse_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        viewcourse_background.setBackground(new java.awt.Color(81, 199, 135));
-        viewcourse_background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        courses_cbox.setBackground(new java.awt.Color(164, 83, 197));
-        courses_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        courses_cbox.setForeground(new java.awt.Color(255, 255, 255));
-        courses_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        viewcourse_background.add(courses_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 230, -1));
-
-        jLabel5.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("Your Courses:");
-        viewcourse_background.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
-
-        InstructorCoursesTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane4.setViewportView(InstructorCoursesTable);
-
-        viewcourse_background.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 780, 360));
-
-        viewcourse_panel.add(viewcourse_background, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 800, 410));
+        viewcourse_panel.add(course_header, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, -10, 820, -1));
 
         instructor_course_panels.addTab("tab2", viewcourse_panel);
 
@@ -651,35 +711,6 @@ public class InstructorHome extends javax.swing.JFrame {
 
         instructor_class.setBackground(new java.awt.Color(255, 255, 255));
         instructor_class.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        class_header.setBackground(new java.awt.Color(255, 255, 255));
-        class_header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        addcourse_btn2.setBackground(new java.awt.Color(3, 159, 75));
-        addcourse_btn2.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
-        addcourse_btn2.setForeground(new java.awt.Color(255, 255, 255));
-        addcourse_btn2.setText("Add Class");
-        addcourse_btn2.setBorderPainted(false);
-        addcourse_btn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addcourse_btn2ActionPerformed(evt);
-            }
-        });
-        class_header.add(addcourse_btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 30));
-
-        viewcourse_btn1.setBackground(new java.awt.Color(3, 159, 75));
-        viewcourse_btn1.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
-        viewcourse_btn1.setForeground(new java.awt.Color(255, 255, 255));
-        viewcourse_btn1.setText("View Class");
-        viewcourse_btn1.setBorderPainted(false);
-        viewcourse_btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                viewcourse_btn1ActionPerformed(evt);
-            }
-        });
-        class_header.add(viewcourse_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 120, 30));
-
-        instructor_class.add(class_header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 820, 40));
 
         addclass_panel.setBackground(new java.awt.Color(255, 255, 255));
         addclass_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -691,46 +722,47 @@ public class InstructorHome extends javax.swing.JFrame {
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel27.setText("Sem:");
-        course_form1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 160, 90, 20));
+        course_form1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 210, 90, 20));
 
         jLabel20.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel20.setText("Year:");
-        course_form1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 90, 20));
+        course_form1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 180, 90, 20));
 
         jLabel23.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel23.setText("Class Section:");
-        course_form1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 20));
+        course_form1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 140, 90, 20));
 
         jLabel24.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        jLabel24.setText("Class Course:");
-        course_form1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 90, 20));
+        jLabel24.setText("Class Program:");
+        course_form1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 110, 90, 20));
 
         classSem_cbox.setBackground(new java.awt.Color(164, 83, 197));
         classSem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         classSem_cbox.setForeground(new java.awt.Color(255, 255, 255));
         classSem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd" }));
-        course_form1.add(classSem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 160, 20));
+        course_form1.add(classSem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 160, 20));
 
         classSection_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        course_form1.add(classSection_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 160, -1));
+        classSection_field.setText("Add section.");
+        course_form1.add(classSection_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 160, -1));
 
         classyear_cbox.setBackground(new java.awt.Color(164, 83, 197));
         classyear_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         classyear_cbox.setForeground(new java.awt.Color(255, 255, 255));
         classyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th" }));
-        course_form1.add(classyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 160, 20));
+        course_form1.add(classyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 160, 20));
 
         course_cbox.setBackground(new java.awt.Color(164, 83, 197));
         course_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         course_cbox.setForeground(new java.awt.Color(255, 255, 255));
         course_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSCS", "BSIT" }));
-        course_form1.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 160, 20));
+        course_form1.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 160, 20));
 
         jLabel26.setFont(new java.awt.Font("Cascadia Mono", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -738,38 +770,16 @@ public class InstructorHome extends javax.swing.JFrame {
         jLabel26.setText("Class Form");
         course_form1.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 260, 40));
 
-        deleteclass_btn.setBackground(new java.awt.Color(233, 82, 82));
-        deleteclass_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        deleteclass_btn.setForeground(new java.awt.Color(255, 255, 255));
-        deleteclass_btn.setText("Delete Class");
-        deleteclass_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                deleteclass_btnActionPerformed(evt);
-            }
-        });
-        course_form1.add(deleteclass_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 240, 30));
-
         addclass_btn.setBackground(new java.awt.Color(48, 150, 95));
         addclass_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         addclass_btn.setForeground(new java.awt.Color(255, 255, 255));
-        addclass_btn.setText("Add Class");
+        addclass_btn.setText("Add Class To Your Class");
         addclass_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addclass_btnActionPerformed(evt);
             }
         });
-        course_form1.add(addclass_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 240, 30));
-
-        updateclass_btn.setBackground(new java.awt.Color(170, 170, 23));
-        updateclass_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        updateclass_btn.setForeground(new java.awt.Color(255, 255, 255));
-        updateclass_btn.setText("Update Class");
-        updateclass_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                updateclass_btnActionPerformed(evt);
-            }
-        });
-        course_form1.add(updateclass_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 240, 30));
+        course_form1.add(addclass_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 240, 30));
 
         addclass_panel.add(course_form1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 260, 410));
 
@@ -795,7 +805,7 @@ public class InstructorHome extends javax.swing.JFrame {
         classes_table1.add(classsearchsem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 110, 20));
 
         classSearch_bar.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        classSearch_bar.setText("Enter Class");
+        classSearch_bar.setText("Search");
         classSearch_bar.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 classSearch_barFocusGained(evt);
@@ -814,9 +824,10 @@ public class InstructorHome extends javax.swing.JFrame {
                 {null, null, null, null, null}
             },
             new String [] {
-                "Course Code", "Course Title", "Credits", "Year", "Semester"
+                "Program", "Course Code", "Course Title", "Year", "Semester"
             }
         ));
+        ClassesTable.setToolTipText("");
         jScrollPane5.setViewportView(ClassesTable);
 
         classes_table1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 520, 360));
@@ -850,31 +861,135 @@ public class InstructorHome extends javax.swing.JFrame {
         viewcourse_background1.setBackground(new java.awt.Color(81, 199, 135));
         viewcourse_background1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        courses_cbox1.setBackground(new java.awt.Color(3, 159, 75));
-        courses_cbox1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        courses_cbox1.setForeground(new java.awt.Color(255, 255, 255));
-        courses_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        viewcourse_background1.add(courses_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 230, -1));
+        sem_cbox1.setBackground(new java.awt.Color(3, 159, 75));
+        sem_cbox1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        sem_cbox1.setForeground(new java.awt.Color(255, 255, 255));
+        sem_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", " " }));
+        sem_cbox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sem_cbox1ActionPerformed(evt);
+            }
+        });
+        viewcourse_background1.add(sem_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 60, -1));
 
         jLabel10.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Your Classes:");
-        viewcourse_background1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+        jLabel10.setText("Semester:");
+        viewcourse_background1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 60, 20));
 
         InstructorCoursesTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Program", "Course Code", "Course Title", "Year", "Semester", "Class Section"
             }
         ));
         jScrollPane6.setViewportView(InstructorCoursesTable1);
 
-        viewcourse_background1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 780, 360));
+        viewcourse_background1.add(jScrollPane6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 780, 320));
+
+        class_header.setBackground(new java.awt.Color(255, 255, 255));
+        class_header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        addcourse_btn2.setBackground(new java.awt.Color(3, 159, 75));
+        addcourse_btn2.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
+        addcourse_btn2.setForeground(new java.awt.Color(255, 255, 255));
+        addcourse_btn2.setText("Add Class");
+        addcourse_btn2.setBorderPainted(false);
+        addcourse_btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addcourse_btn2ActionPerformed(evt);
+            }
+        });
+        class_header.add(addcourse_btn2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 30));
+
+        viewcourse_btn1.setBackground(new java.awt.Color(3, 159, 75));
+        viewcourse_btn1.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
+        viewcourse_btn1.setForeground(new java.awt.Color(255, 255, 255));
+        viewcourse_btn1.setText("View Class");
+        viewcourse_btn1.setBorderPainted(false);
+        viewcourse_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewcourse_btn1ActionPerformed(evt);
+            }
+        });
+        class_header.add(viewcourse_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 10, 120, 30));
+
+        viewcourse_background1.add(class_header, new org.netbeans.lib.awtextra.AbsoluteConstraints(-50, 180, 820, -1));
+
+        jLabel11.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Your Classes:");
+        viewcourse_background1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
+
+        jLabel12.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Program:");
+        viewcourse_background1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, 20));
+
+        program_cbox2.setBackground(new java.awt.Color(3, 159, 75));
+        program_cbox2.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        program_cbox2.setForeground(new java.awt.Color(255, 255, 255));
+        program_cbox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "BSCE", "BSCS", "BSIT", "BSIS", "BSOA" }));
+        program_cbox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                program_cbox2ActionPerformed(evt);
+            }
+        });
+        viewcourse_background1.add(program_cbox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 130, -1));
+
+        jLabel13.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Year:");
+        viewcourse_background1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 10, 30, 20));
+
+        year_cbox3.setBackground(new java.awt.Color(3, 159, 75));
+        year_cbox3.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        year_cbox3.setForeground(new java.awt.Color(255, 255, 255));
+        year_cbox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
+        year_cbox3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                year_cbox3ActionPerformed(evt);
+            }
+        });
+        viewcourse_background1.add(year_cbox3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 10, 60, -1));
+
+        searchfield.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        searchfield.setText("Search Courses");
+        searchfield.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                searchfieldFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                searchfieldFocusLost(evt);
+            }
+        });
+        searchfield.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchfieldActionPerformed(evt);
+            }
+        });
+        searchfield.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchfieldKeyReleased(evt);
+            }
+        });
+        viewcourse_background1.add(searchfield, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 10, 160, -1));
+
+        deleteclass_btn1.setBackground(new java.awt.Color(233, 82, 82));
+        deleteclass_btn1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        deleteclass_btn1.setForeground(new java.awt.Color(255, 255, 255));
+        deleteclass_btn1.setText("Drop Class");
+        deleteclass_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteclass_btn1ActionPerformed(evt);
+            }
+        });
+        viewcourse_background1.add(deleteclass_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 370, 240, 30));
 
         viewclass_panel.add(viewcourse_background1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 800, 410));
 
@@ -1533,17 +1648,9 @@ public class InstructorHome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_viewcourse_btn1ActionPerformed
 
-    private void deleteclass_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteclass_btnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_deleteclass_btnActionPerformed
-
     private void addclass_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addclass_btnActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_addclass_btnActionPerformed
-
-    private void updateclass_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateclass_btnActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_updateclass_btnActionPerformed
 
     private void classsearchyear_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classsearchyear_cboxActionPerformed
         // TODO add your handling code here:
@@ -1560,6 +1667,71 @@ public class InstructorHome extends javax.swing.JFrame {
     private void classSearch_barFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_classSearch_barFocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_classSearch_barFocusLost
+
+    private void searchfieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchfieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchfieldActionPerformed
+
+    private void searchfieldFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchfieldFocusGained
+        DefaultText2(searchfield, "Search Instructor", DefaultFocus.GAINED);
+    }//GEN-LAST:event_searchfieldFocusGained
+
+    private void searchfieldFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchfieldFocusLost
+        DefaultText2(searchfield, "Search Instructor", DefaultFocus.LOST);
+    }//GEN-LAST:event_searchfieldFocusLost
+
+    private void program_cbox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_program_cbox2ActionPerformed
+        String selectedProgram = (String) program_cbox2.getSelectedItem();
+        String selectedYear = (String) year_cbox3.getSelectedItem();
+        String selectedSemester = (String) sem_cbox1.getSelectedItem();
+
+        filterData1(selectedProgram, selectedYear, selectedSemester);
+
+    }//GEN-LAST:event_program_cbox2ActionPerformed
+
+    private void year_cbox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_year_cbox3ActionPerformed
+        String selectedProgram = (String) program_cbox2.getSelectedItem();
+        String selectedYear = (String) year_cbox3.getSelectedItem();
+        String selectedSemester = (String) sem_cbox1.getSelectedItem();
+
+        filterData1(selectedProgram, selectedYear, selectedSemester);
+
+    }//GEN-LAST:event_year_cbox3ActionPerformed
+
+    private void sem_cbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sem_cbox1ActionPerformed
+        String selectedProgram = (String) program_cbox2.getSelectedItem();
+        String selectedYear = (String) year_cbox3.getSelectedItem();
+        String selectedSemester = (String) sem_cbox1.getSelectedItem();
+
+        filterData1(selectedProgram, selectedYear, selectedSemester);
+
+    }//GEN-LAST:event_sem_cbox1ActionPerformed
+
+    private void searchfieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchfieldKeyReleased
+        DefaultTableModel model = (DefaultTableModel) InstructorCoursesTable1.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+        InstructorCoursesTable1.setRowSorter(sorter);
+
+        // Apply a case-insensitive regex filter with the (?i) flag
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + searchfield.getText()));
+    }//GEN-LAST:event_searchfieldKeyReleased
+
+    private void announce_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_announce_btnActionPerformed
+        
+        
+    }//GEN-LAST:event_announce_btnActionPerformed
+
+    private void deleteclass_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteclass_btn1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteclass_btn1ActionPerformed
+
+    private void deleteclass_btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteclass_btn2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_deleteclass_btn2ActionPerformed
+
+    private void coursesearch_barActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesearch_barActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coursesearch_barActionPerformed
 
     public static void main(String args[]) {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -1635,8 +1807,8 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JLabel course_icon;
     private javax.swing.JPanel course_panel;
     private javax.swing.JTextField coursecode_field;
+    private javax.swing.JTextField coursecode_field1;
     private javax.swing.JComboBox<String> courses_cbox;
-    private javax.swing.JComboBox<String> courses_cbox1;
     private javax.swing.JPanel courses_table;
     private javax.swing.JTextField coursesearch_bar;
     private javax.swing.JComboBox<String> coursesearchsem_cbox;
@@ -1649,7 +1821,8 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JLabel cvsum_field;
     private javax.swing.JButton delannounce_btn;
     private javax.swing.JButton delete_btn;
-    private javax.swing.JButton deleteclass_btn;
+    private javax.swing.JButton deleteclass_btn1;
+    private javax.swing.JButton deleteclass_btn2;
     private javax.swing.JButton deletecourse_btn;
     private javax.swing.JLabel dept_field;
     private javax.swing.JButton edit_btn;
@@ -1680,6 +1853,9 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JLabel instructor_sex;
     private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
@@ -1691,6 +1867,7 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1719,7 +1896,10 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JButton profile_btn;
     private javax.swing.JLabel profile_icon;
     private javax.swing.JPanel profile_panel;
+    private javax.swing.JComboBox<String> program_cbox2;
     private javax.swing.JLabel school_info;
+    private javax.swing.JTextField searchfield;
+    private javax.swing.JComboBox<String> sem_cbox1;
     private javax.swing.JLabel sex_field;
     private javax.swing.JLabel title1;
     private javax.swing.JLabel title2;
@@ -1727,7 +1907,6 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JTable top_performing_table;
     private javax.swing.JPanel total_enrolled_panel;
     private javax.swing.JLabel total_result;
-    private javax.swing.JButton updateclass_btn;
     private javax.swing.JButton updatecourse_btn;
     private javax.swing.JPanel viewclass_panel;
     private javax.swing.JPanel viewcourse_background;
@@ -1735,5 +1914,6 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JButton viewcourse_btn;
     private javax.swing.JButton viewcourse_btn1;
     private javax.swing.JPanel viewcourse_panel;
+    private javax.swing.JComboBox<String> year_cbox3;
     // End of variables declaration//GEN-END:variables
 }

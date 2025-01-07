@@ -13,6 +13,7 @@ import Home.StudentHome;
 import Components.UtilityMethods.DefaultFocus;
 import static Components.UtilityMethods.DefaultText;
 import static Components.UtilityMethods.TransparentField;
+import static Components.UtilityMethods.getUserID;
 
 public class StudentCreateAccount2Frame extends javax.swing.JFrame {
 
@@ -269,7 +270,9 @@ public class StudentCreateAccount2Frame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(new JFrame(), "Welcome, Kabsuhenyo!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
                 dispose();
-                new StudentHome().setVisible(true);
+                int userID = getUserID("StudentNumber", "tb_createstudent", "ID", String.valueOf(primaryID));
+                new StudentHome(userID).setVisible(true);
+                StudentHome.setUserID(userID);
 
             } catch (Exception e) {
                 System.out.println("Error " + e.getMessage());
