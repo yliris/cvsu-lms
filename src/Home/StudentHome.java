@@ -323,6 +323,7 @@ public class StudentHome extends javax.swing.JFrame {
         logout_panel = new javax.swing.JPanel();
         logout_icon = new javax.swing.JLabel();
         logout_btn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         greetings = new javax.swing.JLabel();
         header_element = new javax.swing.JLabel();
@@ -1417,6 +1418,9 @@ public class StudentHome extends javax.swing.JFrame {
 
         navigation.add(logout_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 130, 40));
 
+        jLabel1.setText("delete me");
+        navigation.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, -1));
+
         background.add(navigation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 150, 450));
 
         header.setBackground(new java.awt.Color(202, 154, 221));
@@ -1873,6 +1877,7 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JLabel id_field;
     private javax.swing.JTabbedPane instructor_class_panels;
     private com.toedter.calendar.JCalendar jCalendar1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
