@@ -379,15 +379,13 @@ public class StudentEditProfile extends javax.swing.JFrame {
 
         student_answer.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_answer.setForeground(new java.awt.Color(255, 255, 255));
-        student_answer.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_answer.setText("Validation Answer:");
-        user_security.add(student_answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 250, 150, 20));
+        user_security.add(student_answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 150, 20));
 
         student_question.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_question.setForeground(new java.awt.Color(255, 255, 255));
-        student_question.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_question.setText("Validation Question:");
-        user_security.add(student_question, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 190, 150, 20));
+        user_security.add(student_question, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 150, 20));
 
         student_repassword.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_repassword.setForeground(new java.awt.Color(255, 255, 255));

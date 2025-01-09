@@ -142,18 +142,6 @@ public class InstructorEditProfile extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         mover = new Components.PanelMover();
         edit = new javax.swing.JTabbedPane();
-        user_security = new javax.swing.JPanel();
-        instructor_answer = new javax.swing.JLabel();
-        instructor_question = new javax.swing.JLabel();
-        instructor_repassword = new javax.swing.JLabel();
-        instructor_password = new javax.swing.JLabel();
-        question_cbox = new javax.swing.JComboBox<>();
-        repassword_field = new javax.swing.JPasswordField();
-        currentpassword_field = new javax.swing.JPasswordField();
-        answer_field = new javax.swing.JTextField();
-        confirm_btn1 = new javax.swing.JButton();
-        password_field = new javax.swing.JPasswordField();
-        instructor_password1 = new javax.swing.JLabel();
         user_information = new javax.swing.JPanel();
         instructor_name = new javax.swing.JLabel();
         instructor_age = new javax.swing.JLabel();
@@ -177,6 +165,18 @@ public class InstructorEditProfile extends javax.swing.JFrame {
         department_cbox = new javax.swing.JComboBox<>();
         bday_chooser = new com.toedter.calendar.JDateChooser();
         confirm_btn = new javax.swing.JButton();
+        user_security = new javax.swing.JPanel();
+        instructor_answer = new javax.swing.JLabel();
+        instructor_question = new javax.swing.JLabel();
+        instructor_repassword = new javax.swing.JLabel();
+        instructor_password = new javax.swing.JLabel();
+        question_cbox = new javax.swing.JComboBox<>();
+        repassword_field = new javax.swing.JPasswordField();
+        currentpassword_field = new javax.swing.JPasswordField();
+        answer_field = new javax.swing.JTextField();
+        confirm_btn1 = new javax.swing.JButton();
+        password_field = new javax.swing.JPasswordField();
+        instructor_password1 = new javax.swing.JLabel();
         background = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -243,71 +243,6 @@ public class InstructorEditProfile extends javax.swing.JFrame {
         header.add(mover, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 20));
 
         getContentPane().add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 80));
-
-        user_security.setBackground(new java.awt.Color(81, 199, 135));
-        user_security.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        instructor_answer.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        instructor_answer.setForeground(new java.awt.Color(255, 255, 255));
-        instructor_answer.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        instructor_answer.setText("Validation Answer:");
-        user_security.add(instructor_answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 250, 150, 20));
-
-        instructor_question.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        instructor_question.setForeground(new java.awt.Color(255, 255, 255));
-        instructor_question.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        instructor_question.setText("Validation Question:");
-        user_security.add(instructor_question, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 190, 150, 20));
-
-        instructor_repassword.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        instructor_repassword.setForeground(new java.awt.Color(255, 255, 255));
-        instructor_repassword.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        instructor_repassword.setText("Re-enter Password:");
-        user_security.add(instructor_repassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 220, 20));
-
-        instructor_password.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        instructor_password.setForeground(new java.awt.Color(255, 255, 255));
-        instructor_password.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        instructor_password.setText("Current Password: ");
-        user_security.add(instructor_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 220, 20));
-
-        question_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        question_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a question.", "What is the name of the school where you completed your student teaching?", "What was the name of the first school where you taught?", "What year did you start working at CvSU?", "Who was the school administrator on your first year working at CvSU?", "What was your first advisory section?", "What was grade level of your first teaching position?", "What is the name of your favorite subject to teach?", "What was the title of the first course you taught?", " " }));
-        question_cbox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        user_security.add(question_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 560, -1));
-
-        repassword_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_security.add(repassword_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 240, -1));
-
-        currentpassword_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_security.add(currentpassword_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 240, -1));
-
-        answer_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_security.add(answer_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 560, -1));
-
-        confirm_btn1.setBackground(new java.awt.Color(48, 150, 95));
-        confirm_btn1.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
-        confirm_btn1.setForeground(new java.awt.Color(255, 255, 255));
-        confirm_btn1.setText("Confirm Edit");
-        confirm_btn1.setBorder(null);
-        confirm_btn1.setBorderPainted(false);
-        confirm_btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                confirm_btn1ActionPerformed(evt);
-            }
-        });
-        user_security.add(confirm_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 110, 30));
-
-        password_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_security.add(password_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 240, -1));
-
-        instructor_password1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        instructor_password1.setForeground(new java.awt.Color(255, 255, 255));
-        instructor_password1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
-        instructor_password1.setText("New Password:");
-        user_security.add(instructor_password1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 220, 20));
-
-        edit.addTab("tab2", user_security);
 
         user_information.setBackground(new java.awt.Color(81, 199, 135));
         user_information.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -426,6 +361,69 @@ public class InstructorEditProfile extends javax.swing.JFrame {
         user_information.add(confirm_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 110, 30));
 
         edit.addTab("tab1", user_information);
+
+        user_security.setBackground(new java.awt.Color(81, 199, 135));
+        user_security.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        instructor_answer.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_answer.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_answer.setText("Validation Answer:");
+        user_security.add(instructor_answer, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 150, 20));
+
+        instructor_question.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_question.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_question.setText("Validation Question:");
+        user_security.add(instructor_question, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 150, 20));
+
+        instructor_repassword.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_repassword.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_repassword.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        instructor_repassword.setText("Re-enter Password:");
+        user_security.add(instructor_repassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 220, 20));
+
+        instructor_password.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_password.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_password.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        instructor_password.setText("Current Password: ");
+        user_security.add(instructor_password, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 220, 20));
+
+        question_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        question_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select a question.", "What is the name of the school where you completed your student teaching?", "What was the name of the first school where you taught?", "What year did you start working at CvSU?", "Who was the school administrator on your first year working at CvSU?", "What was your first advisory section?", "What was grade level of your first teaching position?", "What is the name of your favorite subject to teach?", "What was the title of the first course you taught?", " " }));
+        question_cbox.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        user_security.add(question_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 560, -1));
+
+        repassword_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        user_security.add(repassword_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 140, 240, -1));
+
+        currentpassword_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        user_security.add(currentpassword_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 240, -1));
+
+        answer_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        user_security.add(answer_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 560, -1));
+
+        confirm_btn1.setBackground(new java.awt.Color(48, 150, 95));
+        confirm_btn1.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
+        confirm_btn1.setForeground(new java.awt.Color(255, 255, 255));
+        confirm_btn1.setText("Confirm Edit");
+        confirm_btn1.setBorder(null);
+        confirm_btn1.setBorderPainted(false);
+        confirm_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirm_btn1ActionPerformed(evt);
+            }
+        });
+        user_security.add(confirm_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 320, 110, 30));
+
+        password_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        user_security.add(password_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 110, 240, -1));
+
+        instructor_password1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_password1.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_password1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        instructor_password1.setText("New Password:");
+        user_security.add(instructor_password1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 220, 20));
+
+        edit.addTab("tab2", user_security);
 
         getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 410));
 
