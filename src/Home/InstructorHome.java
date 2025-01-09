@@ -283,24 +283,25 @@ public class InstructorHome extends javax.swing.JFrame {
         instructor_number = new javax.swing.JLabel();
         instructor_address = new javax.swing.JLabel();
         instructor_bday = new javax.swing.JLabel();
-        school_info = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         jSeparator4 = new javax.swing.JSeparator();
-        jSeparator3 = new javax.swing.JSeparator();
-        instructor_email = new javax.swing.JLabel();
-        instructor_ID = new javax.swing.JLabel();
-        instructor_department = new javax.swing.JLabel();
         edit_btn = new javax.swing.JButton();
         delete_btn = new javax.swing.JButton();
-        dept_field = new javax.swing.JLabel();
         name_field = new javax.swing.JLabel();
         age_field = new javax.swing.JLabel();
         sex_field = new javax.swing.JLabel();
         contactnum_field = new javax.swing.JLabel();
         address_field = new javax.swing.JLabel();
         bday_field = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        school_info = new javax.swing.JLabel();
+        instructor_email = new javax.swing.JLabel();
+        instructor_ID = new javax.swing.JLabel();
+        instructor_department = new javax.swing.JLabel();
         cvsum_field = new javax.swing.JLabel();
         id_field = new javax.swing.JLabel();
+        dept_field = new javax.swing.JLabel();
+        jSeparator5 = new javax.swing.JSeparator();
         instructor_about = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         navigation = new javax.swing.JPanel();
@@ -1002,57 +1003,53 @@ public class InstructorHome extends javax.swing.JFrame {
         instructor_profile.setBackground(new java.awt.Color(255, 255, 255));
         instructor_profile.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        profile_background.setBackground(new java.awt.Color(255, 255, 255));
+        profile_background.setBackground(new java.awt.Color(81, 199, 135));
         profile_background.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(204, 204, 204)));
         profile_background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         personal_info.setFont(new java.awt.Font("Cascadia Mono", 1, 18)); // NOI18N
+        personal_info.setForeground(new java.awt.Color(255, 255, 255));
         personal_info.setText("Personal Details");
         profile_background.add(personal_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
         profile_background.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 780, 10));
 
         instructor_name.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_name.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_name.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         instructor_name.setText("Name:");
-        profile_background.add(instructor_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 50, 30));
+        profile_background.add(instructor_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 110, 30));
 
         instructor_age.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_age.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_age.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         instructor_age.setText("Age:");
-        profile_background.add(instructor_age, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 40, 30));
+        profile_background.add(instructor_age, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 110, 30));
 
         instructor_sex.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_sex.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_sex.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         instructor_sex.setText("Sex:");
-        profile_background.add(instructor_sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 40, 30));
+        profile_background.add(instructor_sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 110, 30));
 
         instructor_number.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_number.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_number.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         instructor_number.setText("Contact Number:");
-        profile_background.add(instructor_number, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 100, 30));
+        profile_background.add(instructor_number, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 110, 30));
 
         instructor_address.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_address.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_address.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         instructor_address.setText("Address:");
-        profile_background.add(instructor_address, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 60, 30));
+        profile_background.add(instructor_address, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 110, 30));
 
         instructor_bday.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_bday.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_bday.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         instructor_bday.setText("Birthdate:");
-        profile_background.add(instructor_bday, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 60, 30));
-
-        school_info.setFont(new java.awt.Font("Cascadia Mono", 1, 18)); // NOI18N
-        school_info.setText("School Details");
-        profile_background.add(school_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, -1, -1));
-        profile_background.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 780, 10));
+        profile_background.add(instructor_bday, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 110, 30));
+        profile_background.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 760, 10));
         profile_background.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 760, 10));
-        profile_background.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 760, 10));
-
-        instructor_email.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        instructor_email.setText("CvSU Email:");
-        profile_background.add(instructor_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, 80, 30));
-
-        instructor_ID.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        instructor_ID.setText("Employee ID:");
-        profile_background.add(instructor_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, 80, 30));
-
-        instructor_department.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        instructor_department.setText("Department:");
-        profile_background.add(instructor_department, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 370, 80, 30));
 
         edit_btn.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/user-edit-idle-icon.png"))); // NOI18N
         edit_btn.setBorder(null);
@@ -1104,32 +1101,70 @@ public class InstructorHome extends javax.swing.JFrame {
         });
         profile_background.add(delete_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
 
-        dept_field.setText("dept");
-        profile_background.add(dept_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 380, 260, -1));
-
+        name_field.setForeground(new java.awt.Color(255, 255, 255));
         name_field.setText("name");
-        profile_background.add(name_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 280, -1));
+        profile_background.add(name_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 640, 30));
 
+        age_field.setForeground(new java.awt.Color(255, 255, 255));
         age_field.setText("age");
-        profile_background.add(age_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 90, 80, -1));
+        profile_background.add(age_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 640, 30));
 
+        sex_field.setForeground(new java.awt.Color(255, 255, 255));
         sex_field.setText("sex");
-        profile_background.add(sex_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 80, -1));
+        profile_background.add(sex_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 110, 640, 30));
 
+        contactnum_field.setForeground(new java.awt.Color(255, 255, 255));
         contactnum_field.setText("cp num");
-        profile_background.add(contactnum_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 180, -1));
+        profile_background.add(contactnum_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 640, 30));
 
+        address_field.setForeground(new java.awt.Color(255, 255, 255));
         address_field.setText("address");
-        profile_background.add(address_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 200, -1));
+        profile_background.add(address_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 640, 30));
 
+        bday_field.setForeground(new java.awt.Color(255, 255, 255));
         bday_field.setText("bday");
-        profile_background.add(bday_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 180, -1));
+        profile_background.add(bday_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 200, 640, 30));
 
+        jPanel1.setBackground(new java.awt.Color(202, 154, 221));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        school_info.setFont(new java.awt.Font("Cascadia Mono", 1, 18)); // NOI18N
+        school_info.setForeground(new java.awt.Color(255, 255, 255));
+        school_info.setText("School Details");
+        jPanel1.add(school_info, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        instructor_email.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_email.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_email.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        instructor_email.setText("CvSU Email:");
+        jPanel1.add(instructor_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 90, 30));
+
+        instructor_ID.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_ID.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_ID.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        instructor_ID.setText("Employee ID:");
+        jPanel1.add(instructor_ID, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 90, 30));
+
+        instructor_department.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        instructor_department.setForeground(new java.awt.Color(255, 255, 255));
+        instructor_department.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        instructor_department.setText("Department:");
+        jPanel1.add(instructor_department, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 90, 30));
+
+        cvsum_field.setForeground(new java.awt.Color(255, 255, 255));
         cvsum_field.setText("cvsu");
-        profile_background.add(cvsum_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 320, 340, -1));
+        jPanel1.add(cvsum_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 650, 30));
 
+        id_field.setForeground(new java.awt.Color(255, 255, 255));
         id_field.setText("id");
-        profile_background.add(id_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 350, 80, -1));
+        jPanel1.add(id_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 80, 650, 30));
+
+        dept_field.setForeground(new java.awt.Color(255, 255, 255));
+        dept_field.setText("dept");
+        jPanel1.add(dept_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 650, 30));
+
+        profile_background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 780, 170));
+        profile_background.add(jSeparator5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 760, 10));
 
         instructor_profile.add(profile_background, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 800, 450));
 
@@ -1875,6 +1910,7 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1883,8 +1919,8 @@ public class InstructorHome extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
+    private javax.swing.JSeparator jSeparator5;
     private javax.swing.JButton logout_btn;
     private javax.swing.JLabel logout_icon;
     private javax.swing.JPanel logout_panel;

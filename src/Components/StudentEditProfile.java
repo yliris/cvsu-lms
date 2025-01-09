@@ -144,6 +144,8 @@ public class StudentEditProfile extends javax.swing.JFrame {
         mover = new Components.PanelMover();
         edit = new javax.swing.JTabbedPane();
         user_information = new javax.swing.JPanel();
+        student_section = new javax.swing.JLabel();
+        section_field = new javax.swing.JTextField();
         student_name = new javax.swing.JLabel();
         student_age = new javax.swing.JLabel();
         student_sex = new javax.swing.JLabel();
@@ -248,105 +250,114 @@ public class StudentEditProfile extends javax.swing.JFrame {
         user_information.setBackground(new java.awt.Color(202, 154, 221));
         user_information.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        student_section.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        student_section.setForeground(new java.awt.Color(255, 255, 255));
+        student_section.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        student_section.setText("Section");
+        user_information.add(student_section, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 160, 20));
+
+        section_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        user_information.add(section_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 360, 270, -1));
+
         student_name.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_name.setForeground(new java.awt.Color(255, 255, 255));
         student_name.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_name.setText("Name:");
-        user_information.add(student_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 70, 180, 20));
+        user_information.add(student_name, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 160, 20));
 
         student_age.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_age.setForeground(new java.awt.Color(255, 255, 255));
         student_age.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_age.setText("Age:");
-        user_information.add(student_age, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 100, 180, 20));
+        user_information.add(student_age, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 160, 20));
 
         student_sex.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_sex.setForeground(new java.awt.Color(255, 255, 255));
         student_sex.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_sex.setText("Sex:");
-        user_information.add(student_sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 130, 180, 20));
+        user_information.add(student_sex, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 160, 20));
 
         student_contact.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_contact.setForeground(new java.awt.Color(255, 255, 255));
         student_contact.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_contact.setText("Contact Number:");
-        user_information.add(student_contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 160, 180, 20));
+        user_information.add(student_contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 160, 20));
 
         student_address.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_address.setForeground(new java.awt.Color(255, 255, 255));
         student_address.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_address.setText("Address:");
-        user_information.add(student_address, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 190, 180, 20));
+        user_information.add(student_address, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 160, 20));
 
         student_bday.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_bday.setForeground(new java.awt.Color(255, 255, 255));
         student_bday.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_bday.setText("Birthdate:");
-        user_information.add(student_bday, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 240, 180, 20));
+        user_information.add(student_bday, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 230, 160, 20));
 
         student_email.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_email.setForeground(new java.awt.Color(255, 255, 255));
         student_email.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_email.setText("CvSU Email:");
-        user_information.add(student_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 280, 180, 20));
+        user_information.add(student_email, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 270, 160, 20));
 
         student_number.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_number.setForeground(new java.awt.Color(255, 255, 255));
         student_number.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_number.setText("Student Number:");
-        user_information.add(student_number, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 310, 180, 20));
+        user_information.add(student_number, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, 160, 20));
 
         student_course.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         student_course.setForeground(new java.awt.Color(255, 255, 255));
         student_course.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         student_course.setText("Course:");
-        user_information.add(student_course, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 340, 180, 20));
+        user_information.add(student_course, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 160, 20));
 
         name_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_information.add(name_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 270, -1));
+        user_information.add(name_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 60, 270, -1));
 
         age_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_information.add(age_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 100, 270, -1));
+        user_information.add(age_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 90, 270, -1));
 
         male_rdb.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         male_rdb.setForeground(new java.awt.Color(255, 255, 255));
         male_rdb.setText("Male");
-        user_information.add(male_rdb, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 130, -1, -1));
+        user_information.add(male_rdb, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, -1, -1));
 
         female_rdb.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         female_rdb.setForeground(new java.awt.Color(255, 255, 255));
         female_rdb.setText("Female");
-        user_information.add(female_rdb, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
+        user_information.add(female_rdb, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 120, -1, -1));
 
         other_rdb.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         other_rdb.setForeground(new java.awt.Color(255, 255, 255));
         other_rdb.setText("Prefer not to say");
-        user_information.add(other_rdb, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 130, -1, -1));
+        user_information.add(other_rdb, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
 
         number_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_information.add(number_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 160, 270, -1));
+        user_information.add(number_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 270, -1));
 
         address_field.setColumns(20);
         address_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         address_field.setRows(5);
         jScrollPane1.setViewportView(address_field);
 
-        user_information.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 270, 40));
+        user_information.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 270, 40));
 
         email_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_information.add(email_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 270, -1));
+        user_information.add(email_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 270, -1));
 
         studNumber_field.setEditable(false);
         studNumber_field.setBackground(new java.awt.Color(255, 255, 255));
         studNumber_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_information.add(studNumber_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, 270, -1));
+        user_information.add(studNumber_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 270, -1));
 
         course_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         course_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BS in Computer Science", "BS in Information Technology", "BS in Computer Engineering", "BS in Information System", "BS in Office Administration" }));
-        user_information.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 340, 270, -1));
+        user_information.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 330, 270, -1));
 
         bday_chooser.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        user_information.add(bday_chooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 270, -1));
+        user_information.add(bday_chooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 270, -1));
 
         confirm_btn.setBackground(new java.awt.Color(164, 83, 197));
         confirm_btn.setFont(new java.awt.Font("Cascadia Mono", 1, 12)); // NOI18N
@@ -359,7 +370,7 @@ public class StudentEditProfile extends javax.swing.JFrame {
                 confirm_btnActionPerformed(evt);
             }
         });
-        user_information.add(confirm_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 110, 30));
+        user_information.add(confirm_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 380, 110, 30));
 
         edit.addTab("tab1", user_information);
 
@@ -428,7 +439,7 @@ public class StudentEditProfile extends javax.swing.JFrame {
 
         edit.addTab("tab2", user_security);
 
-        getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 410));
+        getContentPane().add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 580, 450));
 
         background.setBackground(new java.awt.Color(202, 154, 221));
         background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -760,6 +771,7 @@ public class StudentEditProfile extends javax.swing.JFrame {
     private javax.swing.JPasswordField password_field;
     private javax.swing.JPasswordField repassword_field;
     private javax.swing.JButton sec_btn;
+    private static javax.swing.JTextField section_field;
     private static javax.swing.JTextField studNumber_field;
     private javax.swing.JComboBox<String> studentQuestion_Combobox;
     private javax.swing.JLabel student_address;
@@ -775,6 +787,7 @@ public class StudentEditProfile extends javax.swing.JFrame {
     private javax.swing.JLabel student_password1;
     private javax.swing.JLabel student_question;
     private javax.swing.JLabel student_repassword;
+    private javax.swing.JLabel student_section;
     private javax.swing.JLabel student_sex;
     private javax.swing.JPanel user_information;
     private javax.swing.JPanel user_security;

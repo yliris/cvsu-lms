@@ -202,12 +202,13 @@ public class AdminHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        background = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         user_btn = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         course_btn = new javax.swing.JButton();
         logout_btn = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         panels = new javax.swing.JTabbedPane();
         users = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -236,7 +237,11 @@ public class AdminHome extends javax.swing.JFrame {
         StudentsTable = new javax.swing.JTable();
         usersearch_bar = new javax.swing.JTextField();
         instructor = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        instructor_header = new javax.swing.JPanel();
+        inst_table_btn = new javax.swing.JButton();
+        assign_sub_btn = new javax.swing.JButton();
+        instructor_panels = new javax.swing.JTabbedPane();
+        inst_table = new javax.swing.JPanel();
         instructor_form = new javax.swing.JPanel();
         addinstructor_btn = new javax.swing.JButton();
         updateinstructor_btn = new javax.swing.JButton();
@@ -256,6 +261,20 @@ public class AdminHome extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         InstructorsTable = new javax.swing.JTable();
         search = new javax.swing.JTextField();
+        assign_sub = new javax.swing.JPanel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        CoursesTable1 = new javax.swing.JTable();
+        jLabel33 = new javax.swing.JLabel();
+        coursesearch1 = new javax.swing.JComboBox<>();
+        jLabel34 = new javax.swing.JLabel();
+        searchyear_cbox1 = new javax.swing.JComboBox<>();
+        jLabel35 = new javax.swing.JLabel();
+        searchsem_cbox1 = new javax.swing.JComboBox<>();
+        jLabel36 = new javax.swing.JLabel();
+        coursesearch_bar1 = new javax.swing.JTextField();
+        assigninstructor_btn = new javax.swing.JButton();
+        jLabel27 = new javax.swing.JLabel();
+        instructorname_field1 = new javax.swing.JTextField();
         courses = new javax.swing.JPanel();
         course_form = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
@@ -295,7 +314,7 @@ public class AdminHome extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        background.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -305,11 +324,11 @@ public class AdminHome extends javax.swing.JFrame {
                 user_btnActionPerformed(evt);
             }
         });
-        jPanel2.add(user_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 30, 220, 30));
+        jPanel2.add(user_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 10, 220, 20));
 
         jLabel3.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 18)); // NOI18N
         jLabel3.setText("Hello, Admin!");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 170, 30));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, -1));
 
         course_btn.setText("Courses");
         course_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -317,7 +336,7 @@ public class AdminHome extends javax.swing.JFrame {
                 course_btnActionPerformed(evt);
             }
         });
-        jPanel2.add(course_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 30, 220, 30));
+        jPanel2.add(course_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 10, 220, 20));
 
         logout_btn.setText("Logout");
         logout_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -325,9 +344,11 @@ public class AdminHome extends javax.swing.JFrame {
                 logout_btnActionPerformed(evt);
             }
         });
-        jPanel2.add(logout_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 30, 90, 30));
+        jPanel2.add(logout_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 90, 20));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, 980, 80));
+        background.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 40));
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         users.setBackground(new java.awt.Color(153, 153, 153));
         users.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -341,7 +362,7 @@ public class AdminHome extends javax.swing.JFrame {
                 instructor_btnActionPerformed(evt);
             }
         });
-        jPanel3.add(instructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, 40));
+        jPanel3.add(instructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, 20));
 
         student_btn.setText("Students");
         student_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -349,15 +370,15 @@ public class AdminHome extends javax.swing.JFrame {
                 student_btnActionPerformed(evt);
             }
         });
-        jPanel3.add(student_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, 40));
+        jPanel3.add(student_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 20));
 
-        users.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 960, 60));
+        users.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 960, 40));
 
         student.setBackground(new java.awt.Color(204, 204, 204));
         student.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Student table");
-        student.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 40));
+        student.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 30));
 
         student_form.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -367,34 +388,34 @@ public class AdminHome extends javax.swing.JFrame {
                 addstudent_btnActionPerformed(evt);
             }
         });
-        student_form.add(addstudent_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 260, -1));
+        student_form.add(addstudent_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 260, -1));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel2.setText("Name:");
-        student_form.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 80, 20));
+        student_form.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 80, 20));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel4.setText("Student No.:");
-        student_form.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 80, 20));
+        student_form.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 80, 20));
 
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel5.setText("CvSU Mail:");
-        student_form.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 80, 20));
+        student_form.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 80, 20));
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel6.setText("Program:");
-        student_form.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 80, 20));
+        student_form.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 80, 20));
 
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel7.setText("Password:");
-        student_form.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 80, 20));
-        student_form.add(studentname_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 180, -1));
-        student_form.add(studentnumber_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 180, -1));
-        student_form.add(studentemail_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 180, -1));
+        student_form.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 80, 20));
+        student_form.add(studentname_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 180, -1));
+        student_form.add(studentnumber_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 180, -1));
+        student_form.add(studentemail_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 180, -1));
 
         course_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BS in Computer Science" }));
-        student_form.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 180, -1));
-        student_form.add(studentpass_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 180, -1));
+        student_form.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 180, -1));
+        student_form.add(studentpass_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 180, -1));
 
         updStudentButton.setText("Update Student");
         updStudentButton.addActionListener(new java.awt.event.ActionListener() {
@@ -402,7 +423,7 @@ public class AdminHome extends javax.swing.JFrame {
                 updStudentButtonActionPerformed(evt);
             }
         });
-        student_form.add(updStudentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 260, -1));
+        student_form.add(updStudentButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 260, -1));
 
         studDelButton.setText("Delete Student");
         studDelButton.addActionListener(new java.awt.event.ActionListener() {
@@ -410,7 +431,7 @@ public class AdminHome extends javax.swing.JFrame {
                 studDelButtonActionPerformed(evt);
             }
         });
-        student_form.add(studDelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 260, -1));
+        student_form.add(studDelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 260, -1));
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Student Form");
@@ -422,9 +443,9 @@ public class AdminHome extends javax.swing.JFrame {
                 ClearFormButton2ActionPerformed(evt);
             }
         });
-        student_form.add(ClearFormButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 90, 20));
+        student_form.add(ClearFormButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 90, 20));
 
-        student.add(student_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 280, 370));
+        student.add(student_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 280, 400));
 
         StudentsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -444,7 +465,7 @@ public class AdminHome extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(StudentsTable);
 
-        student.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 650, 370));
+        student.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 650, 400));
 
         usersearch_bar.setText("Search Student");
         usersearch_bar.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -460,15 +481,38 @@ public class AdminHome extends javax.swing.JFrame {
                 usersearch_barKeyReleased(evt);
             }
         });
-        student.add(usersearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 15, 260, 30));
+        student.add(usersearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 260, 30));
 
         user_tables.addTab("tab1", student);
 
         instructor.setBackground(new java.awt.Color(204, 204, 204));
         instructor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setText("Instructor table");
-        instructor.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, 40));
+        instructor_header.setBackground(new java.awt.Color(204, 204, 255));
+        instructor_header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        inst_table_btn.setText("Instructor Table");
+        inst_table_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inst_table_btnActionPerformed(evt);
+            }
+        });
+        instructor_header.add(inst_table_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 13, 120, 20));
+
+        assign_sub_btn.setText("Assign Subject");
+        assign_sub_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assign_sub_btnActionPerformed(evt);
+            }
+        });
+        instructor_header.add(assign_sub_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 13, 120, 20));
+
+        instructor.add(instructor_header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 960, 40));
+
+        instructor_panels.setBackground(new java.awt.Color(204, 204, 204));
+
+        inst_table.setBackground(new java.awt.Color(204, 204, 204));
+        inst_table.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         instructor_form.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -478,7 +522,7 @@ public class AdminHome extends javax.swing.JFrame {
                 addinstructor_btnActionPerformed(evt);
             }
         });
-        instructor_form.add(addinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 260, -1));
+        instructor_form.add(addinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 260, -1));
 
         updateinstructor_btn.setText("Update Instructor");
         updateinstructor_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -486,7 +530,7 @@ public class AdminHome extends javax.swing.JFrame {
                 updateinstructor_btnActionPerformed(evt);
             }
         });
-        instructor_form.add(updateinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 260, -1));
+        instructor_form.add(updateinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 260, -1));
 
         deleteinstructor_btn.setText("Delete Instructor");
         deleteinstructor_btn.addActionListener(new java.awt.event.ActionListener() {
@@ -494,34 +538,34 @@ public class AdminHome extends javax.swing.JFrame {
                 deleteinstructor_btnActionPerformed(evt);
             }
         });
-        instructor_form.add(deleteinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 260, -1));
+        instructor_form.add(deleteinstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 260, -1));
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel9.setText("Name:");
-        instructor_form.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 80, 20));
+        instructor_form.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 80, 20));
 
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel10.setText("CvSU Mail:");
-        instructor_form.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 80, 20));
+        instructor_form.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 80, 20));
 
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel11.setText("Employee ID:");
-        instructor_form.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, 80, 20));
+        instructor_form.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 80, 20));
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel12.setText("Department:");
-        instructor_form.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 150, 80, 20));
+        instructor_form.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 80, 20));
 
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel13.setText("Password:");
-        instructor_form.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 80, 20));
-        instructor_form.add(instructorname_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 60, 180, -1));
-        instructor_form.add(instructormail_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 180, -1));
-        instructor_form.add(employeeid_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 180, -1));
+        instructor_form.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 80, 20));
+        instructor_form.add(instructorname_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 180, -1));
+        instructor_form.add(instructormail_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 180, -1));
+        instructor_form.add(employeeid_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 180, -1));
 
         department_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DIT" }));
-        instructor_form.add(department_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 180, -1));
-        instructor_form.add(instructorpass_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 180, -1));
+        instructor_form.add(department_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 180, -1));
+        instructor_form.add(instructorpass_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 180, -1));
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("Instructor Form");
@@ -533,9 +577,9 @@ public class AdminHome extends javax.swing.JFrame {
                 ClearFormButton1ActionPerformed(evt);
             }
         });
-        instructor_form.add(ClearFormButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, 90, 20));
+        instructor_form.add(ClearFormButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 90, 20));
 
-        instructor.add(instructor_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 280, 370));
+        inst_table.add(instructor_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 280, 400));
 
         InstructorsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -555,7 +599,7 @@ public class AdminHome extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(InstructorsTable);
 
-        instructor.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 650, 370));
+        inst_table.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, 660, 370));
 
         search.setText("Search Instructor");
         search.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -571,11 +615,114 @@ public class AdminHome extends javax.swing.JFrame {
                 searchKeyReleased(evt);
             }
         });
-        instructor.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 15, 260, 30));
+        inst_table.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 10, 270, 30));
+
+        instructor_panels.addTab("tab1", inst_table);
+
+        assign_sub.setBackground(new java.awt.Color(153, 153, 153));
+        assign_sub.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        CoursesTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Program", "Course Code", "Course Title", "Credits", "Pre-requisite", "Year", "Semester", "A.Y."
+            }
+        ));
+        CoursesTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CoursesTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane5.setViewportView(CoursesTable1);
+
+        assign_sub.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 720, 350));
+
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel33.setText("Program");
+        assign_sub.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 80, 30));
+
+        coursesearch1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "BSCS", "BSCE", "BSIT", "BSIS", "BSOA" }));
+        coursesearch1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                coursesearch1ActionPerformed(evt);
+            }
+        });
+        assign_sub.add(coursesearch1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 90, 30));
+
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel34.setText("Year");
+        assign_sub.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 40, 30));
+
+        searchyear_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th", " " }));
+        searchyear_cbox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchyear_cbox1ActionPerformed(evt);
+            }
+        });
+        assign_sub.add(searchyear_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 20, 60, 30));
+
+        jLabel35.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel35.setText("Sem");
+        assign_sub.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 40, 30));
+
+        searchsem_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
+        searchsem_cbox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchsem_cbox1ActionPerformed(evt);
+            }
+        });
+        assign_sub.add(searchsem_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 20, 50, 30));
+
+        jLabel36.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel36.setText("Search");
+        assign_sub.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 20, 40, 30));
+
+        coursesearch_bar1.setText("Enter Course Code / Title");
+        coursesearch_bar1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                coursesearch_bar1FocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                coursesearch_bar1FocusLost(evt);
+            }
+        });
+        coursesearch_bar1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                coursesearch_bar1KeyReleased(evt);
+            }
+        });
+        assign_sub.add(coursesearch_bar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 20, 230, 30));
+
+        assigninstructor_btn.setText("Assign Instructor");
+        assigninstructor_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                assigninstructor_btnActionPerformed(evt);
+            }
+        });
+        assign_sub.add(assigninstructor_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 140, 20));
+
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel27.setText("Name:");
+        assign_sub.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 50, 20));
+        assign_sub.add(instructorname_field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, 180, -1));
+
+        instructor_panels.addTab("tab2", assign_sub);
+
+        instructor.add(instructor_panels, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 1, 980, 450));
 
         user_tables.addTab("tab2", instructor);
 
-        users.add(user_tables, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 960, 460));
+        users.add(user_tables, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 960, 480));
 
         panels.addTab("tab1", users);
 
@@ -662,7 +809,7 @@ public class AdminHome extends javax.swing.JFrame {
         jLabel26.setText("Program:");
         course_form.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
 
-        courses.add(course_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 280, 460));
+        courses.add(course_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 280, 480));
 
         CoursesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -682,7 +829,7 @@ public class AdminHome extends javax.swing.JFrame {
         });
         jScrollPane3.setViewportView(CoursesTable);
 
-        courses.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 670, 420));
+        courses.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, 670, 440));
 
         coursesearch_bar.setText("Enter Course Code / Title");
         coursesearch_bar.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -746,9 +893,11 @@ public class AdminHome extends javax.swing.JFrame {
 
         panels.addTab("tab2", courses);
 
-        jPanel1.add(panels, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 980, 530));
+        jPanel1.add(panels, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 980, 540));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
+        background.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 980, 500));
+
+        getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 980, 540));
 
         pack();
         setLocationRelativeTo(null);
@@ -759,7 +908,6 @@ public class AdminHome extends javax.swing.JFrame {
     }//GEN-LAST:event_user_btnActionPerformed
 
     private void course_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_course_btnActionPerformed
-
         panels.setSelectedIndex(1);
     }//GEN-LAST:event_course_btnActionPerformed
 
@@ -1703,6 +1851,46 @@ public class AdminHome extends javax.swing.JFrame {
         studentpass_field.setText("");
     }//GEN-LAST:event_ClearFormButton2ActionPerformed
 
+    private void inst_table_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inst_table_btnActionPerformed
+        instructor_panels.setSelectedIndex(0);
+    }//GEN-LAST:event_inst_table_btnActionPerformed
+
+    private void assign_sub_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assign_sub_btnActionPerformed
+        instructor_panels.setSelectedIndex(1);
+    }//GEN-LAST:event_assign_sub_btnActionPerformed
+
+    private void CoursesTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CoursesTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_CoursesTable1MouseClicked
+
+    private void coursesearch1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesearch1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coursesearch1ActionPerformed
+
+    private void searchyear_cbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchyear_cbox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchyear_cbox1ActionPerformed
+
+    private void searchsem_cbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchsem_cbox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchsem_cbox1ActionPerformed
+
+    private void coursesearch_bar1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_coursesearch_bar1FocusGained
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coursesearch_bar1FocusGained
+
+    private void coursesearch_bar1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_coursesearch_bar1FocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coursesearch_bar1FocusLost
+
+    private void coursesearch_bar1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_coursesearch_bar1KeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_coursesearch_bar1KeyReleased
+
+    private void assigninstructor_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_assigninstructor_btnActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_assigninstructor_btnActionPerformed
+
     public static void main(String args[]) {
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
     /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1738,19 +1926,26 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JButton ClearFormButton1;
     private javax.swing.JButton ClearFormButton2;
     private javax.swing.JTable CoursesTable;
+    private javax.swing.JTable CoursesTable1;
     private javax.swing.JTable InstructorsTable;
     private javax.swing.JTable StudentsTable;
     private javax.swing.JTextField acadyear_field;
     private javax.swing.JButton addcourse_btn;
     private javax.swing.JButton addinstructor_btn;
     private javax.swing.JButton addstudent_btn;
+    private javax.swing.JPanel assign_sub;
+    private javax.swing.JButton assign_sub_btn;
+    private javax.swing.JButton assigninstructor_btn;
+    private javax.swing.JPanel background;
     private javax.swing.JButton course_btn;
     private javax.swing.JComboBox<String> course_cbox;
     private javax.swing.JPanel course_form;
     private javax.swing.JTextField coursecode_field;
     private javax.swing.JPanel courses;
     private javax.swing.JComboBox<String> coursesearch;
+    private javax.swing.JComboBox<String> coursesearch1;
     private javax.swing.JTextField coursesearch_bar;
+    private javax.swing.JTextField coursesearch_bar1;
     private javax.swing.JTextField coursetitle_field;
     private javax.swing.JLabel credits;
     private javax.swing.JLabel credits1;
@@ -1759,11 +1954,16 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JButton deleteinstructor_btn;
     private javax.swing.JComboBox<String> department_cbox;
     private javax.swing.JTextField employeeid_field;
+    private javax.swing.JPanel inst_table;
+    private javax.swing.JButton inst_table_btn;
     private javax.swing.JPanel instructor;
     private javax.swing.JButton instructor_btn;
     private javax.swing.JPanel instructor_form;
+    private javax.swing.JPanel instructor_header;
+    private javax.swing.JTabbedPane instructor_panels;
     private javax.swing.JTextField instructormail_field;
     private javax.swing.JTextField instructorname_field;
+    private javax.swing.JTextField instructorname_field1;
     private javax.swing.JPasswordField instructorpass_field;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1784,12 +1984,16 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -1797,13 +2001,16 @@ public class AdminHome extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JButton logout_btn;
     private javax.swing.JTabbedPane panels;
     private javax.swing.JTextField prerequisite_field;
     private javax.swing.JTextField program_field;
     private javax.swing.JTextField search;
     private javax.swing.JComboBox<String> searchsem_cbox;
+    private javax.swing.JComboBox<String> searchsem_cbox1;
     private javax.swing.JComboBox<String> searchyear_cbox;
+    private javax.swing.JComboBox<String> searchyear_cbox1;
     private javax.swing.JComboBox<String> sem_cbox;
     private javax.swing.JButton studDelButton;
     private javax.swing.JPanel student;
