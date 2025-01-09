@@ -748,47 +748,47 @@ public class InstructorHome extends javax.swing.JFrame {
         jLabel27.setForeground(new java.awt.Color(255, 255, 255));
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel27.setText("Sem:");
-        course_form1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 210, 90, 20));
+        course_form1.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 210, 90, 20));
 
         jLabel20.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(255, 255, 255));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel20.setText("Year:");
-        course_form1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, 90, 20));
+        course_form1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 180, 90, 20));
 
         jLabel23.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(255, 255, 255));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel23.setText("Class Section:");
-        course_form1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 90, 20));
+        course_form1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 140, 90, 20));
 
         jLabel24.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel24.setText("Class Program:");
-        course_form1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 90, 20));
+        course_form1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 110, 90, 20));
 
         classSem_cbox.setBackground(new java.awt.Color(164, 83, 197));
         classSem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         classSem_cbox.setForeground(new java.awt.Color(255, 255, 255));
         classSem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd" }));
-        course_form1.add(classSem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 160, 20));
+        course_form1.add(classSem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, 90, 20));
 
         classSection_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         classSection_field.setText("Add section.");
-        course_form1.add(classSection_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 140, 160, -1));
+        course_form1.add(classSection_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 90, -1));
 
         classyear_cbox.setBackground(new java.awt.Color(164, 83, 197));
         classyear_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         classyear_cbox.setForeground(new java.awt.Color(255, 255, 255));
         classyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th" }));
-        course_form1.add(classyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, 160, 20));
+        course_form1.add(classyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 90, 20));
 
         course_cbox.setBackground(new java.awt.Color(164, 83, 197));
         course_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         course_cbox.setForeground(new java.awt.Color(255, 255, 255));
         course_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BSCS", "BSIT" }));
-        course_form1.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 160, 20));
+        course_form1.add(course_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 90, 20));
 
         jLabel26.setFont(new java.awt.Font("Cascadia Mono", 1, 14)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(255, 255, 255));
@@ -799,15 +799,15 @@ public class InstructorHome extends javax.swing.JFrame {
         addclass_btn.setBackground(new java.awt.Color(48, 150, 95));
         addclass_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
         addclass_btn.setForeground(new java.awt.Color(255, 255, 255));
-        addclass_btn.setText("Add Class To Your Class");
+        addclass_btn.setText("Add Class");
         addclass_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addclass_btnActionPerformed(evt);
             }
         });
-        course_form1.add(addclass_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 240, 30));
+        course_form1.add(addclass_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 150, 30));
 
-        addclass_panel.add(course_form1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 260, 410));
+        addclass_panel.add(course_form1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 210, 410));
 
         classes_table1.setBackground(new java.awt.Color(81, 199, 135));
         classes_table1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -840,7 +840,7 @@ public class InstructorHome extends javax.swing.JFrame {
                 classSearch_barFocusLost(evt);
             }
         });
-        classes_table1.add(classSearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 230, 20));
+        classes_table1.add(classSearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 230, 20));
 
         ClassesTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -856,12 +856,12 @@ public class InstructorHome extends javax.swing.JFrame {
         ClassesTable.setToolTipText("");
         jScrollPane5.setViewportView(ClassesTable);
 
-        classes_table1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 520, 360));
+        classes_table1.add(jScrollPane5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 570, 360));
 
         jLabel7.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(102, 102, 102));
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/search-icon.png"))); // NOI18N
-        classes_table1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, 20));
+        classes_table1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 20, -1, 20));
 
         jLabel8.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -877,7 +877,7 @@ public class InstructorHome extends javax.swing.JFrame {
         jLabel9.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         classes_table1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 20));
 
-        addclass_panel.add(classes_table1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 540, 410));
+        addclass_panel.add(classes_table1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 590, 410));
 
         instructor_class_panels.addTab("tab1", addclass_panel);
 
