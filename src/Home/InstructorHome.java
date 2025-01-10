@@ -6,7 +6,6 @@ import static Components.UtilityMethods.DefaultText2;
 import static Components.UtilityMethods.TransparentField2;
 import Login.StartFrame;
 import Signup.InstructorCreateAccount1Frame;
-import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -16,12 +15,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class InstructorHome extends javax.swing.JFrame {
-
+//    private JTable InstructorCoursesTable;
     private static int userID;
 
     public InstructorHome(int userID) {
@@ -33,7 +33,7 @@ public class InstructorHome extends javax.swing.JFrame {
         displayDataInInstructorClassTable();
         TransparentField2(searchcourses, coursesearch_bar, searchfield);
     }
-
+    
     public static void setUserID(int userID) {
         InstructorHome.userID = userID;
 
@@ -147,13 +147,15 @@ public class InstructorHome extends javax.swing.JFrame {
     }
 
     private void displayDataInInstructorCoursesTable() {
-        String query = "SELECT * FROM tb_instructorsubjects";
+        String query = "SELECT * FROM tb_instructorsubjects WHERE EmployeeID = ?";
 
         String url = "jdbc:mysql://localhost:3306/lms_project";
         String user = "root";
         String pass = "";
 
-        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); ResultSet rs = pst.executeQuery()) {
+        try (Connection con = DriverManager.getConnection(url, user, pass); 
+                PreparedStatement pst = con.prepareStatement(query); 
+                ResultSet rs = pst.executeQuery()) {
 
             // Create a DefaultTableModel to hold the data
             DefaultTableModel model = (DefaultTableModel) InstructorCoursesTable.getModel();

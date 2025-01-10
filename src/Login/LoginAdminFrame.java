@@ -218,7 +218,7 @@ public class LoginAdminFrame extends javax.swing.JFrame {
         if ("admin@cvsu.edu.ph".equalsIgnoreCase(admin) && "a1d2m3i4n5".equals(password)) {
             JOptionPane.showMessageDialog(null, "Admin Login Success!");
             dispose();
-            new AdminHome().setVisible(true);
+            new AdminHome(-1).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Invalid credentials.", "Invalid Input", JOptionPane.ERROR_MESSAGE);
         }
