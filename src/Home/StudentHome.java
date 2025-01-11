@@ -1,4 +1,3 @@
-
 package Home;
 
 import Components.StudentEditProfile;
@@ -16,10 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-
 
 public class StudentHome extends javax.swing.JFrame {
 
@@ -29,7 +25,6 @@ public class StudentHome extends javax.swing.JFrame {
         StudentHome.userID = userID;
         initComponents();
         displayDataInCoursesTable();
-        displayDataInStudentCoursesTable();
     }
 
     public static void setUserID(int userID) {
@@ -38,50 +33,8 @@ public class StudentHome extends javax.swing.JFrame {
 //        System.out.println(userID);
     }
 
-    private void displayDataInStudentCoursesTable() {
-       String query = "SELECT * FROM tb_studentsubjects";
-        
-        String url = "jdbc:mysql://localhost:3306/lms_project";
-        String user = "root";
-        String pass = "";
-        
-
-        try (Connection con = DriverManager.getConnection(url, user, pass); PreparedStatement pst = con.prepareStatement(query); 
-                ResultSet rs = pst.executeQuery()) {
-
-            // Create a DefaultTableModel to hold the data
-            DefaultTableModel model = (DefaultTableModel) SubjectsTable2.getModel();
-
-            // Clear the existing rows in the table model before adding new ones
-            model.setRowCount(0);
-            while (rs.next()) {
-
-                String instructor = rs.getString("InstructorName");
-                String courseTitle = rs.getString("CourseName");
-                String credits = rs.getString("Credits");
-                String Program = rs.getString("Program");
-                String section = rs.getString("ClassSection");
-                String year = rs.getString("Year");
-                String sem = rs.getString("Semester");
-                String academicYear = rs.getString("AcademicYear");
-
-                model.addRow(new Object[]{instructor, courseTitle, credits, Program, section, year, sem, academicYear});
-            }
-
-            // Refresh JTable UI
-            SubjectsTable2.revalidate();
-            SubjectsTable2.repaint();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(new JFrame(), "Error fetching data: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
     private void displayDataInCoursesTable() {
-        // SQL query with JOIN to fetch data from both tables
-        String query = "SELECT s.Program, s.CourseCode, s.CourseName, s.Credits, s.Year, s.Semester, s.AcademicYear, i.InstructorName, i.ClassSection "
-                + "FROM tb_subjects s "
-                + "JOIN tb_instructorsubjects i ON s.CourseName = i.CourseTitle";  // Assuming 'CourseName' in tb_subjects matches 'CourseTitle' in tb_instructorsubjects
+        String query = "SELECT * FROM tb_subjects";
 
         String url = "jdbc:mysql://localhost:3306/lms_project";
         String user = "root";
@@ -94,22 +47,15 @@ public class StudentHome extends javax.swing.JFrame {
 
             // Clear the existing rows in the table model before adding new ones
             model.setRowCount(0);
-
-            // Process each row from the result set and add to the table model
             while (rs.next()) {
-                // Fetch data from both tables
-                String Program = rs.getString("Program");
+
                 String courseCode = rs.getString("CourseCode");
                 String courseName = rs.getString("CourseName");
                 String credits = rs.getString("Credits");
                 String year = rs.getString("Year");
                 String sem = rs.getString("Semester");
-                String academicYear = rs.getString("AcademicYear");
-                String instructor = rs.getString("InstructorName");
-                String classSection = rs.getString("ClassSection");
 
-                // Add the row to the table model
-                model.addRow(new Object[]{Program, courseCode, courseName, credits, year, sem, academicYear, instructor, classSection});
+                model.addRow(new Object[]{courseCode, courseName, credits, year, sem});
             }
 
             // Refresh JTable UI
@@ -121,14 +67,9 @@ public class StudentHome extends javax.swing.JFrame {
         }
     }
 
-    private void filterData(String selectedProgram, String selectedYear, String selectedSemester) {
+    private void filterData(String selectedYear, String selectedSemester) {
         // Construct the query based on selected Year and Semester
         String query = "SELECT * FROM tb_subjects WHERE 1=1"; // Default query to show all records
-
-        if (selectedProgram != null && !selectedProgram.isEmpty() && !selectedProgram.equals("All")) {
-            // Add year filter if not "All" (if you have a default "All" option in the combobox)
-            query += " AND Program = '" + selectedProgram + "'";
-        }
 
         if (selectedYear != null && !selectedYear.isEmpty() && !selectedYear.equals("All")) {
             // Add year filter if not "All" (if you have a default "All" option in the combobox)
@@ -174,8 +115,8 @@ public class StudentHome extends javax.swing.JFrame {
         }
 
     }
-
-    public void refreshProfile() {
+    
+    public void refreshProfile(){
         String query = "SELECT * FROM tb_studentinfo WHERE info_id = " + userID;
 
         String url = "jdbc:mysql://localhost:3306/lms_project";
@@ -237,31 +178,51 @@ public class StudentHome extends javax.swing.JFrame {
         student_subject = new javax.swing.JPanel();
         student_subject_panels = new javax.swing.JTabbedPane();
         addsubject_panel = new javax.swing.JPanel();
+        addsubject_form = new javax.swing.JPanel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        credits = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        subjectcode_field = new javax.swing.JTextField();
+        credits_field = new javax.swing.JTextField();
+        subjectsem_cbox = new javax.swing.JComboBox<>();
+        subjectyear_cbox = new javax.swing.JComboBox<>();
+        jLabel22 = new javax.swing.JLabel();
+        addsubject_btn1 = new javax.swing.JButton();
+        subjecttitle_field = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
         addsubjects_table = new javax.swing.JPanel();
-        program_cbox = new javax.swing.JComboBox<>();
-        sem_cbox = new javax.swing.JComboBox<>();
+        coursesearchyear_cbox = new javax.swing.JComboBox<>();
+        coursesearchsem_cbox = new javax.swing.JComboBox<>();
         coursesearch_bar = new javax.swing.JTextField();
         jScrollPane3 = new javax.swing.JScrollPane();
         SubjectsTable = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        addsubject_btn1 = new javax.swing.JButton();
-        year_cbox2 = new javax.swing.JComboBox<>();
-        jLabel10 = new javax.swing.JLabel();
         viewsubject_panel = new javax.swing.JPanel();
+        viewsubject_form = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
+        credits1 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        subjectcode_field1 = new javax.swing.JTextField();
+        credits_field1 = new javax.swing.JTextField();
+        subjectsem_cbox1 = new javax.swing.JComboBox<>();
+        subjectyear_cbox1 = new javax.swing.JComboBox<>();
+        jLabel31 = new javax.swing.JLabel();
+        subjecttitle_field1 = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        removecourse_btn = new javax.swing.JButton();
         viewsubjects_table1 = new javax.swing.JPanel();
-        program2cbox = new javax.swing.JComboBox<>();
-        sem2cbox = new javax.swing.JComboBox<>();
+        coursesearchyear_cbox1 = new javax.swing.JComboBox<>();
+        coursesearchsem_cbox1 = new javax.swing.JComboBox<>();
         coursesearch_bar1 = new javax.swing.JTextField();
         jScrollPane4 = new javax.swing.JScrollPane();
-        SubjectsTable2 = new javax.swing.JTable();
+        SubjectsTable1 = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        removecourse_btn = new javax.swing.JButton();
-        year2cbox = new javax.swing.JComboBox<>();
-        jLabel16 = new javax.swing.JLabel();
         subject_header = new javax.swing.JPanel();
         addsubject_btn = new javax.swing.JButton();
         viewsubject_btn = new javax.swing.JButton();
@@ -362,6 +323,7 @@ public class StudentHome extends javax.swing.JFrame {
         logout_panel = new javax.swing.JPanel();
         logout_icon = new javax.swing.JLabel();
         logout_btn = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         greetings = new javax.swing.JLabel();
         header_element = new javax.swing.JLabel();
@@ -493,26 +455,99 @@ public class StudentHome extends javax.swing.JFrame {
         addsubject_panel.setBackground(new java.awt.Color(255, 255, 255));
         addsubject_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        addsubject_form.setBackground(new java.awt.Color(202, 154, 221));
+        addsubject_form.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel19.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel19.setText("Semester:");
+        addsubject_form.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 90, 20));
+
+        jLabel18.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel18.setText("Course Code:");
+        addsubject_form.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 20));
+
+        credits.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        credits.setForeground(new java.awt.Color(255, 255, 255));
+        credits.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        credits.setText("Credits:");
+        addsubject_form.add(credits, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 90, 20));
+
+        jLabel21.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel21.setText("Year:");
+        addsubject_form.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 90, 20));
+
+        subjectcode_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        addsubject_form.add(subjectcode_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 160, -1));
+
+        credits_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        addsubject_form.add(credits_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 160, -1));
+
+        subjectsem_cbox.setBackground(new java.awt.Color(164, 83, 197));
+        subjectsem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        subjectsem_cbox.setForeground(new java.awt.Color(255, 255, 255));
+        subjectsem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd" }));
+        addsubject_form.add(subjectsem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 160, 20));
+
+        subjectyear_cbox.setBackground(new java.awt.Color(164, 83, 197));
+        subjectyear_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        subjectyear_cbox.setForeground(new java.awt.Color(255, 255, 255));
+        subjectyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th" }));
+        addsubject_form.add(subjectyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 160, 20));
+
+        jLabel22.setFont(new java.awt.Font("Cascadia Mono", 1, 14)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("Subject Form");
+        addsubject_form.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 260, 40));
+
+        addsubject_btn1.setBackground(new java.awt.Color(164, 83, 197));
+        addsubject_btn1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        addsubject_btn1.setForeground(new java.awt.Color(255, 255, 255));
+        addsubject_btn1.setText("Enroll To This Subject");
+        addsubject_btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addsubject_btn1ActionPerformed(evt);
+            }
+        });
+        addsubject_form.add(addsubject_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 240, 30));
+
+        subjecttitle_field.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        addsubject_form.add(subjecttitle_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 160, -1));
+
+        jLabel25.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel25.setText("Course Title:");
+        addsubject_form.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 90, 20));
+
+        addsubject_panel.add(addsubject_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 260, 410));
+
         addsubjects_table.setBackground(new java.awt.Color(81, 199, 135));
         addsubjects_table.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        program_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        program_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "BSCE", "BSCS", "BSIT", "BSIS", "BSOA" }));
-        program_cbox.addActionListener(new java.awt.event.ActionListener() {
+        coursesearchyear_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        coursesearchyear_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
+        coursesearchyear_cbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                program_cboxActionPerformed(evt);
+                coursesearchyear_cboxActionPerformed(evt);
             }
         });
-        addsubjects_table.add(program_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 20));
+        addsubjects_table.add(coursesearchyear_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 20));
 
-        sem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        sem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
-        sem_cbox.addActionListener(new java.awt.event.ActionListener() {
+        coursesearchsem_cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        coursesearchsem_cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
+        coursesearchsem_cbox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sem_cboxActionPerformed(evt);
+                coursesearchsem_cboxActionPerformed(evt);
             }
         });
-        addsubjects_table.add(sem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 110, 20));
+        addsubjects_table.add(coursesearchsem_cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 110, 20));
 
         coursesearch_bar.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         coursesearch_bar.setText("Enter Subject Code / Title");
@@ -524,101 +559,142 @@ public class StudentHome extends javax.swing.JFrame {
                 coursesearch_barFocusLost(evt);
             }
         });
-        coursesearch_bar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                coursesearch_barKeyReleased(evt);
-            }
-        });
-        addsubjects_table.add(coursesearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 230, 20));
+        addsubjects_table.add(coursesearch_bar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 230, 20));
 
         SubjectsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Program", "Course Code", "Course Title", "Credits", "Year", "Semester", "Academic Year", "Instructor", "Class Section"
+                "Course Code", "Course Title", "Credits", "Year", "Semester"
             }
         ));
         jScrollPane3.setViewportView(SubjectsTable);
 
-        addsubjects_table.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 790, 320));
+        addsubjects_table.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 520, 360));
 
         jLabel4.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(102, 102, 102));
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/search-icon.png"))); // NOI18N
-        addsubjects_table.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, 20));
+        addsubjects_table.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, 20));
 
         jLabel3.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Semester");
         jLabel3.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jLabel3.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addsubjects_table.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 110, 20));
+        addsubjects_table.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 110, 20));
 
         jLabel2.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Year");
         jLabel2.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jLabel2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addsubjects_table.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 110, 20));
+        addsubjects_table.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 20));
 
-        addsubject_btn1.setBackground(new java.awt.Color(164, 83, 197));
-        addsubject_btn1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        addsubject_btn1.setForeground(new java.awt.Color(255, 255, 255));
-        addsubject_btn1.setText("Enroll To This Subject");
-        addsubject_btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addsubject_btn1ActionPerformed(evt);
-            }
-        });
-        addsubjects_table.add(addsubject_btn1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, 240, 30));
-
-        year_cbox2.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        year_cbox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
-        year_cbox2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                year_cbox2ActionPerformed(evt);
-            }
-        });
-        addsubjects_table.add(year_cbox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, 110, 20));
-
-        jLabel10.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel10.setText("Program");
-        jLabel10.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel10.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        addsubjects_table.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 20));
-
-        addsubject_panel.add(addsubjects_table, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 810, 410));
+        addsubject_panel.add(addsubjects_table, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 540, 410));
 
         student_subject_panels.addTab("tab1", addsubject_panel);
 
         viewsubject_panel.setBackground(new java.awt.Color(255, 255, 255));
         viewsubject_panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        viewsubject_form.setBackground(new java.awt.Color(202, 154, 221));
+        viewsubject_form.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel28.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel28.setText("Semester:");
+        viewsubject_form.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 200, 90, 20));
+
+        jLabel29.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel29.setText("Course Code:");
+        viewsubject_form.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 70, 90, 20));
+
+        credits1.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        credits1.setForeground(new java.awt.Color(255, 255, 255));
+        credits1.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        credits1.setText("Credits:");
+        viewsubject_form.add(credits1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 90, 20));
+
+        jLabel30.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel30.setText("Year:");
+        viewsubject_form.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 170, 90, 20));
+
+        subjectcode_field1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        viewsubject_form.add(subjectcode_field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 160, -1));
+
+        credits_field1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        viewsubject_form.add(credits_field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 130, 160, -1));
+
+        subjectsem_cbox1.setBackground(new java.awt.Color(164, 83, 197));
+        subjectsem_cbox1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        subjectsem_cbox1.setForeground(new java.awt.Color(255, 255, 255));
+        subjectsem_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd" }));
+        viewsubject_form.add(subjectsem_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 200, 160, 20));
+
+        subjectyear_cbox1.setBackground(new java.awt.Color(164, 83, 197));
+        subjectyear_cbox1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        subjectyear_cbox1.setForeground(new java.awt.Color(255, 255, 255));
+        subjectyear_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1st", "2nd", "3rd", "Midyear", "4th" }));
+        viewsubject_form.add(subjectyear_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 160, 20));
+
+        jLabel31.setFont(new java.awt.Font("Cascadia Mono", 1, 14)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Subject Form");
+        viewsubject_form.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 260, 40));
+
+        subjecttitle_field1.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        viewsubject_form.add(subjecttitle_field1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 100, 160, -1));
+
+        jLabel32.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
+        jLabel32.setText("Course Title:");
+        viewsubject_form.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 90, 20));
+
+        removecourse_btn.setBackground(new java.awt.Color(233, 82, 82));
+        removecourse_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
+        removecourse_btn.setForeground(new java.awt.Color(255, 255, 255));
+        removecourse_btn.setText("Remove Course");
+        removecourse_btn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                removecourse_btnActionPerformed(evt);
+            }
+        });
+        viewsubject_form.add(removecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 240, 30));
+
+        viewsubject_panel.add(viewsubject_form, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 260, 410));
+
         viewsubjects_table1.setBackground(new java.awt.Color(81, 199, 135));
         viewsubjects_table1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        program2cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        program2cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
-        program2cbox.addActionListener(new java.awt.event.ActionListener() {
+        coursesearchyear_cbox1.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        coursesearchyear_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
+        coursesearchyear_cbox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                program2cboxActionPerformed(evt);
+                coursesearchyear_cbox1ActionPerformed(evt);
             }
         });
-        viewsubjects_table1.add(program2cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 20));
+        viewsubjects_table1.add(coursesearchyear_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 110, 20));
 
-        sem2cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        sem2cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
-        sem2cbox.addActionListener(new java.awt.event.ActionListener() {
+        coursesearchsem_cbox1.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
+        coursesearchsem_cbox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd" }));
+        coursesearchsem_cbox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                sem2cboxActionPerformed(evt);
+                coursesearchsem_cbox1ActionPerformed(evt);
             }
         });
-        viewsubjects_table1.add(sem2cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 110, 20));
+        viewsubjects_table1.add(coursesearchsem_cbox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 110, 20));
 
         coursesearch_bar1.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
         coursesearch_bar1.setText("Enter Subject Code / Title");
@@ -630,75 +706,48 @@ public class StudentHome extends javax.swing.JFrame {
                 coursesearch_bar1FocusLost(evt);
             }
         });
-        viewsubjects_table1.add(coursesearch_bar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 20, 230, 20));
+        viewsubjects_table1.add(coursesearch_bar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 230, 20));
 
-        SubjectsTable2.setModel(new javax.swing.table.DefaultTableModel(
+        SubjectsTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Instructor", "Course Title", "Credits", "Program", "Class Section", "Year", "Semester", "Academic Year"
+                "Program", "Course Code", "Course Title", "Credits", "Year", "Semester"
             }
         ));
-        jScrollPane4.setViewportView(SubjectsTable2);
-        if (SubjectsTable2.getColumnModel().getColumnCount() > 0) {
-            SubjectsTable2.getColumnModel().getColumn(0).setResizable(false);
-            SubjectsTable2.getColumnModel().getColumn(3).setResizable(false);
-            SubjectsTable2.getColumnModel().getColumn(4).setResizable(false);
+        jScrollPane4.setViewportView(SubjectsTable1);
+        if (SubjectsTable1.getColumnModel().getColumnCount() > 0) {
+            SubjectsTable1.getColumnModel().getColumn(0).setResizable(false);
+            SubjectsTable1.getColumnModel().getColumn(3).setResizable(false);
+            SubjectsTable1.getColumnModel().getColumn(4).setResizable(false);
         }
 
-        viewsubjects_table1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 790, 320));
+        viewsubjects_table1.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 520, 360));
 
         jLabel5.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(102, 102, 102));
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/icons/search-icon.png"))); // NOI18N
-        viewsubjects_table1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, -1, 20));
+        viewsubjects_table1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 20, -1, 20));
 
         jLabel11.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setText("Semester");
         jLabel11.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jLabel11.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        viewsubjects_table1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 0, 110, 20));
+        viewsubjects_table1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 0, 110, 20));
 
         jLabel12.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("Program");
+        jLabel12.setText("Year");
         jLabel12.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
         jLabel12.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         viewsubjects_table1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 20));
 
-        removecourse_btn.setBackground(new java.awt.Color(233, 82, 82));
-        removecourse_btn.setFont(new java.awt.Font("Cascadia Mono", 0, 12)); // NOI18N
-        removecourse_btn.setForeground(new java.awt.Color(255, 255, 255));
-        removecourse_btn.setText("Remove Course");
-        removecourse_btn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                removecourse_btnActionPerformed(evt);
-            }
-        });
-        viewsubjects_table1.add(removecourse_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 370, 240, 30));
-
-        year2cbox.setFont(new java.awt.Font("Cascadia Mono", 0, 10)); // NOI18N
-        year2cbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "1st", "2nd", "3rd", "Midyear", "4th" }));
-        year2cbox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                year2cboxActionPerformed(evt);
-            }
-        });
-        viewsubjects_table1.add(year2cbox, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 110, 20));
-
-        jLabel16.setFont(new java.awt.Font("Cascadia Mono", 0, 8)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel16.setText("Year");
-        jLabel16.setVerticalAlignment(javax.swing.SwingConstants.BOTTOM);
-        jLabel16.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        viewsubjects_table1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 110, 20));
-
-        viewsubject_panel.add(viewsubjects_table1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 810, 410));
+        viewsubject_panel.add(viewsubjects_table1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, 540, 410));
 
         student_subject_panels.addTab("tab2", viewsubject_panel);
 
@@ -1369,6 +1418,9 @@ public class StudentHome extends javax.swing.JFrame {
 
         navigation.add(logout_panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 130, 40));
 
+        jLabel1.setText("delete me");
+        navigation.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 370, -1, -1));
+
         background.add(navigation, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 150, 450));
 
         header.setBackground(new java.awt.Color(202, 154, 221));
@@ -1491,11 +1543,17 @@ public class StudentHome extends javax.swing.JFrame {
     }//GEN-LAST:event_delete_btnActionPerformed
 
     private void addsubject_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addsubject_btn1ActionPerformed
+        String CourseCode;
+        String CourseTitle;
+        String Credit;
+        String Year;
+        String Sem;
+        String query;
 
-        int primaryID = 0;
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException ex) {
+            Logger.getLogger(StudentCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
@@ -1509,96 +1567,77 @@ public class StudentHome extends javax.swing.JFrame {
         try {
             con = DriverManager.getConnection(url, user, pass);
         } catch (SQLException ex) {
+            Logger.getLogger(StudentCreateAccount1Frame.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        DefaultTableModel model = (DefaultTableModel) SubjectsTable.getModel();
-        int selectedRow = SubjectsTable.getSelectedRow();
+// Validation for empty fields
+        if (subjectcode_field.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Course Code is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (subjecttitle_field.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Course Title is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (credits_field.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Credit is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (subjectyear_cbox.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Year Level is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
+        } else if (subjectsem_cbox.getSelectedItem().toString().isEmpty()) {
+            JOptionPane.showMessageDialog(new JFrame(), "Semester is required", "Dialog", JOptionPane.ERROR_MESSAGE);
+            isValid = false;
 
-        if (selectedRow == -1) {
-            // No row selected, display a message (optional)
-            JOptionPane.showMessageDialog(this, "Please select a course to enroll.");
-            return;
         }
+        if (isValid) {
+            // Retrieve input values
+            CourseCode = subjectcode_field.getText().trim();
+            CourseTitle = subjecttitle_field.getText().trim();
+            Credit = credits_field.getText().trim(); // Store as String initiall         
+            Year = (String) subjectyear_cbox.getSelectedItem();
+            Sem = (String) subjectsem_cbox.getSelectedItem();
 
-// Get the course details from the selected row
-        String Program = model.getValueAt(selectedRow, 0).toString();
-        String CourseCode = model.getValueAt(selectedRow, 1).toString();
-        String CourseTitle = model.getValueAt(selectedRow, 2).toString();
-        String Credits = model.getValueAt(selectedRow, 3).toString();
-        String Year = model.getValueAt(selectedRow, 4).toString();
-        String Semester = model.getValueAt(selectedRow, 5).toString();
-        String academicYear = model.getValueAt(selectedRow, 6).toString();
-        String instructor = model.getValueAt(selectedRow, 7).toString();
-        String section = model.getValueAt(selectedRow, 8).toString();
+            // Proceed if all inputs are valid
+            if (isValid) {
+                query = "INSERT INTO tb_subjects (CourseCode, CourseName, Credits, Year, Semester) VALUES (?, ?, ?, ?, ?)";
+                try {
+                    PreparedStatement pst = con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+                    pst.setString(1, CourseCode);
+                    pst.setString(2, CourseTitle);
+                    pst.setString(3, Credit);
+                    pst.setString(4, Year);
+                    pst.setString(5, Sem);
 
-        try {
-            // Query to get instructor details based on course's primary ID
-            String queryAtInstructorSubjects = "SELECT InstructorName, Program, CourseTitle, ClassSection, Year, Semester, AcademicYear FROM tb_instructorsubjects WHERE CourseTitle = ?";
-            PreparedStatement pstInstructorSubj = con.prepareStatement(queryAtInstructorSubjects);
-            pstInstructorSubj.setString(1, CourseTitle);
+                    pst.executeUpdate();
 
-            ResultSet rsInstructor = pstInstructorSubj.executeQuery();
-            if (rsInstructor.next()) {
-                // If a record is found, retrieve the data
-                instructor = rsInstructor.getString("InstructorName");
-                Program = rsInstructor.getString("Program");
-                CourseTitle = rsInstructor.getString("CourseTitle");
-                section = rsInstructor.getString("ClassSection");
-                Year = rsInstructor.getString("Year");
-                Semester = rsInstructor.getString("Semester");
-                academicYear = rsInstructor.getString("AcademicYear");
-            } else {
-                JOptionPane.showMessageDialog(this, "Instructor not found for the selected course.");
-                return;
+                    JOptionPane.showMessageDialog(new JFrame(), "Course added successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+                    displayDataInCoursesTable();  // Update the table with the newly added course
+
+                } catch (SQLException e) {
+                    System.out.println("Error " + e.getMessage());
+                    JOptionPane.showMessageDialog(new JFrame(), "Database connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
             }
-
-            // Debugging: Check the value of CourseTitle before executing the next query
-            System.out.println("CourseTitle being used in the query: " + CourseTitle);
-
-            // Query to get academic year details for the course
-            String queryCourse = "SELECT CourseCode, Credits FROM tb_subjects WHERE CourseName = ?";
-            PreparedStatement pstCourse = con.prepareStatement(queryCourse);
-            pstCourse.setString(1, CourseTitle);  // Use CourseTitle or the correct column name
-
-            ResultSet rsYear = pstCourse.executeQuery();
-            if (rsYear.next()) {
-                // If course info found, retrieve the data
-                CourseCode = rsYear.getString("CourseCode");
-                Credits = rsYear.getString("Credits");
-            } else {
-                JOptionPane.showMessageDialog(this, "Course details not found.");
-                return;
-            }
-
-            // Add the retrieved data to the SubjectsTable2 (second table)
-            model = (DefaultTableModel) SubjectsTable2.getModel();
-            model.addRow(new Object[]{instructor, CourseTitle, Credits, Program, section, Year, Semester, academicYear});
-
-            // Now insert into the tb_studentsubjects table
-            String insertQuery = "INSERT INTO tb_studentsubjects (InstructorName, CourseName, Credits, Program, ClassSection, Year, Semester, AcademicYear) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement pst = con.prepareStatement(insertQuery);
-            pst.setString(1, instructor);
-            pst.setString(2, CourseTitle);
-            pst.setString(3, Credits);
-            pst.setString(4, Program);
-            pst.setString(5, section);
-            pst.setString(6, Year);
-            pst.setString(7, Semester);
-            pst.setString(8, academicYear);
-            pst.executeUpdate();
-
-            JOptionPane.showMessageDialog(null, "Course Added Successfully!");
-            displayDataInStudentCoursesTable();
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error retrieving data from the database.");
         }
-
-       
-
     }//GEN-LAST:event_addsubject_btn1ActionPerformed
+
+    private void coursesearchyear_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesearchyear_cboxActionPerformed
+
+        String selectedYear = (String) coursesearchyear_cbox.getSelectedItem();
+        String selectedSemester = (String) coursesearchsem_cbox.getSelectedItem();
+
+        filterData(selectedYear, selectedSemester);
+
+    }//GEN-LAST:event_coursesearchyear_cboxActionPerformed
+
+    private void coursesearchsem_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesearchsem_cboxActionPerformed
+
+        String selectedYear = (String) coursesearchyear_cbox.getSelectedItem();
+        String selectedSemester = (String) coursesearchsem_cbox.getSelectedItem();
+
+        filterData(selectedYear, selectedSemester);
+    }//GEN-LAST:event_coursesearchsem_cboxActionPerformed
 
     private void addclass_btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addclass_btn1ActionPerformed
         // TODO add your handling code here:
@@ -1628,13 +1667,13 @@ public class StudentHome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_classSearch_barFocusLost
 
-    private void program2cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_program2cboxActionPerformed
+    private void coursesearchyear_cbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesearchyear_cbox1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_program2cboxActionPerformed
+    }//GEN-LAST:event_coursesearchyear_cbox1ActionPerformed
 
-    private void sem2cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sem2cboxActionPerformed
+    private void coursesearchsem_cbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coursesearchsem_cbox1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_sem2cboxActionPerformed
+    }//GEN-LAST:event_coursesearchsem_cbox1ActionPerformed
 
     private void coursesearch_bar1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_coursesearch_bar1FocusGained
         // TODO add your handling code here:
@@ -1643,6 +1682,77 @@ public class StudentHome extends javax.swing.JFrame {
     private void coursesearch_bar1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_coursesearch_bar1FocusLost
         // TODO add your handling code here:
     }//GEN-LAST:event_coursesearch_bar1FocusLost
+
+    private void removecourse_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removecourse_btnActionPerformed
+        DefaultTableModel model = (DefaultTableModel) ViewClassesTable.getModel();
+
+        // Get the selected row index
+        int selectedRow = ViewClassesTable.getSelectedRow();
+
+        // Check if a row is selected
+        if (selectedRow != -1) {
+            // Get the CourseCode from the selected row (assuming it's in the first column)
+            String delCode = model.getValueAt(selectedRow, 0).toString();
+
+            int confirmDelete = JOptionPane.showConfirmDialog(null,
+                "Are you sure you want to delete this course?",
+                "Delete Course",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE);
+
+            // If the user confirms the deletion
+            if (confirmDelete == JOptionPane.YES_OPTION) {
+                // Remove the row from the JTable
+                model.removeRow(selectedRow);
+
+                // Now delete the course from the database
+                deleteCourseFromDatabase(delCode);
+                // Show a success message
+                JOptionPane.showMessageDialog(null, "Course deleted successfully!");
+            } else {
+                // If the user cancels, you can add any additional logic here (optional)
+                JOptionPane.showMessageDialog(null, "Course deletion cancelled.");
+            }
+
+        } else {
+            // Handle the case where no row is selected
+            if (ViewClassesTable.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(null, "The table has no values.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
+
+            }
+        }
+        }
+
+        private void deleteCourseFromDatabase(String courseCode) {
+            // Database connection parameters
+            String dbUrl = "jdbc:mysql://localhost:3306/lms_project";
+            String dbUser = "root";
+            String dbPassword = "";
+
+            // SQL Delete query
+            String deleteQuery = "DELETE FROM tb_subjects WHERE CourseCode = ?";
+
+            try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(deleteQuery)) {
+
+                // Set the parameters for the SQL delete
+                pst.setString(1, courseCode);
+
+                // Execute the delete query
+                int rowsAffected = pst.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Database row deleted successfully.");
+                } else {
+                    System.out.println("No records deleted.");
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error deleting the course from the database!");
+            }
+    }//GEN-LAST:event_removecourse_btnActionPerformed
 
     private void classsearchyear_cbox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_classsearchyear_cbox1ActionPerformed
         // TODO add your handling code here:
@@ -1664,151 +1774,43 @@ public class StudentHome extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_removeclass_btnActionPerformed
 
-    private void removecourse_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removecourse_btnActionPerformed
-        // Get the selected row in the JTable
-        DefaultTableModel model = (DefaultTableModel) SubjectsTable2.getModel();
-        int selectedRow = SubjectsTable2.getSelectedRow();
-
-        // Check if a row is selected
-        if (selectedRow != -1) {
-            // Get the CourseCode from the selected row (assuming it's in the first column)
-            String sectionRemove = model.getValueAt(selectedRow, 4).toString(); // Assuming CourseCode is in the first column
-
-            // Confirm with the user before deleting
-            int confirmDelete = JOptionPane.showConfirmDialog(null,
-                    "Are you sure you want to delete this course?",
-                    "Delete Course",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.WARNING_MESSAGE);
-
-            // If the user confirms the deletion
-            if (confirmDelete == JOptionPane.YES_OPTION) {
-                // Remove the row from the JTable
-                model.removeRow(selectedRow);
-
-                // Now delete the course from the database
-                deleteCourseFromDatabase(sectionRemove);
-
-                // Show a success message
-                JOptionPane.showMessageDialog(null, "Course deleted successfully!");
-            } else {
-                // If the user cancels the deletion
-                JOptionPane.showMessageDialog(null, "Course deletion cancelled.");
-            }
-        } else {
-            // Handle the case where no row is selected
-            if (SubjectsTable2.getRowCount() == 0) {
-                JOptionPane.showMessageDialog(null, "The table has no values.");
-            } else {
-                JOptionPane.showMessageDialog(null, "Select a single row for deletion.");
-            }
-        }
-    }
-
-    private void deleteCourseFromDatabase(String section) {
-        // Database connection parameters
-        String dbUrl = "jdbc:mysql://localhost:3306/lms_project";
-        String dbUser = "root";
-        String dbPassword = "";
-
-        // SQL Delete query
-        String deleteQuery = "DELETE FROM tb_studentsubjects WHERE ClassSection = ?";
-
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement pst = conn.prepareStatement(deleteQuery)) {
-
-            // Set the parameters for the SQL delete
-            pst.setString(1, section);
-          
-
-            // Execute the delete query
-            int rowsAffected = pst.executeUpdate();
-
-            if (rowsAffected > 0) {
-                System.out.println("Database row deleted successfully.");
-            } else {
-                System.out.println("No records deleted.");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Error deleting the course from the database!");
-        }
-    
-    }//GEN-LAST:event_removecourse_btnActionPerformed
-
-    private void year2cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_year2cboxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_year2cboxActionPerformed
-
-    private void program_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_program_cboxActionPerformed
-        String selectedProgram = (String) program_cbox.getSelectedItem();
-        String selectedYear = (String) year_cbox2.getSelectedItem();
-        String selectedSemester = (String) sem_cbox.getSelectedItem();
-
-        filterData(selectedProgram, selectedYear, selectedSemester);
-    }//GEN-LAST:event_program_cboxActionPerformed
-
-    private void year_cbox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_year_cbox2ActionPerformed
-        String selectedProgram = (String) program_cbox.getSelectedItem();
-        String selectedYear = (String) year_cbox2.getSelectedItem();
-        String selectedSemester = (String) sem_cbox.getSelectedItem();
-
-        filterData(selectedProgram, selectedYear, selectedSemester);
-    }//GEN-LAST:event_year_cbox2ActionPerformed
-
-    private void sem_cboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sem_cboxActionPerformed
-        String selectedProgram = (String) program_cbox.getSelectedItem();
-        String selectedYear = (String) year_cbox2.getSelectedItem();
-        String selectedSemester = (String) sem_cbox.getSelectedItem();
-
-        filterData(selectedProgram, selectedYear, selectedSemester);
-    }//GEN-LAST:event_sem_cboxActionPerformed
-
-    private void coursesearch_barKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_coursesearch_barKeyReleased
-        DefaultTableModel model = (DefaultTableModel) SubjectsTable.getModel();
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        SubjectsTable.setRowSorter(sorter);
-
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + coursesearch_bar.getText()));
-    }//GEN-LAST:event_coursesearch_barKeyReleased
-
     public static void main(String args[]) {
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
             }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(StudentHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(StudentHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(StudentHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(StudentHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(StudentHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(StudentHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(StudentHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(StudentHome.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-    //</editor-fold>
-    //</editor-fold>
-    //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            new StudentHome(0).setVisible(true);
-        }
-    });
-}
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new StudentHome(0).setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable AddClassesTable;
     private javax.swing.JTable SubjectsTable;
-    private javax.swing.JTable SubjectsTable2;
+    private javax.swing.JTable SubjectsTable1;
     private javax.swing.JTable ViewClassesTable;
     private javax.swing.JButton about_btn;
     private javax.swing.JLabel about_icon;
@@ -1821,6 +1823,7 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JLabel address_field;
     private javax.swing.JButton addsubject_btn;
     private javax.swing.JButton addsubject_btn1;
+    private javax.swing.JPanel addsubject_form;
     private javax.swing.JPanel addsubject_panel;
     private javax.swing.JPanel addsubjects_table;
     private javax.swing.JLabel age_field;
@@ -1851,6 +1854,14 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JPanel course_panel;
     private javax.swing.JTextField coursesearch_bar;
     private javax.swing.JTextField coursesearch_bar1;
+    private javax.swing.JComboBox<String> coursesearchsem_cbox;
+    private javax.swing.JComboBox<String> coursesearchsem_cbox1;
+    private javax.swing.JComboBox<String> coursesearchyear_cbox;
+    private javax.swing.JComboBox<String> coursesearchyear_cbox1;
+    private javax.swing.JLabel credits;
+    private javax.swing.JLabel credits1;
+    private javax.swing.JTextField credits_field;
+    private javax.swing.JTextField credits_field1;
     private javax.swing.JLabel cvsum_field;
     private javax.swing.JButton delete_btn;
     private javax.swing.JButton edit_btn;
@@ -1866,20 +1877,29 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JLabel id_field;
     private javax.swing.JTabbedPane instructor_class_panels;
     private com.toedter.calendar.JCalendar jCalendar1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel36;
@@ -1912,8 +1932,6 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JButton profile_btn;
     private javax.swing.JLabel profile_icon;
     private javax.swing.JPanel profile_panel;
-    private javax.swing.JComboBox<String> program2cbox;
-    private javax.swing.JComboBox<String> program_cbox;
     private javax.swing.JTextArea reminder_field;
     private javax.swing.JPanel reminder_panel;
     private javax.swing.JButton removeclass_btn;
@@ -1921,8 +1939,6 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JButton savereminder_btn;
     private javax.swing.JLabel school_info;
     private javax.swing.JLabel section_field;
-    private javax.swing.JComboBox<String> sem2cbox;
-    private javax.swing.JComboBox<String> sem_cbox;
     private javax.swing.JLabel sex_field;
     private javax.swing.JPanel student_about;
     private javax.swing.JLabel student_address;
@@ -1944,6 +1960,14 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JButton subject_btn;
     private javax.swing.JPanel subject_header;
     private javax.swing.JLabel subject_icon;
+    private javax.swing.JTextField subjectcode_field;
+    private javax.swing.JTextField subjectcode_field1;
+    private javax.swing.JComboBox<String> subjectsem_cbox;
+    private javax.swing.JComboBox<String> subjectsem_cbox1;
+    private javax.swing.JTextField subjecttitle_field;
+    private javax.swing.JTextField subjecttitle_field1;
+    private javax.swing.JComboBox<String> subjectyear_cbox;
+    private javax.swing.JComboBox<String> subjectyear_cbox1;
     private javax.swing.JLabel title1;
     private javax.swing.JLabel title2;
     private javax.swing.JLabel title4;
@@ -1955,9 +1979,8 @@ public class StudentHome extends javax.swing.JFrame {
     private javax.swing.JPanel viewclass_panel;
     private javax.swing.JPanel viewclass_table;
     private javax.swing.JButton viewsubject_btn;
+    private javax.swing.JPanel viewsubject_form;
     private javax.swing.JPanel viewsubject_panel;
     private javax.swing.JPanel viewsubjects_table1;
-    private javax.swing.JComboBox<String> year2cbox;
-    private javax.swing.JComboBox<String> year_cbox2;
     // End of variables declaration//GEN-END:variables
 }
